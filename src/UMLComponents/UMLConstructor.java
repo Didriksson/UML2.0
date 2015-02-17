@@ -10,5 +10,4 @@ public class UMLConstructor extends UMLMethod{
     //Still, we want to be able to "treat" this constructor as a method at some point, as it is a method without returntype.
     public void setReturnType(String returnType) {
     }
-
 }

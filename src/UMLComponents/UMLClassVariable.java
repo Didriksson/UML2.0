@@ -1,22 +1,22 @@
 package UMLComponents;
 
 public class UMLClassVariable extends UMLVariable{
-    String scopeModifier;
+    String modifiers;
     public UMLClassVariable(String scopeModifier, String type, String name) {
 	super(type, name);
-	this.scopeModifier =scopeModifier;
+	this.modifiers =scopeModifier;
     }
     
     public String toString(){
-	return scopeModifier + " " + super.toString();
+	return modifiers + " " + super.toString();
     }
 
-    public String getScopeModifier() {
-        return scopeModifier;
+    public String getModifiers() {
+        return modifiers;
     }
 
     public void setScopeModifier(String scopeModifier) {
-        this.scopeModifier = scopeModifier;
+        this.modifiers = scopeModifier;
     }
     
 

@@ -7,13 +7,13 @@ public class UMLComponent {
     private String name;
     private String type;
     private List<UMLMethod> methods;
-    private List<UMLVariable> variables;
+    private List<UMLClassVariable> variables;
     
     public UMLComponent(String name, String type){
 	this.name = name;
 	this.type = type;
 	methods = new ArrayList<UMLMethod>();
-	variables = new ArrayList<UMLVariable>();
+	variables = new ArrayList<UMLClassVariable>();
     }
 
     public String getName() {
@@ -39,7 +39,7 @@ public class UMLComponent {
 	return methods.get(n);
     }
     
-    public UMLVariable getVariable(int n){
+    public UMLClassVariable getVariable(int n){
 	return variables.get(n);
     }
     

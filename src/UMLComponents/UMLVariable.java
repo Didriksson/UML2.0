@@ -1,15 +1,15 @@
 package UMLComponents;
 
 public class UMLVariable {
-    String variableName;
-    String type;
+    private String variableName;
+    private String type;
 
     public UMLVariable(String type, String name) {
 	this.variableName = name;
 	this.type = type;
     }
 
-    public String getVariableName() {
+    public String getName() {
         return variableName;
     }
 
@@ -19,5 +19,9 @@ public class UMLVariable {
 
     public String toString(){
 	return type + " " + variableName;
+    }
+
+    public String getType() {
+	return this.type;
     }
 }

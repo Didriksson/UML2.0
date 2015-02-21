@@ -12,8 +12,6 @@ import net.miginfocom.swing.MigLayout;
 public class FigureViewingPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
-	private JPanel drawingPanel;
-	
 	public FigureViewingPanel() {
 		this.setLayout(new MigLayout("fill","grow","grow"));
 		this.setBorder(Constants.RAISED_BEVEL_BORDER);
@@ -22,9 +20,7 @@ public class FigureViewingPanel extends JPanel {
 	
 	
 	private void createComponents() {	
-	  
-		drawingPanel = new JPanel();
-		
+	
 		setComponents();
 	}
 

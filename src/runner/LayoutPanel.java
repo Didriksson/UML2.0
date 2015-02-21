@@ -30,9 +30,10 @@ public class LayoutPanel extends JPanel {
 		pathPanel.setBorder(Constants.RAISED_BEVEL_BORDER);		
 		drawingPanel.setBorder(Constants.RAISED_BEVEL_BORDER);
 		
-		this.add(pathPanel, "grow");
+		this.add(new TreePanel(), "grow");
 		this.add(new FigureViewingPanel(), "grow");
 
+		
 		
 	}
 }

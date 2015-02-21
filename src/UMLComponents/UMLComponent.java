@@ -26,7 +26,7 @@ public class UMLComponent {
 
     public void addMethod(UMLMethod method) throws Exception{
 	if(method.getMethodName().equals(this.name) && !(method instanceof UMLConstructor))
-	    throw new Exception("Method should have type constructor." + method);
+	    throw new Exception("Method should have type UMLConstructor." + method);
 	    
 	methods.add(method);
     }
@@ -37,6 +37,10 @@ public class UMLComponent {
     
     public UMLMethod getMethod(int n){
 	return methods.get(n);
+    }
+    
+    public List<UMLMethod> getMethods(){
+	return methods;
     }
     
     public UMLClassVariable getVariable(int n){

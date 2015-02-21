@@ -6,13 +6,13 @@ import java.util.List;
 public class UMLMethod {
     String methodName;
     String returnType;
-    String scopeModifier;
+    String modifier;
     List<UMLVariable> variables;
 
     public UMLMethod(String scopeModifier, String returntype, String name) {
 	this.methodName = name;
 	this.returnType = returntype;
-	this.scopeModifier = scopeModifier;
+	this.modifier = scopeModifier;
 	this.variables = new ArrayList<UMLVariable>();
     }
     
@@ -21,13 +21,17 @@ public class UMLMethod {
     public UMLMethod(String scopeModifier, String returntype, String name, List<UMLVariable> v) {
 	this.methodName = name;
 	this.returnType = returntype;
-	this.scopeModifier = scopeModifier;
+	this.modifier = scopeModifier;
 	this.variables = v;
     }
     
     
     public void addVariable(UMLVariable v){
 	variables.add(v);
+    }
+    
+    public List<UMLVariable> getVariables(){
+	return variables;
     }
 
     public String getMethodName() {
@@ -47,16 +51,16 @@ public class UMLMethod {
     }
 
     public String getScopeModifier() {
-        return scopeModifier;
+        return modifier;
     }
 
     public void setScopeModifier(String scopeModifier) {
-        this.scopeModifier = scopeModifier;
+        this.modifier = scopeModifier;
     }
     
     public String toString(){
 
-	String tmp= scopeModifier +" " + returnType + " " + methodName +"(";
+	String tmp= modifier +" " + returnType + " " + methodName +"(";
 	for(int i = 0;i<variables.size();i++){
 	    tmp+=variables.get(i).toString();
 	    if(i != variables.size() -1 )

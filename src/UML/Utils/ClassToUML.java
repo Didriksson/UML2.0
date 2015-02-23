@@ -1,4 +1,4 @@
-package UMLComponents;
+package UML.Utils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -6,6 +6,10 @@ import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
 import java.util.Arrays;
 import java.util.List;
+
+import UML.Components.UMLComponent;
+import UML.Components.UMLMethod;
+import UML.Components.UMLVariable;
 
 public class ClassToUML {
     public static UMLComponent toUML(Class<?> class1) {

@@ -1,21 +1,11 @@
 package runner;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
-import UMLComponents.UMLClassVariable;
-import UMLComponents.UMLMethod;
-import UMLComponents.UMLVariable;
 import net.miginfocom.swing.MigLayout;
 
 public class FigureViewingPanel extends JPanel {

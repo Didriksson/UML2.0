@@ -1,16 +1,16 @@
 package Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 
 import org.junit.AfterClass;
 import org.junit.Test;
 
-import UMLComponents.UMLComponent;
-import UMLComponents.UMLConverter;
-import UMLComponents.UMLMethod;
-import UMLComponents.UMLVariable;
+import UML.Components.UMLComponent;
+import UML.Components.UMLMethod;
+import UML.Components.UMLVariable;
+import UML.Utils.UMLConverter;
 
 public class GenerateSourceTest {
     static String path = ".\\src\\GeneratedTestFiles\\";

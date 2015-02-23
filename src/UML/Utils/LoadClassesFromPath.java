@@ -1,4 +1,4 @@
-package UMLComponents;
+package UML.Utils;
 
 import java.io.File;
 import java.io.IOException;

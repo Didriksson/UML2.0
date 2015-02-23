@@ -1,4 +1,4 @@
-package UMLComponents;
+package UML.Components;
 
 public class UMLVariable {
     private String variableName;
@@ -18,10 +18,14 @@ public class UMLVariable {
     }
 
     public String toString(){
-	return type + " " + variableName;
+	return variableName +" : "+ type;
     }
 
     public String getType() {
 	return this.type;
+    }
+
+    public String generateSourceString() {
+	return type + " " + variableName;
     }
 }

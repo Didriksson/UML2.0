@@ -7,10 +7,10 @@ import java.util.List;
 
 import org.junit.Test;
 
-import UMLComponents.LoadClassesFromPath;
-import UMLComponents.UMLComponent;
-import UMLComponents.UMLConverter;
-import UMLComponents.UMLMethod;
+import UML.Components.UMLComponent;
+import UML.Components.UMLMethod;
+import UML.Utils.LoadClassesFromPath;
+import UML.Utils.UMLConverter;
 
 public class ClassToUMLTest {
 

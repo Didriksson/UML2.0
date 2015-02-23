@@ -1,4 +1,4 @@
-package UMLComponents;
+package UML.Components;
 
 public class UMLConstructor extends UMLMethod{
 

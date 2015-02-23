@@ -2,11 +2,9 @@ package runner;
 
 import java.util.List;
 
-import javax.swing.ListModel;
-
-import UMLComponents.UMLClassVariable;
-import UMLComponents.UMLComponent;
-import UMLComponents.UMLMethod;
+import UML.Components.UMLClassVariable;
+import UML.Components.UMLComponent;
+import UML.Components.UMLMethod;
 
 public class UMLController {
 

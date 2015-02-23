@@ -1,4 +1,4 @@
-package UMLComponents;
+package UML.Components;
 
 public class UMLClassVariable extends UMLVariable{
     String modifiers;
@@ -7,8 +7,26 @@ public class UMLClassVariable extends UMLVariable{
 	this.modifiers =scopeModifier;
     }
     
+    public String generateSourceString(){
+	return modifiers + " " + super.generateSourceString();
+    }
+    
     public String toString(){
-	return modifiers + " " + super.toString();
+	
+	String umlModify = "";
+	switch(modifiers){
+	case("public"):
+	    umlModify = "+";
+	    break;
+	case("private"):
+	    umlModify = "-";
+	    break;
+	case("protected"):
+	    umlModify = "#";
+	    break;
+	}
+	
+	return umlModify +super.toString();
     }
 
     public String getModifiers() {

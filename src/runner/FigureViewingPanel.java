@@ -4,36 +4,39 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 import javax.swing.JPanel;
 
+import UML.Components.UMLComponent;
 import net.miginfocom.swing.MigLayout;
 
 public class FigureViewingPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
    
 	
-	private UMLController controller;
-	private Resizable res;
+	private UMLDrawAreaController controller;
+	private List<Resizable> res;
 	
 	private JPanel umlPanel;
 
 	public FigureViewingPanel() {
 		this.setLayout(new MigLayout("fill","grow","grow"));
 		this.setBorder(Constants.RAISED_BEVEL_BORDER);
+		this.controller = new UMLDrawAreaController();
 		createComponents();
+		
 	}
 	
 	
 	private void createComponents() {			
-		controller = new UMLController();		
 		umlPanel = new JPanel(null);
 
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent me) {
                 requestFocus();
-                res.repaint();           
+                repaint();           
             }
         });
 		
@@ -47,13 +50,14 @@ public class FigureViewingPanel extends JPanel {
 		this.add(new ToolbarUML(this), "dock west");       
 	}
 	
-	public void createFigures() {	
-		res = new Resizable(new ClassFigure(controller));
-		res.setBounds(50, 50, 200, 200);
-		umlPanel.add(res);
+	public void createFigures() {
+	    	UMLComponentController component = ComponentFactory.getComponentController();
+	    	Resizable tmp = new Resizable(new ClassFigure(component));
+	    	tmp.setBounds(50, 50, 200, 200);
+		umlPanel.add(tmp);
 		
-		res.repaint();
-		res.revalidate();
+		tmp.repaint();
+		tmp.revalidate();
 	}
 		
 	public void paintComponent(final Graphics g) {

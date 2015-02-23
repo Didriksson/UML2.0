@@ -2,15 +2,22 @@ package runner;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Vector;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import UML.Components.UMLClassVariable;
 import UML.Components.UMLMethod;
+
 
 public class ClassFigure extends JPanel {
 
@@ -19,21 +26,47 @@ public class ClassFigure extends JPanel {
 	private JTextField classNameField;
 	private JPanel umlPanel, classPanel;
 	private GridBagConstraints gbc;
+	private UMLComponentController controller;
+	private JButton addMethodButton;
 	
-	public ClassFigure(UMLController controller) {
+	public ClassFigure(UMLComponentController controller) {
 		this.setLayout(new GridBagLayout());
+		this.controller = controller;
 		gbc = new GridBagConstraints();
+		createAndAddComponents();
 		
-		listMethods = new JList<UMLMethod>(controller.getMethods().toArray(new UMLMethod[controller.getMethods().size()]));
-		listVariables = new JList<UMLClassVariable>(controller.getVariables().toArray(new UMLClassVariable[controller.getVariables().size()]));	
-		
+	}
+	
+	private void createAndAddComponents(){
+		listMethods = new JList<UMLMethod>(new Vector<UMLMethod>(controller.getMethods()));
+		listVariables = new JList<UMLClassVariable>(new Vector<UMLClassVariable>(controller.getVariables()));	
+
 		vaiableScroll = new JScrollPane(listVariables);
-		methodScroll = new JScrollPane(listMethods);	
+		methodScroll = new JScrollPane(listMethods);
+		
+		
 		
 		classNameField = new JTextField("ClassName");	
 		classNameField.setHorizontalAlignment(JLabel.CENTER);	
 		classNameField.setText(controller.getClassName());
-			
+		classNameField.getDocument().addDocumentListener(new DocumentListener() {
+		    
+		    @Override
+		    public void removeUpdate(DocumentEvent e) {
+			controller.setName(classNameField.getText());			
+		    }
+		    
+		    @Override
+		    public void insertUpdate(DocumentEvent e) {
+			controller.setName(classNameField.getText());
+		    }
+		    
+		    @Override
+		    public void changedUpdate(DocumentEvent e) {
+		    }
+		});
+	    
+	    
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.weighty = 0.1;
 		gbc.weightx = 1.0;
@@ -52,7 +85,25 @@ public class ClassFigure extends JPanel {
 		gbc.gridx = 0;
 		gbc.gridy = 2;
 		this.add(methodScroll, gbc);
-		
+		addMethodButton = new JButton("");
+		addMethodButton.addActionListener(new ActionListener() {
+		    
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+			controller.newMethod();
+			updatateList();
+		    }
+		});
+		this.add(addMethodButton);
+	    
+	}
+	
+
+	protected void updatateList() {
+	    this.removeAll();
+	    createAndAddComponents();
+	    repaint();
+	    revalidate();
 	}
 	
 }

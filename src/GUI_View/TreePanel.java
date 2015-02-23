@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 
-import Constants.Constants;
+import ConstantsAndEnums.Constants;
 import net.miginfocom.swing.MigLayout;
 
 public class TreePanel extends JPanel {

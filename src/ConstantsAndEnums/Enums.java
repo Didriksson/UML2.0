@@ -1,4 +1,4 @@
-package startProgram;
+package ConstantsAndEnums;
 
 public enum Enums {
 

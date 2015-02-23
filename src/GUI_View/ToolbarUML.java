@@ -7,8 +7,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JToolBar;
 
-import startProgram.Enums;
-import Constants.Constants;
+import ConstantsAndEnums.Constants;
+import ConstantsAndEnums.Enums;
 import Figures.FigureViewingPanel;
 
 public class ToolbarUML extends JToolBar {

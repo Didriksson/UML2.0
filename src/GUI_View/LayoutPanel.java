@@ -2,7 +2,7 @@ package GUI_View;
 
 import javax.swing.JPanel;
 
-import Constants.Constants;
+import ConstantsAndEnums.Constants;
 import Figures.FigureViewingPanel;
 import net.miginfocom.swing.MigLayout;
 

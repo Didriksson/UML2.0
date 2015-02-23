@@ -1,4 +1,4 @@
-package Constants;
+package ConstantsAndEnums;
 
 import java.awt.Image;
 

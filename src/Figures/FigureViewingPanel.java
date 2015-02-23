@@ -7,7 +7,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JPanel;
 
-import Constants.Constants;
+import ConstantsAndEnums.Constants;
 import Controller.UMLController;
 import GUI_View.ToolbarUML;
 import net.miginfocom.swing.MigLayout;

@@ -1,10 +1,5 @@
-/runner/
-/UML/
-/Figures/
-/ResizeAndMovment/
-/GUI/
-/Controller/
-/View/
-/GUI_View/
+/StartProgram/
 /Constants/
-/startProgram/
+/GUI_View/
+/ConstantsAndEnums/
+/Figures/

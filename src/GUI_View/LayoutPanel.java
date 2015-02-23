@@ -1,7 +1,9 @@
-package runner;
+package GUI_View;
 
 import javax.swing.JPanel;
 
+import Constants.Constants;
+import Figures.FigureViewingPanel;
 import net.miginfocom.swing.MigLayout;
 
 public class LayoutPanel extends JPanel {

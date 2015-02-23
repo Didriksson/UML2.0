@@ -1,4 +1,4 @@
-package runner;
+package Figures;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;

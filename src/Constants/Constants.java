@@ -1,4 +1,4 @@
-package runner;
+package Constants;
 
 import java.awt.Image;
 

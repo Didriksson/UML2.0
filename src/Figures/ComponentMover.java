@@ -1,4 +1,4 @@
-package runner;
+package Figures;
 
 import java.awt.Cursor;
 import java.awt.Point;

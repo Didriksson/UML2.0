@@ -1,4 +1,4 @@
-package runner;
+package Figures;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import Controller.UMLController;
 import UML.Components.UMLClassVariable;
 import UML.Components.UMLMethod;
 

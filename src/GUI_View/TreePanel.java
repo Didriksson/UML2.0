@@ -1,4 +1,4 @@
-package runner;
+package GUI_View;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.io.File;
@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 
+import Constants.Constants;
 import net.miginfocom.swing.MigLayout;
 
 public class TreePanel extends JPanel {

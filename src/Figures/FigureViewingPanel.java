@@ -1,4 +1,4 @@
-package runner;
+package Figures;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -7,6 +7,9 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JPanel;
 
+import Constants.Constants;
+import Controller.UMLController;
+import GUI_View.ToolbarUML;
 import net.miginfocom.swing.MigLayout;
 
 public class FigureViewingPanel extends JPanel {

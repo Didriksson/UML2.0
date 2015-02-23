@@ -1,9 +1,11 @@
-package runner;
+package GUI_View;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+
+import Constants.Constants;
 
 public class WindowFrame extends JFrame {
 	private static final long serialVersionUID = 1L;

@@ -1,8 +1,10 @@
-package runner;
+package startProgram;
 
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
+
+import GUI_View.WindowFrame;
 
 public class runnerMain {
 

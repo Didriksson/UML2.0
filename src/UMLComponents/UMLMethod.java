@@ -3,7 +3,7 @@ package UMLComponents;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UMLMethod {
+public class UMLMethod implements Comparable<UMLMethod> {
     String methodName;
     String returnType;
     String modifier;
@@ -69,5 +69,12 @@ public class UMLMethod {
 	tmp +="){}";
 	
 	return tmp;
+    }
+
+
+
+    @Override
+    public int compareTo(UMLMethod o) {
+	return this.getMethodName().compareTo(o.getMethodName());
     }
 }

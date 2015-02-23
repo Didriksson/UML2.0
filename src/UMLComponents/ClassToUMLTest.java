@@ -2,6 +2,7 @@ package UMLComponents;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Test;
@@ -30,15 +31,19 @@ public class ClassToUMLTest {
 	assertEquals("int", uml.getVariable(0).getType());
 	assertEquals("public", uml.getVariable(0).getModifiers());
 
+	List<UMLMethod> methods = uml.getMethods();
+	Collections.sort(methods);
+	
 	
 	assertEquals("testString", uml.getVariable(1).getName());
 	assertEquals("private", uml.getVariable(1).getModifiers());
+	
+	assertEquals("testMethod", uml.getMethod(0).getMethodName());
 
-	assertEquals("testMethodParameters", uml.getMethod(0).getMethodName());
-	assertEquals("String", uml.getMethod(0).getVariables().get(0).getType());
+	assertEquals("testMethodParameters", methods.get(1).getMethodName());
+	assertEquals("String", methods.get(1).getVariables().get(0).getType());
 	
-	
-	assertEquals("testMethod", uml.getMethod(1).getMethodName());
+	System.out.println(uml.toString());
 	
     }
 

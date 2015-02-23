@@ -33,7 +33,6 @@ public class ClassFigure extends JPanel {
 		classNameField = new JTextField("ClassName");	
 		classNameField.setHorizontalAlignment(JLabel.CENTER);	
 		classNameField.setText(controller.getClassName());
-		
 			
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.weighty = 0.1;

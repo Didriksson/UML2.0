@@ -1,5 +1,6 @@
 package runner;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -25,11 +26,8 @@ public class FigureViewingPanel extends JPanel {
 	
 	
 	private void createComponents() {			
-		controller = new UMLController();
-		
+		controller = new UMLController();		
 		umlPanel = new JPanel(null);
-						
-		res = new Resizable(new ClassFigure(controller));
 
         addMouseListener(new MouseAdapter() {
             @Override
@@ -43,16 +41,21 @@ public class FigureViewingPanel extends JPanel {
 	}
 
 	private void setComponents() {
-		res.setBounds(50, 50, 200, 200);
+		umlPanel.setBackground(Color.WHITE);
 		
-		umlPanel.add(res);
-
 		this.add(umlPanel, "dock center");
-		this.add(new ToolbarUML(), "dock west");
-       
+		this.add(new ToolbarUML(this), "dock west");       
+	}
+	
+	public void createFigures() {	
+		res = new Resizable(new ClassFigure(controller));
+		res.setBounds(50, 50, 200, 200);
+		umlPanel.add(res);
+		
+		res.repaint();
+		res.revalidate();
 	}
 		
-
 	public void paintComponent(final Graphics g) {
 	    super.paintComponent(g);
 	    if (Constants.FIGURE_VIEWER_BACKGROUND != null)

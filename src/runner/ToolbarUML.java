@@ -10,11 +10,14 @@ import javax.swing.JToolBar;
 public class ToolbarUML extends JToolBar {
 	private static final long serialVersionUID = 1L;
 	
-	public ToolbarUML() {
-		
+	private FigureViewingPanel figureViewingPanel;
+	
+	public ToolbarUML(FigureViewingPanel figureViewingPanel) {
 		super("Toolbar", JToolBar.VERTICAL);
 		this.setBorder(Constants.RAISED_BEVEL_BORDER);
 		this.setFloatable(false);
+		
+		this.figureViewingPanel = figureViewingPanel;
 		
 		addButtonsToToolbar(this);
 	}
@@ -102,7 +105,7 @@ public class ToolbarUML extends JToolBar {
 					break;
 					
 				case CLASS_ENUM:
-					
+					figureViewingPanel.createFigures();
 					break;
 					
 				case ASSOCIATION_ENUM:

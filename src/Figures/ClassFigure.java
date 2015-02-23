@@ -4,11 +4,14 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -16,7 +19,6 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import runner.UMLComponentController;
-import Controller.UMLController;
 import UML.Components.UMLClassVariable;
 import UML.Components.UMLMethod;
 
@@ -44,6 +46,23 @@ public class ClassFigure extends JPanel {
 	listVariables = new JList<UMLClassVariable>(
 		new Vector<UMLClassVariable>(controller.getVariables()));
 
+	
+	listMethods.addMouseListener(new MouseAdapter(){
+	    public void mouseClicked(MouseEvent e){
+		JList list = (JList)e.getSource();
+
+		if(e.getClickCount() == 2)
+		{
+		    int index = list.locationToIndex(e.getPoint());
+		    String name = JOptionPane.showInputDialog(null, "Rename method: ");
+		    if(!isNullOrEmpty(name))
+			controller.getMethods().get(index).setMethodName(name);
+		}
+	    }
+
+	   
+	});
+	
 	vaiableScroll = new JScrollPane(listVariables);
 	methodScroll = new JScrollPane(listMethods);
 
@@ -105,5 +124,7 @@ public class ClassFigure extends JPanel {
 	repaint();
 	revalidate();
     }
-
+    private boolean isNullOrEmpty(String name) {
+	return name == null || name.isEmpty();
+    }
 }

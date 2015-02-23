@@ -79,7 +79,7 @@ public class UMLMethod implements Comparable<UMLMethod> {
 	    if (i != variables.size() - 1)
 		tmp += ", ";
 	}
-	tmp += ")";
+	tmp += ")" + " : " +returnType;
 
 	return tmp;
     }

@@ -39,10 +39,7 @@ public class UMLComponentController {
 	try {
 	    umlC.addMethod(new UMLMethod("public", "void", "MethodName"));
 	} catch (Exception e) {
-	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	}
-	
-	System.out.println("New method!");
     }
 }

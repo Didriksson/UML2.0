@@ -10,35 +10,44 @@ import javax.swing.JComponent;
 import javax.swing.event.MouseInputAdapter;
 
 
-public class Resizable extends JComponent {
-
-	ComponentMover mouseListener;
+public class Resizable extends JComponent{
 	
-    public Resizable(Component comp) {
-        this(comp, new ResizableBorder(8));
+	ComponentMover mouseListener;
+	GUIComponent content;
+    public Resizable(GUIComponent comp, Point p) {
+        this(comp, new ResizableBorder(8), p); 
     }
 
-    public Resizable(Component comp, ResizableBorder border) {
+    public Resizable(GUIComponent comp, ResizableBorder border, Point p) {
         
     	mouseListener = new ComponentMover(this);
-    	
+    	this.content = comp;
         setLayout(new BorderLayout());
-        add(comp);
+        add(content);
         addMouseListener(mouseListener);
         addMouseMotionListener(mouseListener);
         setBorder(border);
+    	setBounds(p.x, p.y, 200, 200);
     }
     
-//    public void registerComponent(Component components) {
-//		for (Component component : components)
-//			component.addMouseListener( mouseListener );
-//	}
     
+    public GUIComponent getComponent(){
+    	return content;
+    }
 
     public void resize() {
         if (getParent() != null) {
             ((JComponent) getParent()).revalidate();
         }
     }
+    
+    public boolean equals(Object o){
+    	if(o instanceof Resizable)
+    	{
+    		Resizable r = (Resizable) o;
+    	}
+    	return false;
+    }
+    
 }
 

@@ -9,6 +9,7 @@ public class UMLComponent {
 	private List<UMLMethod> methods;
 	private List<UMLClassVariable> variables;
 
+	
 	public UMLComponent(String name, String type) {
 		this.name = name;
 		this.type = type;

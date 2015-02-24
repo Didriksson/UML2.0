@@ -1,5 +1,8 @@
 package runner;
 
+import java.awt.Component;
+
+import Figures.ClassFigure;
 import UML.Components.UMLComponent;
 
 public class ComponentFactory {
@@ -9,5 +12,13 @@ public class ComponentFactory {
     
     public static UMLComponentController getComponentController(){
 	return new UMLComponentController(getClassComponent());
+    }    
+    
+    public static UMLComponentController getComponentController(UMLComponent c){
+	return new UMLComponentController(c);
+    }
+    
+    public static ClassFigure getClassFigure(UMLComponent c){
+    	return new ClassFigure(getComponentController(c));
     }
 }

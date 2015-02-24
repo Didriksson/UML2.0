@@ -2,6 +2,8 @@ package GUI_View;
 
 import javax.swing.JPanel;
 
+import runner.ComponentFactory;
+import runner.ViewFactory;
 import ConstantsAndEnums.Constants;
 import Figures.FigureViewingPanel;
 import net.miginfocom.swing.MigLayout;
@@ -33,7 +35,7 @@ public class LayoutPanel extends JPanel {
 		drawingPanel.setBorder(Constants.RAISED_BEVEL_BORDER);
 		
 		this.add(new TreePanel(), "grow");
-		this.add(new FigureViewingPanel(), "grow");
+		this.add(ViewFactory.getFigureViewingPanel(), "grow");
 
 		
 		

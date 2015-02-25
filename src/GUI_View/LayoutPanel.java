@@ -2,11 +2,9 @@ package GUI_View;
 
 import javax.swing.JPanel;
 
-import runner.ComponentFactory;
+import net.miginfocom.swing.MigLayout;
 import runner.ViewFactory;
 import ConstantsAndEnums.Constants;
-import Figures.FigureViewingPanel;
-import net.miginfocom.swing.MigLayout;
 
 public class LayoutPanel extends JPanel {
 	private static final long serialVersionUID = 1L;

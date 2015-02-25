@@ -121,7 +121,8 @@ public class ComponentMover extends MouseInputAdapter {
                     res.setBounds(bounds);
                     res.resize();
             }
-
+            
+            res.getGUIComponent().setPosition(res.getLocation());
             res.setCursor(Cursor.getPredefinedCursor(cursor));
         }
     }

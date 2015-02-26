@@ -1,5 +1,6 @@
 package Command;
 
+import ConstantsAndEnums.Constants;
 import runner.Diagram;
 
 public class NewAssociationComponentCommand implements ICommand{
@@ -12,7 +13,7 @@ public class NewAssociationComponentCommand implements ICommand{
 	
 	@Override
 	public void execute() {
-		d.newRelation("Association");
+		d.newRelation(Constants.ASSOCIATION_STRING);
 	}
 
 	@Override

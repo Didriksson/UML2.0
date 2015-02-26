@@ -22,8 +22,18 @@ public class Constants {
 	public static final ImageIcon ASSOCIATION_ICON  = new ImageIcon("src/images/association.png");
 	public static final ImageIcon DIRECT_ASSOCIATION_ICON  = new ImageIcon("src/images/directassociation.png");
 	public static final ImageIcon REALIZATION_ICON  = new ImageIcon("src/images/realisation.png");
-	
+
 	public static final Image FIGURE_VIEWER_BACKGROUND  = new ImageIcon("src/images/figureviewer.png").getImage();
+
+	public static final String CLASSNAME_STRING  = "CLASSNAME"; 
+	public static final String COMPOSITION_STRING  = "COMPOSITION";
+	public static final String AGGREGATION_STRING = "AGGREGATION";
+	public static final String DEPENDENCY_STRING  = "DEPENDENCY";
+	public static final String INHERITANCE_STRING  = "INHERITANCE";
+	public static final String ASSOCIATION_STRING  = "ASSOCIATION";
+	public static final String DIRECT_ASSOCIATION_STRING  = "DIRECT_ASSOCIATION";
+	public static final String REALISATION_STRING  = "REALISATION"; 
+	
 	
 	
 	public static final Border RAISED_BEVEL_BORDER = BorderFactory.createRaisedBevelBorder();

@@ -18,7 +18,6 @@ public class RemoveClassComponentCommand implements ICommand{
 
     @Override
     public void undo() {
-	// TODO Auto-generated method stub
 	
     }
 

@@ -12,22 +12,22 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import runner.UMLComponentController;
+import Controller.UMLComponentController;
 import UML.Components.UMLClassVariable;
 import UML.Components.UMLMethod;
 
 public class ClassFigure extends GUIComponent {
 
-	private JList listMethods, listVariables;
+	private static final long serialVersionUID = -3733269893885327522L;
+	private JList<UMLMethod> listMethods;
+	private JList<UMLClassVariable> listVariables;
 	private JScrollPane vaiableScroll, methodScroll;
 	private JTextField classNameField;
-	private JPanel umlPanel, classPanel;
 	private GridBagConstraints gbc;
 	private JButton addMethodButton;
 
@@ -47,7 +47,7 @@ public class ClassFigure extends GUIComponent {
 
 		listMethods.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				JList list = (JList) e.getSource();
+				JList<?> list = (JList<?>) e.getSource();
 
 				if (e.getClickCount() == 2) {
 					int index = list.locationToIndex(e.getPoint());

@@ -1,60 +1,45 @@
 package runner;
 
-import java.awt.Point;
 import java.util.List;
 
-import Figures.UMLComponent_GUI;
 import UML.Components.UMLClassVariable;
 import UML.Components.UMLComponent;
 import UML.Components.UMLMethod;
 
 public class UMLComponentController {
 
-    UMLComponent_GUI umlC;
-    UMLDrawAreaController drawController;
+    UMLComponent umlC;
 
-    public UMLComponentController(UMLComponent_GUI c, UMLDrawAreaController cont) {
+    public UMLComponentController(UMLComponent c) {
 	this.umlC = c; 
-	this.drawController = cont;
     }
 
     public String getClassName() {
-	return umlC.getComponent().getName();
+	return umlC.getName();
     }
 
     public List<UMLClassVariable> getVariables() {
-	return umlC.getComponent().getVariables();
+	return umlC.getVariables();
     }
 
     public List<UMLMethod> getMethods() {
-	return umlC.getComponent().getMethods();
+	return umlC.getMethods();
     }
 
     public String getUMLtoString() {
-	return umlC.getComponent().toString();
+	return umlC.toString();
     }
 
     public void setName(String name) {
-	umlC.getComponent().setName(name);
+	System.out.println(name);
+	umlC.setName(name);
     }
 
     public void newMethod() {
 	try {
-	    umlC.getComponent().addMethod(new UMLMethod("public", "void", "MethodName"));
+	    umlC.addMethod(new UMLMethod("public", "void", "MethodName"));
 	} catch (Exception e) {
 	    e.printStackTrace();
 	}
-    }
-
-    public void removeComponent() {
-	drawController.removeComponent(umlC);
-    }
-
-    public void setPosition(Point location) {
-	umlC.setPoint(location);
-    }
-    
-    public Point getPosition() {
-	return umlC.getPoint();
     }
 }

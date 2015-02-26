@@ -18,12 +18,13 @@ public class Resizable extends JComponent{
 	
 	ComponentMover mouseListener;
 	GUIComponent content;
-    public Resizable(GUIComponent comp) {
-        this(comp, new ResizableBorder(8), comp.getPosition()); 
+	Point position;
+    public Resizable(GUIComponent comp, Point p) {
+        this(comp, new ResizableBorder(8), p);
     }
 
     public Resizable(GUIComponent comp, ResizableBorder border, Point p) {
-        
+        this.position = p;
     	mouseListener = new ComponentMover(this);
     	this.content = comp;
         setLayout(new BorderLayout());
@@ -35,6 +36,10 @@ public class Resizable extends JComponent{
     	setBounds(p.x, p.y, 200, 200);
     }
     
+    public void updatePosition(int x, int y){
+    	this.position.x = x;
+    	this.position.y = y;
+    }
     
     public GUIComponent getGUIComponent(){
     	return content;

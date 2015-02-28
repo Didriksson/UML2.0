@@ -1,6 +1,7 @@
 package GUI_View;
 
 import javax.swing.JPanel;
+import javax.swing.JSplitPane;
 
 import net.miginfocom.swing.MigLayout;
 import runner.ViewFactory;
@@ -9,10 +10,12 @@ import ConstantsAndEnums.Constants;
 public class LayoutPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
-	private JPanel drawingPanel, pathPanel;
-
+	private JSplitPane splitPane;
+	private TreePanel treePanel;
+	private JPanel figurePanel;
+	
 	public LayoutPanel() {
-		this.setLayout(new MigLayout("", "[grow, 30%][grow, 70%]", "[grow]"));
+		this.setLayout(new MigLayout("", "[grow, fill]", "[grow]"));
 		
 		createComponents();
 		
@@ -21,19 +24,18 @@ public class LayoutPanel extends JPanel {
 	
 	
 	private void createComponents() {
+		treePanel = new TreePanel();
+		figurePanel = ViewFactory.getFigureViewingPanel();
 		
-		drawingPanel = new JPanel(new MigLayout());
-		pathPanel = new JPanel(new MigLayout());
+		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treePanel, figurePanel);
 		
 		setComponents();
 	}
 
 	private void setComponents() {
-		pathPanel.setBorder(Constants.RAISED_BEVEL_BORDER);		
-		drawingPanel.setBorder(Constants.RAISED_BEVEL_BORDER);
-		
-		this.add(new TreePanel(), "grow");
-		this.add(ViewFactory.getFigureViewingPanel(), "grow");
+	
+		this.add(splitPane, "grow");
+
 
 		
 		

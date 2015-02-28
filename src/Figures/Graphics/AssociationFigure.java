@@ -18,7 +18,6 @@ public class AssociationFigure extends GeomatricPosition {
 	private Line2D.Double line;
 	private Rectangle2D.Double[] rects;
 	protected boolean selected;
-	private final double outerFillingArea = 6;
 
 	public AssociationFigure(Point startPoint, Point endPoint) {
 		super(startPoint.x, startPoint.y);

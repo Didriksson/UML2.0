@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JSplitPane;
 import javax.swing.JToolBar;
 
 import ConstantsAndEnums.Constants;
@@ -20,75 +21,73 @@ public class ToolbarUML extends JToolBar {
 		super("Toolbar", JToolBar.VERTICAL);
 		this.setBorder(Constants.RAISED_BEVEL_BORDER);
 		this.setFloatable(false);
-
 		this.figureViewingPanel = figureViewingPanel;
-
 		addButtonsToToolbar(this);
 	}
 
 	public void addButtonsToToolbar(JToolBar jtbToolBar) {
 		JButton jbnToolbarButtons = null;
 
-		
-		
-		
-		jbnToolbarButtons = buttonSettings(Constants.OPEN_FILE_ICON, "Open");
-		jbnToolbarButtons
-				.addActionListener(new MyListerner(Enums.OPENFILE_ENUM));
+
+		jbnToolbarButtons = buttonSettings(Constants.MINIMIZE_ICON, Constants.MINIMIZE_STRING);
+		jbnToolbarButtons.addActionListener(arg0 -> {
+			});
 		jtbToolBar.add(jbnToolbarButtons);
 
+		
+		jbnToolbarButtons = buttonSettings(Constants.EXPAND_ICON, Constants.EXPAND_STRING);
+		jbnToolbarButtons.addActionListener(arg0 -> {
+			});
+		jtbToolBar.add(jbnToolbarButtons);
 	
-		jbnToolbarButtons = buttonSettings(Constants.SAVE_FILE_ICON, "Save");
-		jbnToolbarButtons
-				.addActionListener(new MyListerner(Enums.SAVEFILE_ENUM));
-		jtbToolBar.add(jbnToolbarButtons);
-
-		jbnToolbarButtons = buttonSettings(Constants.CLASS_ICON, "Class");
+		
+		jbnToolbarButtons = buttonSettings(Constants.CLASS_ICON,
+				Constants.CLASSNAME_STRING);
 		jbnToolbarButtons.addActionListener(new MyListerner(Enums.CLASS_ENUM));
 		jtbToolBar.add(jbnToolbarButtons);
 
 		jbnToolbarButtons = buttonSettings(Constants.ASSOCIATION_ICON,
-				"Association");
+				Constants.ASSOCIATION_STRING);
 		jbnToolbarButtons.addActionListener(new MyListerner(
 				Enums.ASSOCIATION_ENUM));
 		jtbToolBar.add(jbnToolbarButtons);
 
 		jbnToolbarButtons = buttonSettings(Constants.DIRECT_ASSOCIATION_ICON,
-				"Direct Association");
+				Constants.DIRECT_ASSOCIATION_STRING);
 		jbnToolbarButtons.addActionListener(new MyListerner(
 				Enums.DIRECT_ASSOCIATION_ENUM));
 		jtbToolBar.add(jbnToolbarButtons);
 
 		jbnToolbarButtons = buttonSettings(Constants.INHERITANCE_ICON,
-				"Inheritance");
+				Constants.INHERITANCE_STRING);
 		jbnToolbarButtons.addActionListener(new MyListerner(
 				Enums.INHERITANCE_ENUM));
 		jtbToolBar.add(jbnToolbarButtons);
 
 		jbnToolbarButtons = buttonSettings(Constants.DEPENDENCY_ICON,
-				"Dependency");
+				Constants.DEPENDENCY_STRING);
 		jbnToolbarButtons.addActionListener(new MyListerner(
 				Enums.DEPENDENCY_ENUM));
 		jtbToolBar.add(jbnToolbarButtons);
 
 		jbnToolbarButtons = buttonSettings(Constants.REALIZATION_ICON,
-				"Realisation");
+				Constants.REALISATION_STRING);
 		jbnToolbarButtons.addActionListener(new MyListerner(
 				Enums.REALIZATION_ENUM));
 		jtbToolBar.add(jbnToolbarButtons);
 
 		jbnToolbarButtons = buttonSettings(Constants.AGGREGATION_ICON,
-				"Aggregation");
+				Constants.AGGREGATION_STRING);
 		jbnToolbarButtons.addActionListener(new MyListerner(
 				Enums.AGGREGATION_ENUM));
 		jtbToolBar.add(jbnToolbarButtons);
 
 		jbnToolbarButtons = buttonSettings(Constants.COMPOSITION_ICON,
-				"Composition");
+				Constants.COMPOSITION_STRING);
 		jbnToolbarButtons.addActionListener(new MyListerner(
 				Enums.COMPOSITION_ENUM));
 		jtbToolBar.add(jbnToolbarButtons);
-		
+
 	}
 
 	private JButton buttonSettings(ImageIcon icon, String tipText) {

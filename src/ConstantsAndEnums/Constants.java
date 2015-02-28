@@ -24,8 +24,14 @@ public class Constants {
 	public static final ImageIcon REALIZATION_ICON  = new ImageIcon("src/images/realisation.png");
 
 	public static final Image FIGURE_VIEWER_BACKGROUND  = new ImageIcon("src/images/figureviewer.png").getImage();
+	
+	public static final ImageIcon MINIMIZE_ICON  = new ImageIcon("src/images/minimizeIcon.png");
+	public static final String MINIMIZE_STRING  = "Minimize"; 
+	public static final ImageIcon EXPAND_ICON  = new ImageIcon("src/images/expandIcon.png");
+	public static final String EXPAND_STRING  = "Expand"; 
 
-	public static final String CLASSNAME_STRING  = "CLASSNAME"; 
+	
+	public static final String CLASSNAME_STRING  = "CLASS"; 
 	public static final String COMPOSITION_STRING  = "COMPOSITION";
 	public static final String AGGREGATION_STRING = "AGGREGATION";
 	public static final String DEPENDENCY_STRING  = "DEPENDENCY";
@@ -33,6 +39,8 @@ public class Constants {
 	public static final String ASSOCIATION_STRING  = "ASSOCIATION";
 	public static final String DIRECT_ASSOCIATION_STRING  = "DIRECT_ASSOCIATION";
 	public static final String REALISATION_STRING  = "REALISATION"; 
+	
+	
 	
 	
 	

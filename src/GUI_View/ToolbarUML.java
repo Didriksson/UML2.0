@@ -29,11 +29,15 @@ public class ToolbarUML extends JToolBar {
 	public void addButtonsToToolbar(JToolBar jtbToolBar) {
 		JButton jbnToolbarButtons = null;
 
+		
+		
+		
 		jbnToolbarButtons = buttonSettings(Constants.OPEN_FILE_ICON, "Open");
 		jbnToolbarButtons
 				.addActionListener(new MyListerner(Enums.OPENFILE_ENUM));
 		jtbToolBar.add(jbnToolbarButtons);
 
+	
 		jbnToolbarButtons = buttonSettings(Constants.SAVE_FILE_ICON, "Save");
 		jbnToolbarButtons
 				.addActionListener(new MyListerner(Enums.SAVEFILE_ENUM));
@@ -84,6 +88,7 @@ public class ToolbarUML extends JToolBar {
 		jbnToolbarButtons.addActionListener(new MyListerner(
 				Enums.COMPOSITION_ENUM));
 		jtbToolBar.add(jbnToolbarButtons);
+		
 	}
 
 	private JButton buttonSettings(ImageIcon icon, String tipText) {

@@ -2,8 +2,10 @@ package Figures.Graphics;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Observable;
+import java.util.Observer;
 
-public abstract class BaseFigure implements Drawable {
+public abstract class BaseFigure implements Drawable{
 	private Color color;
 
 	public BaseFigure(Color color) {
@@ -32,4 +34,5 @@ public abstract class BaseFigure implements Drawable {
 	public abstract void moveTo(int x, int y);
 
 	public abstract boolean encloses(int x, int y);
+
 }

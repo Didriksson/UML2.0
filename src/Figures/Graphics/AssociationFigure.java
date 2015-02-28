@@ -116,8 +116,8 @@ public class AssociationFigure extends GeomatricPosition {
 
 	@Override
 	public boolean encloses(int x, int y) {
-		double inLIne = Line2D.ptSegDist(line.x1, line.y1, line.x2, line.y2, x, y);
-		if (inLIne == 0)
+		double inLIne = Math.abs(Line2D.Double.ptLineDist(line.x1, line.y1, line.x2, line.y2, x, y));
+		if (inLIne <= 3.0)
 			return true;
 		else
 			return false;

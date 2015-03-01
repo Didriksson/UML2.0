@@ -27,8 +27,8 @@ public class Constants {
 	
 	public static final ImageIcon MINIMIZE_ICON  = new ImageIcon("src/images/minimizeIcon.png");
 	public static final String MINIMIZE_STRING  = "Minimize"; 
-	public static final ImageIcon EXPAND_ICON  = new ImageIcon("src/images/expandIcon.png");
-	public static final String EXPAND_STRING  = "Expand"; 
+	public static final ImageIcon HIDETREE_ICON  = new ImageIcon("src/images/hideIcon.png");
+	public static final String HIDETREE_STRING  = "Hide Tree"; 
 
 	
 	public static final String CLASSNAME_STRING  = "CLASS"; 

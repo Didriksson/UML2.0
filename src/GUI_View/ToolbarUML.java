@@ -28,18 +28,6 @@ public class ToolbarUML extends JToolBar {
 	public void addButtonsToToolbar(JToolBar jtbToolBar) {
 		JButton jbnToolbarButtons = null;
 
-
-		jbnToolbarButtons = buttonSettings(Constants.MINIMIZE_ICON, Constants.MINIMIZE_STRING);
-		jbnToolbarButtons.addActionListener(arg0 -> {
-			});
-		jtbToolBar.add(jbnToolbarButtons);
-
-		
-		jbnToolbarButtons = buttonSettings(Constants.EXPAND_ICON, Constants.EXPAND_STRING);
-		jbnToolbarButtons.addActionListener(arg0 -> {
-			});
-		jtbToolBar.add(jbnToolbarButtons);
-	
 		
 		jbnToolbarButtons = buttonSettings(Constants.CLASS_ICON,
 				Constants.CLASSNAME_STRING);

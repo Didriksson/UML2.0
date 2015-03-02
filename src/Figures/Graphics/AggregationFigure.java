@@ -7,35 +7,30 @@ import java.awt.geom.Line2D;
 
 public class AggregationFigure extends AssociationFigure {
 
-	private ArrowHeadFigure arrowHead;
-	private Line2D.Double line;
-	
-	public AggregationFigure(Point startPoint, Point endPoint) {
-		super(startPoint, endPoint);
+    private ArrowHeadFigure arrowHead;
 
-		
-		line = super.getLine();
-		arrowHead = new ArrowHeadFigure("Arrow.POLYGON");
-	}
+    public AggregationFigure(Point startPoint, Point endPoint) {
+	super(startPoint, endPoint);
+	arrowHead = new ArrowHeadFigure("Arrow.POLYGON");
+    }
 
-	@Override
-	protected void drawSpecific(Graphics g) {	
-		
-		Graphics2D g2 = (Graphics2D) g;	
-		
-		int startX = (int) line.x1;
-		int startY = (int) line.y1;
-		int endX = (int) line.x2;
-		int endY = (int) line.y2;
+    @Override
+    protected void drawSpecific(Graphics g) {
 
-		super.drawSpecific(g2);
-		
-		arrowHead.drawChoosenHead(g2, startX, startY, endX, endY, true);
-	}
+	Graphics2D g2 = (Graphics2D) g;
 
-	@Override
-	public boolean encloses(int x, int y) {
-		return (x <= 10 && y <= 10);
-	}
+	int startX = (int) line.x1;
+	int startY = (int) line.y1;
+	int endX = (int) line.x2;
+	int endY = (int) line.y2;
 
+	super.drawSpecific(g2);
+
+	arrowHead.drawChoosenHead(g2, startX, startY, endX, endY, true);
+    }
+
+    @Override
+    public boolean encloses(int x, int y) {
+	return super.encloses(x, y) || arrowHead.encloses(x, y);
+    }
 }

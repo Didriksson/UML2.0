@@ -9,13 +9,10 @@ import java.awt.geom.Line2D;
 public class DependencyFigure extends AssociationFigure {
 
 	private ArrowHeadFigure arrowHead;
-	private Line2D.Double line;
 	private float[] dash4 = {8f, 8f};
 	
 	public DependencyFigure(Point startPoint, Point endPoint) {
 		super(startPoint, endPoint);
-		
-		line = super.getLine();
 		arrowHead = new ArrowHeadFigure("none");
 	}
 
@@ -39,7 +36,7 @@ public class DependencyFigure extends AssociationFigure {
 
 	@Override
 	public boolean encloses(int x, int y) {
-		return (x <= 10 && y <= 10);
+	    return super.encloses(x, y) || arrowHead.encloses(x,y);
 	}
 
 }

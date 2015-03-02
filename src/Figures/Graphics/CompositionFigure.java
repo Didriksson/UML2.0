@@ -8,12 +8,9 @@ import java.awt.geom.Line2D;
 public class CompositionFigure extends AssociationFigure {
 
 	private ArrowHeadFigure arrowHead;
-	private Line2D.Double line;
-	
+
 	public CompositionFigure(Point startPoint, Point endPoint) {
 		super(startPoint, endPoint);
-		
-		line = super.getLine();
 		arrowHead = new ArrowHeadFigure("Arrow.POLYGON");
 	}
 
@@ -36,7 +33,7 @@ public class CompositionFigure extends AssociationFigure {
 
 	@Override
 	public boolean encloses(int x, int y) {
-		return (x <= 10 && y <= 10);
+	    return super.encloses(x, y) || arrowHead.encloses(x,y);
 	}
 
 }

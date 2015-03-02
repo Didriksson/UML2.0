@@ -15,7 +15,7 @@ public class AssociationFigure extends GeomatricPosition {
 
 	private double recSize = 10.0;
 
-	private Line2D.Double line;
+	protected Line2D.Double line;
 	private Rectangle2D.Double[] rects;
 	protected boolean selected;
 

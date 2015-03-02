@@ -92,4 +92,9 @@ public class ArrowHeadFigure {
 		arrow.lineTo((distance), 0);
 		return arrow;
 	}
+
+	public boolean encloses(int x, int y) {
+	    // TODO Auto-generated method stub
+	    return false;
+	}
 }

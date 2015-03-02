@@ -8,12 +8,9 @@ import java.awt.geom.Line2D;
 public class InheritanceFigure extends AssociationFigure {
 
 	private ArrowHeadFigure arrowHead;
-	private Line2D.Double line;
 	
 	public InheritanceFigure(Point startPoint, Point endPoint) {
 		super(startPoint, endPoint);
-		
-		line = super.getLine();
 		arrowHead = new ArrowHeadFigure("Arrow.TRIANGLE");
 	}
 
@@ -34,7 +31,7 @@ public class InheritanceFigure extends AssociationFigure {
 
 	@Override
 	public boolean encloses(int x, int y) {
-		return (x <= 10 && y <= 10);
+	    return super.encloses(x, y) || arrowHead.encloses(x,y);
 	}
 
 }

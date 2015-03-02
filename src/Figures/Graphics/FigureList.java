@@ -10,23 +10,23 @@ import java.util.Observer;
 import UML.Components.UMLRelation;
 
 public class FigureList extends Observable implements Observer, Iterable<AssociationFigure>{
-	private Map<UMLRelation, AssociationFigure> relationFigureMap;
+	private Map<AssociationFigure, UMLRelation> relationFigureMap;
 	
 	public FigureList() {
-		relationFigureMap = new HashMap<UMLRelation, AssociationFigure>();
+		relationFigureMap = new HashMap<AssociationFigure, UMLRelation>();
 	}
 	public void add(AssociationFigure figure, UMLRelation relation) {
-		relationFigureMap.put(relation, figure);
+		relationFigureMap.put(figure, relation);
 		this.setChanged();
 		this.notifyObservers();
 	}
 
-	public void remove(UMLRelation relation) {
-		relationFigureMap.remove(relation);
+	public UMLRelation remove(AssociationFigure a) {
+		UMLRelation r  = relationFigureMap.remove(a);
 		this.setChanged();
 		this.notifyObservers();
+		return r;
 	}
-
 
 	@Override
 	public void update(Observable arg0, Object arg1) // eg if a part is changed
@@ -37,9 +37,9 @@ public class FigureList extends Observable implements Observer, Iterable<Associa
 
 	@Override
 	public Iterator<AssociationFigure> iterator() {
-		return relationFigureMap.values().iterator();
+		return relationFigureMap.keySet().iterator();
 	}
 	public boolean contains(UMLRelation r) {
-		return relationFigureMap.containsKey(r);
+		return relationFigureMap.containsValue(r);
 	}
 }

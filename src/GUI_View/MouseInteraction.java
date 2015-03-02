@@ -1,25 +1,27 @@
-package Figures.Graphics;
+package GUI_View;
 
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.util.Observable;
+
+import Figures.Graphics.AssociationFigure;
+import Figures.Graphics.FigureList;
+import Figures.Graphics.RelationsDrawer;
+
 
 public class MouseInteraction extends MouseAdapter {
-
+	
 	private int selectedIndex = -1;
 	private Point2D.Double offset;
 	private boolean dragging = false;
 
 	private AssociationFigure selectedFigure;
 	private FigureList figureList;
-	private FigureViewer viewpanel;
+	private RelationsDrawer viewpanel;
 
-	public MouseInteraction(FigureList figureList, FigureViewer viewpanel) {
+	public MouseInteraction(FigureList figureList, RelationsDrawer viewpanel) {
 		this.figureList = figureList;
 		this.viewpanel = viewpanel;
 		this.offset = new Point2D.Double();
@@ -27,28 +29,31 @@ public class MouseInteraction extends MouseAdapter {
 
 	@Override
 	public void mouseDragged(MouseEvent m) {
-		if (selectedFigure != null) {
-			selectedFigure.moveTo(m.getX(), m.getY());
-		}
-
-		if (dragging) {
+		if (dragging && selectedFigure != null) {
 			double x = m.getX() - offset.x;
 			double y = m.getY() - offset.y;
 			selectedFigure.setRect(selectedIndex, x, y);
 		}
+		
+		System.out.println(viewpanel.checkIfOverlapping(m.getPoint()));
 		updateViewPanel();
 	}
 
+	
+	public AssociationFigure getSelectedFigure(){
+		return selectedFigure;
+	}
+	
 	private void updateViewPanel() {
+		viewpanel.requestFocus();
 		viewpanel.repaint();
 		viewpanel.revalidate();
 	}
-
+		
 	@Override
 	public void mousePressed(MouseEvent m) {
 		Point p = m.getPoint();
 		selectedFigure = null;
-		System.out.println("Yo!");
 
 		for (AssociationFigure figure : figureList) {
 			figure.setSelected(false);
@@ -83,10 +88,4 @@ public class MouseInteraction extends MouseAdapter {
 		}
 	}
 
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		selectedIndex = -1;
-		dragging = false;
-		updateViewPanel();
-	}
 }

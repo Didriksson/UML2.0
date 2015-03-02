@@ -68,4 +68,10 @@ public class Diagram extends Observable {
 	public List<UMLRelation> getRelations() {
 		return relations;
 	}
+
+	public void removeRelation(UMLRelation relation) {
+		relations.remove(relation);
+		setChanged();
+		notifyObservers(this);
+	}
 }

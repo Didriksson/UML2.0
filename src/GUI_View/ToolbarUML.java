@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JSplitPane;
 import javax.swing.JToolBar;
 
 import ConstantsAndEnums.Constants;
@@ -22,6 +21,7 @@ public class ToolbarUML extends JToolBar {
 		this.setFloatable(false);
 		this.figureViewingPanel = figureViewingPanel;
 		addButtonsToToolbar(this);
+		this.setFocusable(false);
 	}
 
 	public void addButtonsToToolbar(JToolBar jtbToolBar) {

@@ -1,12 +1,11 @@
 package GUI_View;
 
 import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.Component;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -16,20 +15,21 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 
 import net.miginfocom.swing.MigLayout;
 import runner.Diagram;
-import Command.ICommand;
 import ConstantsAndEnums.Constants;
 import ConstantsAndEnums.Enums;
 import Controller.UMLComponentController;
 import Controller.UMLDrawAreaController;
 import Figures.ClassFigure;
 import Figures.Resizable;
-import Figures.Graphics.AssociationFigure;
-import Figures.Graphics.BaseFigure;
-import Figures.Graphics.FigureViewer;
+import Figures.Graphics.RelationsDrawer;
+import Figures.Graphics.UMLRelationsController;
 import UML.Components.UMLComponent;
 import UML.Components.UMLRelation;
 
@@ -37,7 +37,7 @@ public class FigureViewingPanel extends JPanel implements Observer {
 	private static final long serialVersionUID = 1L;
 
 	private UMLDrawAreaController controller;
-	private FigureViewer umlPanel;
+	private RelationsDrawer umlPanel;
 	private Map<UMLComponent, Point> components;
 	private Map<UMLRelation, List<Point>> relations;
 
@@ -53,22 +53,28 @@ public class FigureViewingPanel extends JPanel implements Observer {
 	}
 
 	private void createComponents() {
-		umlPanel = new FigureViewer(this);
-
-		addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent me) {
-				requestFocus();
-				repaint();
-			}
-		});
-		this.addKeyListener(new KeyHandler());
+		umlPanel = new RelationsDrawer(this, new UMLRelationsController(
+				controller));
 		setComponents();
+		setUpKeyBinding();
+	}
+
+	private void setUpKeyBinding() {
+		Action doNothing = new AbstractAction() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Deletar!" + "FigureViewingPanel");
+			}
+		};
+		this.getInputMap(WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(
+				KeyStroke.getKeyStroke("DELETE"), "doNothing");
+		this.getInputMap(WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(
+				KeyStroke.getKeyStroke("F2"), "doNothing");
+		this.getActionMap().put("doNothing", doNothing);
+
 	}
 
 	private void setComponents() {
-		umlPanel.setBackground(Color.WHITE);
-
+		this.umlPanel.setBackground(Color.WHITE);
 		this.add(umlPanel, "dock center");
 		this.add(new ToolbarUML(this), "dock west");
 	}
@@ -91,11 +97,15 @@ public class FigureViewingPanel extends JPanel implements Observer {
 
 		umlPanel.repaint();
 		umlPanel.revalidate();
+		this.repaint();
+		this.revalidate();
+		
 	}
 
 	private void updateUMLRelations(Diagram d) {
-		List<UMLRelation> diagramComponents = d.getRelations();
-		diagramComponents.stream().filter(c -> !relations.containsKey(c))
+
+		List<UMLRelation> diagramRelations = d.getRelations();
+		diagramRelations.stream().filter(c -> !relations.containsKey(c))
 				.forEach(c -> {
 					List<Point> points = new ArrayList<Point>();
 					UMLComponent root = c.getRoot();
@@ -110,9 +120,17 @@ public class FigureViewingPanel extends JPanel implements Observer {
 						points.add(components.get(dest));
 					else
 						points.add(new Point(100, 100));
-					
-					relations.put(c , points);
+
+					relations.put(c, points);
 				});
+
+	
+		
+		
+		Set<UMLRelation> tmpRelations = new HashSet<UMLRelation>(relations.keySet());
+		tmpRelations.removeAll(diagramRelations);
+		relations.keySet().removeAll(tmpRelations);
+		
 	}
 
 	private void updateUMLComponents(Diagram d) {
@@ -174,6 +192,20 @@ public class FigureViewingPanel extends JPanel implements Observer {
 
 	public void toolbarCommand(Enums enumeration) {
 		controller.toolbarCommands(enumeration);
+	}
+
+	public boolean checkIfRelationOverlaps(Point p) {
+		boolean cont = false;
+		for(Component comp : umlPanel.getComponents())
+		{
+			cont = comp.contains(p);
+			if(cont)
+			{
+				System.out.println(comp);
+				System.out.println(p);
+			}
+			}
+		return cont;
 	}
 
 }

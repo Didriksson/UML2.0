@@ -22,10 +22,9 @@ public class AssociationFigure extends GeomatricPosition {
 	public AssociationFigure(Point startPoint, Point endPoint) {
 		super(startPoint.x, startPoint.y);
 		this.selected = false;
-		System.out.println("Hej");
 
 		line = new Line2D.Double(startPoint.x, startPoint.y, endPoint.x,
-				startPoint.y);
+				endPoint.y);
 		rects = new Rectangle2D.Double[3];
 
 		for (int j = 0; j < rects.length; j++)
@@ -34,8 +33,9 @@ public class AssociationFigure extends GeomatricPosition {
 		rects[0] = new Rectangle2D.Double(startPoint.x - recSize / 2,
 				startPoint.y - recSize / 2, recSize, recSize);
 		rects[1] = new Rectangle2D.Double(endPoint.x - recSize / 2,
-				startPoint.y - recSize / 2, recSize, recSize);
+				endPoint.y - recSize / 2, recSize, recSize);
 		rects[2] = new Rectangle2D.Double();
+		setCenter();	
 	}
 
 	@Override
@@ -58,7 +58,6 @@ public class AssociationFigure extends GeomatricPosition {
 	}
 
 	private void drawRects(Graphics2D g2) {
-		System.out.println("Selected: " + selected);
 		if (selected) {
 			g2.setPaint(Color.red);
 			for (int j = 0; j < rects.length; j++)
@@ -68,6 +67,10 @@ public class AssociationFigure extends GeomatricPosition {
 
 	public void setSelected(boolean show) {
 		this.selected = show;
+	}
+	
+	public boolean getSelected() {
+		return this.selected;
 	}
 
 	public void setRect(int index, double x, double y) {
@@ -79,6 +82,7 @@ public class AssociationFigure extends GeomatricPosition {
 					recSize);
 			rects[1].setFrame(rects[1].x + dx, rects[1].y + dy, recSize,
 					recSize);
+			
 			break;
 		default:
 			rects[index].setFrame(x, y, recSize, recSize);

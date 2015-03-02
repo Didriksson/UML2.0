@@ -1,93 +1,86 @@
 package Figures;
+
 import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Cursor;
 import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.util.HashSet;
-import java.util.Set;
+import java.awt.event.ActionEvent;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JComponent;
-import javax.swing.event.MouseInputAdapter;
+import javax.swing.KeyStroke;
 
+public class Resizable extends JComponent {
 
-public class Resizable extends JComponent{
-	
 	ComponentMover mouseListener;
 	GUIComponent content;
 	Point position;
-    public Resizable(GUIComponent comp, Point p) {
-        this(comp, new ResizableBorder(8), p);
-    }
 
-    public Resizable(GUIComponent comp, ResizableBorder border, Point p) {
-        this.position = p;
-    	mouseListener = new ComponentMover(this);
-    	this.content = comp;
-        setLayout(new BorderLayout());
-        add(content);
-        addMouseListener(mouseListener);
-        addMouseMotionListener(mouseListener);
-        addKeyListener(new KeyHandler());
-        setBorder(border);
-    	setBounds(p.x, p.y, 200, 200);
-    }
-    
-    public void updatePosition(int x, int y){
-    	this.position.x = x;
-    	this.position.y = y;
-    }
-    
-    public GUIComponent getGUIComponent(){
-    	return content;
-    }
+	public Resizable(GUIComponent comp, Point p) {
+		this(comp, new ResizableBorder(8), p);
+	}
 
-    public void resize() {
-        if (getParent() != null) {
-            ((JComponent) getParent()).revalidate();
-        }
-    }
-    
-    public boolean equals(Object o){
-    	if(o instanceof Resizable)
-    	{
-    		Resizable r = (Resizable) o;
-    	}
-    	return false;
-    }
-    
-    public class KeyHandler implements KeyListener {
-   	private Set<Integer> pressedKeys;
+	public Resizable(GUIComponent comp, ResizableBorder border, Point p) {
+		this.position = p;
+		mouseListener = new ComponentMover(this);
+		this.content = comp;
+		setLayout(new BorderLayout());
+		add(content);
+		addMouseListener(mouseListener);
+		addMouseMotionListener(mouseListener);
+		setupKeyBindings();
+		setBorder(border);
+		setBounds(p.x, p.y, 200, 200);
+	}
 
-   	public KeyHandler() {
-   	    pressedKeys = new HashSet<Integer>();
-   	}
+	private void setupKeyBindings() {
+		Action deleteMethod = new AbstractAction() {
+			public void actionPerformed(ActionEvent e) {
+				content.controller.removeComponent();
+			}
+		};
 
-   	@Override
-   	public void keyPressed(KeyEvent e) {
-   	    pressedKeys.add(e.getKeyCode());
-   	  if (pressedKeys.size() == 1) {
-   		if (pressedKeys.contains(KeyEvent.VK_DELETE)) {
-   		    System.out.println("Delete!");
-   		    content.controller.removeComponent();
-   		}
-   	    }
-   	}
+		this.getInputMap(WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(
+				KeyStroke.getKeyStroke("DELETE"), "doNothing");
+		this.getActionMap().put("doNothing", deleteMethod);
+	}
 
-   	@Override
-   	public void keyReleased(KeyEvent e) {
-   	    pressedKeys.remove(e.getKeyCode());
-   	}
+	public void updatePosition(int x, int y) {
+		this.position.x = x;
+		this.position.y = y;
+		this.setLocation(position);
+		System.out.println(position);
 
-   	@Override
-   	public void keyTyped(KeyEvent e) {
+	}
 
-   	}
+	public GUIComponent getGUIComponent() {
+		return content;
+	}
 
-       }
-    
+	public void resize() {
+		if (getParent() != null) {
+			((JComponent) getParent()).revalidate();
+		}
+	}
+
+	public boolean equals(Object o) {
+		if (o instanceof Resizable) {
+			Resizable r = (Resizable) o;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean contains(Point p) {
+		return containsWidth(p) && containsHeight(p);
+
+	}
+
+	private boolean containsWidth(Point p) {
+		return p.x >= position.x && p.x <= (position.x + this.getWidth());
+	}
+
+	private boolean containsHeight(Point p) {
+		return p.y >= position.y && p.y <= (position.y + this.getHeight());
+	}
+
 }
-

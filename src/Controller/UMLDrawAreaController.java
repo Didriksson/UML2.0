@@ -7,8 +7,10 @@ import runner.Diagram;
 import Command.ICommand;
 import Command.NewClassComponentCommand;
 import Command.RemoveClassComponentCommand;
+import Command.RemoveRelationCommand;
 import ConstantsAndEnums.Enums;
 import UML.Components.UMLComponent;
+import UML.Components.UMLRelation;
 
 public class UMLDrawAreaController{
     private Diagram diagram;
@@ -35,8 +37,13 @@ public class UMLDrawAreaController{
 	new RemoveClassComponentCommand(diagram, c).execute();
     }
     
+    
     public void toolbarCommands(Enums command){
     	toolbarCommands.get(command).execute();
     }
+
+	public void removeRelation(UMLRelation r) {
+		new RemoveRelationCommand(diagram, r).execute();
+	}
 
 }

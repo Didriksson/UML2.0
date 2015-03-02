@@ -5,6 +5,7 @@ import java.util.List;
 import UML.Components.UMLClassVariable;
 import UML.Components.UMLComponent;
 import UML.Components.UMLMethod;
+import UML.Components.UMLRelation;
 
 public class UMLComponentController {
 
@@ -13,6 +14,7 @@ public class UMLComponentController {
 
 	public UMLComponentController(UMLComponent c, UMLDrawAreaController cont) {
 		this.umlC = c;
+		
 		this.drawController = cont;
 	}
 
@@ -47,4 +49,5 @@ public class UMLComponentController {
 	public void removeComponent() {
 		drawController.removeComponent(umlC);
 	}
+	
 }

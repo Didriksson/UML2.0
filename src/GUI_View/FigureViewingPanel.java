@@ -1,4 +1,4 @@
-package Figures;
+package GUI_View;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -25,10 +25,11 @@ import ConstantsAndEnums.Constants;
 import ConstantsAndEnums.Enums;
 import Controller.UMLComponentController;
 import Controller.UMLDrawAreaController;
+import Figures.ClassFigure;
+import Figures.Resizable;
 import Figures.Graphics.AssociationFigure;
 import Figures.Graphics.BaseFigure;
 import Figures.Graphics.FigureViewer;
-import GUI_View.ToolbarUML;
 import UML.Components.UMLComponent;
 import UML.Components.UMLRelation;
 

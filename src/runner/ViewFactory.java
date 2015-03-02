@@ -15,7 +15,7 @@ import Command.NewRealisationComponentCommand;
 import Command.RemoveClassComponentCommand;
 import ConstantsAndEnums.Enums;
 import Controller.UMLDrawAreaController;
-import Figures.FigureViewingPanel;
+import GUI_View.FigureViewingPanel;
 
 public class ViewFactory {
 	private static FigureViewingPanel currentPanel;

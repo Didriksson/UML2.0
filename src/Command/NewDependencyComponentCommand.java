@@ -13,7 +13,7 @@ public class NewDependencyComponentCommand implements ICommand {
 	
 	@Override
 	public void execute() {
-	    diagram.newClassComponent(Constants.DEPENDENCY_STRING);
+	    diagram.newRelation(Constants.DEPENDENCY_STRING);
 	}
 
 	@Override

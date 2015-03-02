@@ -10,7 +10,6 @@ import javax.swing.JToolBar;
 
 import ConstantsAndEnums.Constants;
 import ConstantsAndEnums.Enums;
-import Figures.FigureViewingPanel;
 
 public class ToolbarUML extends JToolBar {
 	private static final long serialVersionUID = 1L;

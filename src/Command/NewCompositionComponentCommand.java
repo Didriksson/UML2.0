@@ -13,7 +13,7 @@ public class NewCompositionComponentCommand implements ICommand {
 	
 	@Override
 	public void execute() {
-	    diagram.newClassComponent(Constants.COMPOSITION_STRING);
+	    diagram.newRelation(Constants.COMPOSITION_STRING);
 	}
 
 	@Override

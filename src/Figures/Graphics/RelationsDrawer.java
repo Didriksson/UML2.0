@@ -11,8 +11,11 @@ import javax.swing.Action;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
+import Controller.UMLRelationsController;
+import Figures.Resizable;
 import GUI_View.FigureViewingPanel;
 import GUI_View.MouseInteraction;
+import UML.Components.UMLComponent;
 import UML.Components.UMLRelation;
 
 public class RelationsDrawer extends JPanel {
@@ -33,9 +36,13 @@ public class RelationsDrawer extends JPanel {
 		addMouseMotionListener(mouseInteraction);
 		setUpKeyBinding();
 	}
-	
-	public boolean checkIfOverlapping(Point p){
+
+	public boolean checkIfOverlapping(Point p) {
 		return topPanel.checkIfRelationOverlaps(p);
+	}
+
+	public Resizable returnOverlapsedComponent(Point p) {
+		return topPanel.returnOverlapsedComponent(p);
 	}
 
 	private void setUpKeyBinding() {
@@ -65,18 +72,37 @@ public class RelationsDrawer extends JPanel {
 					e.printStackTrace();
 				}
 		}
-		for (AssociationFigure f : figureList)
+		for (AssociationFigure f : figureList) {
 			f.draw(g);
+		}
 
 	}
 
 	private void addNewAssociationFigure(UMLRelation r) throws Exception {
-		Point start = topPanel.getRelation().get(r).get(0);
-		Point endPoint = topPanel.getRelation().get(r).get(1);
+		Point start = topPanel.getRelation().get(r).start;
+		Point endPoint = topPanel.getRelation().get(r).end;
 		AssociationFigure figure = FigureFactory.getRelationsFigure(
 				r.getType(), start, endPoint);
 		figureList.add(figure, r);
 
+	}
+
+	public void setDestinationForRelation(UMLRelation rel, UMLComponent c) {
+		controller.setDestinationForRelation(rel, c);
+	}
+
+	public void updateCoordinats(UMLRelation r, Point startPoint, Point endPoint) {
+		AssociationFigure a = figureList.getAssociationFromRelation(r);
+		if (a != null) {
+			System.out.println(a);
+			a.setEndPoint(endPoint);
+			a.setStartPoint(startPoint);
+
+		}
+	}
+
+	public void setRootForRelation(UMLRelation rel, UMLComponent umlComponent) {
+		controller.setRootForRelation(rel, umlComponent);
 	}
 
 }

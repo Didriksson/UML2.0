@@ -18,28 +18,28 @@ public class AssociationFigure extends GeomatricPosition {
 	protected Line2D.Double line;
 	private Rectangle2D.Double[] rects;
 	protected boolean selected;
+	protected Point startPoint, endPoint;
 
 	public AssociationFigure(Point startPoint, Point endPoint) {
 		super(startPoint.x, startPoint.y);
 		this.selected = false;
-
-		line = new Line2D.Double(startPoint.x, startPoint.y, endPoint.x,
-				endPoint.y);
+		this.startPoint = startPoint;
+		this.endPoint = endPoint;
+		line = new Line2D.Double(startPoint, endPoint);
 		rects = new Rectangle2D.Double[3];
 
 		for (int j = 0; j < rects.length; j++)
 			rects[j] = new Rectangle2D.Double();
+		
+		updateRects();
 
-		rects[0] = new Rectangle2D.Double(startPoint.x - recSize / 2,
-				startPoint.y - recSize / 2, recSize, recSize);
-		rects[1] = new Rectangle2D.Double(endPoint.x - recSize / 2,
-				endPoint.y - recSize / 2, recSize, recSize);
-		rects[2] = new Rectangle2D.Double();
-		setCenter();	
 	}
 
 	@Override
 	protected void drawSpecific(Graphics g) {
+		updateRects();
+		setLine();
+		
 
 		Graphics2D g2 = (Graphics2D) g;
 		RenderingHints rh = new RenderingHints(RenderingHints.KEY_ANTIALIASING,
@@ -54,7 +54,17 @@ public class AssociationFigure extends GeomatricPosition {
 		g2.draw(line);
 
 		g2.setStroke(new BasicStroke());
+
 		drawRects(g2);
+	}
+
+	private void updateRects() {
+		rects[0] = new Rectangle2D.Double(startPoint.x - recSize / 2,
+				startPoint.y - recSize / 2, recSize, recSize);
+		rects[1] = new Rectangle2D.Double(endPoint.x - recSize / 2, endPoint.y
+				- recSize / 2, recSize, recSize);
+		rects[2] = new Rectangle2D.Double();
+		setCenter();		
 	}
 
 	private void drawRects(Graphics2D g2) {
@@ -68,26 +78,9 @@ public class AssociationFigure extends GeomatricPosition {
 	public void setSelected(boolean show) {
 		this.selected = show;
 	}
-	
+
 	public boolean getSelected() {
 		return this.selected;
-	}
-
-	public void setRect(int index, double x, double y) {
-		switch (index) {
-		case 2:
-			double dy = y - rects[2].y;
-			double dx = x - rects[2].x;
-			rects[0].setFrame(rects[0].x + dx, rects[0].y + dy, recSize,
-					recSize);
-			rects[1].setFrame(rects[1].x + dx, rects[1].y + dy, recSize,
-					recSize);
-			
-			break;
-		default:
-			rects[index].setFrame(x, y, recSize, recSize);
-		}
-		setLine();
 	}
 
 	private void setLine() {
@@ -119,7 +112,8 @@ public class AssociationFigure extends GeomatricPosition {
 
 	@Override
 	public boolean encloses(int x, int y) {
-		double inLIne = Math.abs(Line2D.Double.ptLineDist(line.x1, line.y1, line.x2, line.y2, x, y));
+		double inLIne = Math.abs(Line2D.Double.ptLineDist(line.x1, line.y1,
+				line.x2, line.y2, x, y));
 		if (inLIne <= 3.0)
 			return true;
 		else
@@ -130,4 +124,43 @@ public class AssociationFigure extends GeomatricPosition {
 		return rects[0].contains(x, y) || rects[1].contains(x, y)
 				|| rects[2].contains(x, y);
 	}
+	
+	public Point getStartPoint(){
+		return startPoint;
+	}
+	public Point getEndPoint(){
+		return endPoint;
+	}
+
+	public void setEndPoint(Point endPoint2) {
+		if(endPoint2 != null)
+			this.endPoint = endPoint2;
+	}
+
+	public void setStartPoint(Point startPoint2) {
+		if(startPoint2 != null)
+			this.startPoint = startPoint2;
+	}
+
+	public void updatePosition(int selectedRect, int x, int y) {
+		switch(selectedRect){
+		case 0:
+			startPoint.x = (int) x;
+			startPoint.y = (int) y;
+			break;
+		case 1:
+			endPoint.x = (int) x;
+			endPoint.y = (int) y;
+			break;
+		case 2:
+			double dy = y - rects[2].y;
+			double dx = x - rects[2].x;
+			startPoint.x += dx;
+			startPoint.y += dy;
+			endPoint.x += dx;
+			endPoint.y += dy;
+			break;
+		}
+	}
+	
 }

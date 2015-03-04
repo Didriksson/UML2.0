@@ -6,13 +6,14 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
+import UML.Components.UMLRelation;
+import Figures.Resizable;
 import Figures.Graphics.AssociationFigure;
 import Figures.Graphics.FigureList;
 import Figures.Graphics.RelationsDrawer;
 
-
 public class MouseInteraction extends MouseAdapter {
-	
+
 	private int selectedIndex = -1;
 	private Point2D.Double offset;
 	private boolean dragging = false;
@@ -32,24 +33,23 @@ public class MouseInteraction extends MouseAdapter {
 		if (dragging && selectedFigure != null) {
 			double x = m.getX() - offset.x;
 			double y = m.getY() - offset.y;
-			selectedFigure.setRect(selectedIndex, x, y);
+			selectedFigure.updatePosition(selectedIndex, (int) x, (int) y);
 		}
-		
-		System.out.println(viewpanel.checkIfOverlapping(m.getPoint()));
+
+		viewpanel.checkIfOverlapping(m.getPoint());
 		updateViewPanel();
 	}
 
-	
-	public AssociationFigure getSelectedFigure(){
+	public AssociationFigure getSelectedFigure() {
 		return selectedFigure;
 	}
-	
+
 	private void updateViewPanel() {
 		viewpanel.requestFocus();
 		viewpanel.repaint();
 		viewpanel.revalidate();
 	}
-		
+
 	@Override
 	public void mousePressed(MouseEvent m) {
 		Point p = m.getPoint();
@@ -65,6 +65,23 @@ public class MouseInteraction extends MouseAdapter {
 
 		updateViewPanel();
 
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent m) {
+		if (viewpanel.checkIfOverlapping(m.getPoint())) {
+			Resizable res = viewpanel.returnOverlapsedComponent(m.getPoint());
+			UMLRelation rel = figureList.getRelation(selectedFigure);
+
+			if (selectedIndex == 0) {
+				viewpanel.setRootForRelation(rel, res.getGUIComponent()
+						.getUMLComponent());
+				
+			} else if (selectedIndex == 1) {
+				viewpanel.setDestinationForRelation(rel, res.getGUIComponent()
+						.getUMLComponent());
+			}
+		}
 	}
 
 	private boolean figureSelected(MouseEvent m, AssociationFigure figure) {

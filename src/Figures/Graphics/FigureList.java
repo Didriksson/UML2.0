@@ -28,6 +28,10 @@ public class FigureList extends Observable implements Observer, Iterable<Associa
 		return r;
 	}
 
+	public UMLRelation getRelation(AssociationFigure a){
+		return relationFigureMap.get(a);
+	}
+	
 	@Override
 	public void update(Observable arg0, Object arg1) // eg if a part is changed
 	{
@@ -41,5 +45,13 @@ public class FigureList extends Observable implements Observer, Iterable<Associa
 	}
 	public boolean contains(UMLRelation r) {
 		return relationFigureMap.containsValue(r);
+	}
+	public AssociationFigure getAssociationFromRelation(UMLRelation r) {
+		for(AssociationFigure a : relationFigureMap.keySet())
+		{
+			if(relationFigureMap.get(a) == r)
+				return a;
+		}
+		return null;
 	}
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Optional;
 
+import ConstantsAndEnums.Constants;
 import UML.Components.UMLComponent;
 import UML.Components.UMLRelation;
 
@@ -15,7 +16,7 @@ public class Diagram extends Observable {
 	public Diagram() {
 		this.components = new ArrayList<UMLComponent>();
 		this.relations = new ArrayList<UMLRelation>();
-	}
+}
 
 	public void addComponent(UMLComponent c) {
 		this.components.add(c);
@@ -73,5 +74,19 @@ public class Diagram extends Observable {
 		relations.remove(relation);
 		setChanged();
 		notifyObservers(this);
+	}
+
+	public void setDestinationForRelation(UMLRelation rel, UMLComponent comp) {
+		if(rel != null)
+			rel.setDestination(comp);
+		setChanged();
+		notifyObservers(this);
+	}
+
+	public void setRootForRelation(UMLRelation rel, UMLComponent comp) {
+		if(rel != null)
+			rel.setRoot(comp);
+		setChanged();
+		notifyObservers(this);		
 	}
 }

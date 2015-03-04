@@ -27,5 +27,6 @@ public class UMLRelation {
 
 	public void setDestination(UMLComponent destination) {
 		this.destination = destination;
+		System.out.println(destination);
 	}
 }

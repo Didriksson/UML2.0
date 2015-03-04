@@ -9,6 +9,8 @@ import javax.swing.event.MouseInputAdapter;
 
 public class ComponentMover extends MouseInputAdapter {
     Resizable res;
+    private int cursor;
+    private Point startPos = null;
     
     public ComponentMover(Resizable res) {
 		this.res = res;
@@ -27,9 +29,6 @@ public class ComponentMover extends MouseInputAdapter {
     	res.setCursor(Cursor.getDefaultCursor());
     }
 
-    private int cursor;
-    private Point startPos = null;
-
     @Override
     public void mousePressed(MouseEvent me) {
         
@@ -37,7 +36,7 @@ public class ComponentMover extends MouseInputAdapter {
         cursor = border.getCursor(me);
         startPos = me.getPoint();
         res.requestFocus();
-        res.repaint();
+        res.viewUpdated();
     }
 
     @Override
@@ -124,6 +123,7 @@ public class ComponentMover extends MouseInputAdapter {
             
             res.updatePosition(res.getLocation().x, res.getLocation().y);
             res.setCursor(Cursor.getPredefinedCursor(cursor));
+
         }
     }
 

@@ -1,6 +1,6 @@
-package Figures.Graphics;
+package Controller;
 
-import Controller.UMLDrawAreaController;
+import UML.Components.UMLComponent;
 import UML.Components.UMLRelation;
 
 public class UMLRelationsController {
@@ -11,5 +11,13 @@ public class UMLRelationsController {
 	
 	public void removeRelation(UMLRelation r){
 		drawController.removeRelation(r);
+	}
+
+	public void setDestinationForRelation(UMLRelation rel, UMLComponent c) {
+		drawController.setDestinationForRelation(rel, c);
+	}
+	
+	public void setRootForRelation(UMLRelation rel, UMLComponent c) {
+		drawController.setRootForRelation(rel, c);
 	}
 }

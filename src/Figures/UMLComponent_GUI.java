@@ -7,6 +7,7 @@ import UML.Components.UMLComponent;
 public class UMLComponent_GUI {
     private Point point;
     private UMLComponent component;
+    
 
     
     public UMLComponent_GUI(UMLComponent c, Point p) {

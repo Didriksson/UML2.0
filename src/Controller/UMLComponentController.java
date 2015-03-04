@@ -49,5 +49,9 @@ public class UMLComponentController {
 	public void removeComponent() {
 		drawController.removeComponent(umlC);
 	}
+
+	public UMLComponent getComponent() {
+		return umlC;
+	}
 	
 }

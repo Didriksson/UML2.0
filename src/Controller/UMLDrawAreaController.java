@@ -6,6 +6,8 @@ import java.util.Observer;
 import runner.Diagram;
 import Command.ICommand;
 import Command.NewClassComponentCommand;
+import Command.NewDestinationForRelationCommand;
+import Command.NewRootForRelationCommand;
 import Command.RemoveClassComponentCommand;
 import Command.RemoveRelationCommand;
 import ConstantsAndEnums.Enums;
@@ -44,6 +46,14 @@ public class UMLDrawAreaController{
 
 	public void removeRelation(UMLRelation r) {
 		new RemoveRelationCommand(diagram, r).execute();
+	}
+
+	public void setDestinationForRelation(UMLRelation rel, UMLComponent c) {
+		new NewDestinationForRelationCommand(diagram, rel, c).execute();
+	}
+
+	public void setRootForRelation(UMLRelation rel, UMLComponent c) {
+		new NewRootForRelationCommand(diagram, rel, c).execute();
 	}
 
 }

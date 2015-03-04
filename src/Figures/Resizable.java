@@ -3,11 +3,14 @@ package Figures;
 import java.awt.BorderLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
+import javax.swing.SwingConstants;
 
 public class Resizable extends JComponent {
 
@@ -32,6 +35,7 @@ public class Resizable extends JComponent {
 		setBounds(p.x, p.y, 200, 200);
 	}
 
+
 	private void setupKeyBindings() {
 		Action deleteMethod = new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
@@ -48,8 +52,7 @@ public class Resizable extends JComponent {
 		this.position.x = x;
 		this.position.y = y;
 		this.setLocation(position);
-		System.out.println(position);
-
+		viewUpdated();
 	}
 
 	public GUIComponent getGUIComponent() {
@@ -61,7 +64,18 @@ public class Resizable extends JComponent {
 			((JComponent) getParent()).revalidate();
 		}
 	}
+	
+	public void setHoveredState(boolean state){
+		ResizableBorder border = (ResizableBorder) getBorder();
+		border.setHoveredState(state);		
+	}
 
+	public boolean getHoveredState(){
+		ResizableBorder border = (ResizableBorder) getBorder();
+		return border.getHoveredState();		
+	}
+
+	
 	public boolean equals(Object o) {
 		if (o instanceof Resizable) {
 			Resizable r = (Resizable) o;
@@ -81,6 +95,11 @@ public class Resizable extends JComponent {
 
 	private boolean containsHeight(Point p) {
 		return p.y >= position.y && p.y <= (position.y + this.getHeight());
+	}
+
+	public void viewUpdated() {
+		this.getParent().repaint();
+		this.getParent().revalidate();
 	}
 
 }

@@ -4,9 +4,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -26,10 +25,10 @@ import ConstantsAndEnums.Constants;
 import ConstantsAndEnums.Enums;
 import Controller.UMLComponentController;
 import Controller.UMLDrawAreaController;
+import Controller.UMLRelationsController;
 import Figures.ClassFigure;
 import Figures.Resizable;
 import Figures.Graphics.RelationsDrawer;
-import Figures.Graphics.UMLRelationsController;
 import UML.Components.UMLComponent;
 import UML.Components.UMLRelation;
 
@@ -37,23 +36,23 @@ public class FigureViewingPanel extends JPanel implements Observer {
 	private static final long serialVersionUID = 1L;
 
 	private UMLDrawAreaController controller;
-	private RelationsDrawer umlPanel;
+	private RelationsDrawer relationPanel;
 	private Map<UMLComponent, Point> components;
-	private Map<UMLRelation, List<Point>> relations;
+	private Map<UMLRelation, UMLRelationPoints> relations;
 
 	public FigureViewingPanel(UMLDrawAreaController controller) {
 		this.setLayout(new MigLayout("fill", "grow", "grow"));
 		this.setBorder(Constants.RAISED_BEVEL_BORDER);
 		this.controller = controller;
 		this.components = new HashMap<UMLComponent, Point>();
-		this.relations = new HashMap<UMLRelation, List<Point>>();
+		this.relations = new HashMap<UMLRelation, UMLRelationPoints>();
 		controller.registerMeAsObserver(this);
 		createComponents();
 
 	}
 
 	private void createComponents() {
-		umlPanel = new RelationsDrawer(this, new UMLRelationsController(
+		relationPanel = new RelationsDrawer(this, new UMLRelationsController(
 				controller));
 		setComponents();
 		setUpKeyBinding();
@@ -74,8 +73,8 @@ public class FigureViewingPanel extends JPanel implements Observer {
 	}
 
 	private void setComponents() {
-		this.umlPanel.setBackground(Color.WHITE);
-		this.add(umlPanel, "dock center");
+		this.relationPanel.setBackground(Color.WHITE);
+		this.add(relationPanel, "dock center");
 		this.add(new ToolbarUML(this), "dock west");
 	}
 
@@ -84,22 +83,22 @@ public class FigureViewingPanel extends JPanel implements Observer {
 	}
 
 	private void addComponentToDrawArea(UMLComponent c) {
-		umlPanel.add(new Resizable(new ClassFigure(new UMLComponentController(
+		relationPanel.add(new Resizable(new ClassFigure(new UMLComponentController(
 				c, controller)), components.get(c)));
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		umlPanel.removeAll();
+		relationPanel.removeAll();
 		Diagram d = (Diagram) o;
 		updateUMLComponents(d);
 		updateUMLRelations(d);
 
-		umlPanel.repaint();
-		umlPanel.revalidate();
+		relationPanel.repaint();
+		relationPanel.revalidate();
 		this.repaint();
 		this.revalidate();
-		
+
 	}
 
 	private void updateUMLRelations(Diagram d) {
@@ -107,30 +106,30 @@ public class FigureViewingPanel extends JPanel implements Observer {
 		List<UMLRelation> diagramRelations = d.getRelations();
 		diagramRelations.stream().filter(c -> !relations.containsKey(c))
 				.forEach(c -> {
-					List<Point> points = new ArrayList<Point>();
+					UMLRelationPoints points = new UMLRelationPoints();
+					points.start = new Point(50, 50);
+					points.end = new Point(100, 50);
 					UMLComponent root = c.getRoot();
 					UMLComponent dest = c.getDestination();
 
 					if (root != null)
-						points.add(components.get(root));
-					else
-						points.add(new Point(50, 50));
+						points.start = components.get(root);
 
 					if (dest != null)
-						points.add(components.get(dest));
-					else
-						points.add(new Point(100, 100));
+						points.end = components.get(dest);
 
 					relations.put(c, points);
 				});
 
-	
-		
-		
-		Set<UMLRelation> tmpRelations = new HashSet<UMLRelation>(relations.keySet());
+		diagramRelations.forEach(c -> {
+			relationPanel.updateCoordinats(c,  components.get(c.getRoot()), components.get(c.getDestination()));
+		});
+
+		Set<UMLRelation> tmpRelations = new HashSet<UMLRelation>(
+				relations.keySet());
 		tmpRelations.removeAll(diagramRelations);
 		relations.keySet().removeAll(tmpRelations);
-		
+
 	}
 
 	private void updateUMLComponents(Diagram d) {
@@ -145,7 +144,7 @@ public class FigureViewingPanel extends JPanel implements Observer {
 		addUMLComponents();
 	}
 
-	public Map<UMLRelation, List<Point>> getRelation() {
+	public Map<UMLRelation, UMLRelationPoints> getRelation() {
 		return relations;
 	}
 
@@ -155,57 +154,36 @@ public class FigureViewingPanel extends JPanel implements Observer {
 		});
 	}
 
-	public class KeyHandler implements KeyListener {
-		private Set<Integer> pressedKeys;
-
-		public KeyHandler() {
-			pressedKeys = new HashSet<Integer>();
-		}
-
-		@Override
-		public void keyPressed(KeyEvent e) {
-			pressedKeys.add(e.getKeyCode());
-			if (pressedKeys.size() > 1) {
-				if (pressedKeys.contains(KeyEvent.VK_CONTROL)) {
-					if (pressedKeys.contains(KeyEvent.VK_C))
-						System.out.println("Kopiera!");
-				}
-			}
-
-			else if (pressedKeys.size() == 1) {
-				if (pressedKeys.contains(KeyEvent.VK_DELETE)) {
-					System.out.println("Delete!");
-				}
-			}
-		}
-
-		@Override
-		public void keyReleased(KeyEvent e) {
-			pressedKeys.remove(e.getKeyCode());
-		}
-
-		@Override
-		public void keyTyped(KeyEvent e) {
-
-		}
-	}
-
 	public void toolbarCommand(Enums enumeration) {
 		controller.toolbarCommands(enumeration);
 	}
 
 	public boolean checkIfRelationOverlaps(Point p) {
 		boolean cont = false;
-		for(Component comp : umlPanel.getComponents())
-		{
-			cont = comp.contains(p);
-			if(cont)
-			{
-				System.out.println(comp);
-				System.out.println(p);
+		for (Component comp : relationPanel.getComponents()) {
+			if (comp instanceof Resizable) {
+				Resizable res = (Resizable) comp;
+				res.setHoveredState(false);
+				if (res.contains(p)) {
+					cont = true;
+					res.setHoveredState(true);
+				}
 			}
-			}
+		}
 		return cont;
+	}
+
+	public Resizable returnOverlapsedComponent(Point p) {
+		Resizable res = null;
+		for (Component comp : relationPanel.getComponents()) {
+			if (comp instanceof Resizable) {
+				if (comp.contains(p)) {
+					res = (Resizable) comp;
+					res.setHoveredState(true);
+				}
+			}
+		}
+		return res;
 	}
 
 }

@@ -23,7 +23,6 @@ public class DirectAssociationFigure extends AssociationFigure {
 		int startY = (int) line.y1;
 		int endX = (int) line.x2;
 		int endY = (int) line.y2;
-		System.out.println("Hej?");
 		arrowHead.drawRoofHead(g2, startX, startY, endX, endY);
 		super.drawSpecific(g2);
 	}

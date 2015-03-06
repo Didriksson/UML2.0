@@ -76,7 +76,7 @@ public class MouseInteraction extends MouseAdapter {
 			if (selectedIndex == 0) {
 				viewpanel.setRootForRelation(rel, res.getGUIComponent()
 						.getUMLComponent());
-				
+
 			} else if (selectedIndex == 1) {
 				viewpanel.setDestinationForRelation(rel, res.getGUIComponent()
 						.getUMLComponent());
@@ -92,6 +92,7 @@ public class MouseInteraction extends MouseAdapter {
 	private void handleSelectedFigure(MouseEvent m, Point p,
 			AssociationFigure figure) {
 		selectedFigure = figure;
+
 		figure.setSelected(true);
 
 		Rectangle2D.Double[] rects = figure.getRects();

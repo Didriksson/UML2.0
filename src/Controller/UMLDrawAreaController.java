@@ -6,12 +6,15 @@ import java.util.Observer;
 import runner.Diagram;
 import Command.ICommand;
 import Command.NewClassComponentCommand;
+import Command.NewClassVariableCommand;
 import Command.NewDestinationForRelationCommand;
+import Command.NewMethodCommand;
 import Command.NewRootForRelationCommand;
 import Command.RemoveClassComponentCommand;
 import Command.RemoveRelationCommand;
 import ConstantsAndEnums.Enums;
 import UML.Components.UMLComponent;
+import UML.Components.UMLMethod;
 import UML.Components.UMLRelation;
 
 public class UMLDrawAreaController{
@@ -54,6 +57,14 @@ public class UMLDrawAreaController{
 
 	public void setRootForRelation(UMLRelation rel, UMLComponent c) {
 		new NewRootForRelationCommand(diagram, rel, c).execute();
+	}
+
+	public void addMethod(UMLComponent c) {
+	    new NewMethodCommand(diagram, c).execute();
+	}
+
+	public void addVariable(UMLComponent c) {
+	    new NewClassVariableCommand(diagram, c).execute();
 	}
 
 }

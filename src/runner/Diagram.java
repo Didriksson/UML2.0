@@ -6,8 +6,11 @@ import java.util.Observable;
 import java.util.Optional;
 
 import ConstantsAndEnums.Constants;
+import UML.Components.UMLClassVariable;
 import UML.Components.UMLComponent;
+import UML.Components.UMLMethod;
 import UML.Components.UMLRelation;
+import UML.Components.UMLVariable;
 
 public class Diagram extends Observable {
 	private List<UMLComponent> components;
@@ -88,5 +91,13 @@ public class Diagram extends Observable {
 			rel.setRoot(comp);
 		setChanged();
 		notifyObservers(this);		
+	}
+
+	public void addMethod(UMLComponent c, UMLMethod m) throws Exception {
+	    c.addMethod(m);
+	}
+
+	public void addClassVariable(UMLComponent c, UMLClassVariable v) {
+	    c.addVariable(v);
 	}
 }

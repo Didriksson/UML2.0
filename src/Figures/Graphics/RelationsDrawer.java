@@ -94,7 +94,6 @@ public class RelationsDrawer extends JPanel {
 	public void updateCoordinats(UMLRelation r, Point startPoint, Point endPoint) {
 		AssociationFigure a = figureList.getAssociationFromRelation(r);
 		if (a != null) {
-			System.out.println(a);
 			a.setEndPoint(endPoint);
 			a.setStartPoint(startPoint);
 

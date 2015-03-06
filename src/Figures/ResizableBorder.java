@@ -51,28 +51,15 @@ public class ResizableBorder implements Border {
 		g.setColor(Color.black);
 		g.drawRect(x + dist / 2, y + dist / 2, w - dist, h - dist);
 		if (component.hasFocus() || hovered) {
-			Point locationOnScreen = MouseInfo.getPointerInfo().getLocation();
-			locationOnScreen.x -= component.getLocationOnScreen().x;
-			locationOnScreen.y -= component.getLocationOnScreen().y;
-
-			int closestRec = 0;
+			int closestRec = -1;
 			if (hovered) {
-				double previousDistance = Integer.MAX_VALUE;
-				for (int i = 0; i < locations.length; i++) {
-					Rectangle rect = getRectangle(x, y, w, h, locations[i]);
-					double distance = rect.getLocation().distance(locationOnScreen);
-					if (distance < previousDistance) {
-						closestRec = i;
-						previousDistance = distance;
-					}
-				}
+				closestRec = getClosestSnappPoint(component);
 			}
 
-
 			for (int i = 0; i < locations.length; i++) {
-				Rectangle rect = getRectangle(x, y, w, h, locations[i]);
-				if(i == closestRec && hovered)
-					g.setColor(Color.LIGHT_GRAY);
+				Rectangle rect = getRectangle(w, h, locations[i]);
+				if (locations[i] == closestRec && hovered)
+					g.setColor(Color.RED.darker());
 				else
 					g.setColor(Color.WHITE);
 				g.fillRect(rect.x, rect.y, rect.width - 1, rect.height - 1);
@@ -82,8 +69,28 @@ public class ResizableBorder implements Border {
 		}
 	}
 
-	private Rectangle getRectangle(int x, int y, int w, int h, int location) {
+	public int getClosestSnappPoint(Component component) {
+		Point locationOnScreen = MouseInfo.getPointerInfo().getLocation();
+		locationOnScreen.x -= component.getLocationOnScreen().x;
+		locationOnScreen.y -= component.getLocationOnScreen().y;
+		int closestRec = -1;
 
+		double previousDistance = Integer.MAX_VALUE;
+		for (int i = 0; i < locations.length; i++) {
+			Rectangle rect = getRectangle(component.getWidth(),
+					component.getHeight(), locations[i]);
+			double distance = rect.getLocation().distance(locationOnScreen);
+			if (distance < previousDistance) {
+				closestRec = i;
+				previousDistance = distance;
+
+			}
+		}
+		return locations[closestRec];
+	}
+
+	private Rectangle getRectangle(int w, int h, int location) {
+		int x = 0, y = 0;
 		switch (location) {
 		case SwingConstants.NORTH:
 			return new Rectangle(x + w / 2 - dist / 2, y, dist, dist);
@@ -112,7 +119,7 @@ public class ResizableBorder implements Border {
 		int h = c.getHeight();
 
 		for (int i = 0; i < locations.length; i++) {
-			Rectangle rect = getRectangle(0, 0, w, h, locations[i]);
+			Rectangle rect = getRectangle(w, h, locations[i]);
 			if (rect.contains(me.getPoint())) {
 				return cursors[i];
 			}

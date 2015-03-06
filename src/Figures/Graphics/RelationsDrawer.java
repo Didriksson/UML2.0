@@ -87,22 +87,20 @@ public class RelationsDrawer extends JPanel {
 
 	}
 
-	public void setDestinationForRelation(UMLRelation rel, UMLComponent c) {
-		controller.setDestinationForRelation(rel, c);
+	public void setDestinationForRelation(UMLRelation rel, UMLComponent umlComponent, Point point) {
+		controller.setDestinationForRelation(rel, umlComponent, point);
 	}
 
 	public void updateCoordinats(UMLRelation r, Point startPoint, Point endPoint) {
 		AssociationFigure a = figureList.getAssociationFromRelation(r);
 		if (a != null) {
-			System.out.println(a);
 			a.setEndPoint(endPoint);
 			a.setStartPoint(startPoint);
-
 		}
 	}
 
-	public void setRootForRelation(UMLRelation rel, UMLComponent umlComponent) {
-		controller.setRootForRelation(rel, umlComponent);
+	public void setRootForRelation(UMLRelation rel, UMLComponent umlComponent, Point point) {
+		controller.setRootForRelation(rel, umlComponent, point);
 	}
 
 }

@@ -1,8 +1,4 @@
 /Figures/
-/Command/
-/ConstantsAndEnums/
+/src/
 /GUI_View/
-/runner/
-/images/
-/UML/
-*.class
+/Controller/

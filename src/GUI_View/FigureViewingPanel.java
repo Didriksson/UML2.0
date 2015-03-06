@@ -38,14 +38,17 @@ public class FigureViewingPanel extends JPanel implements Observer {
 	private UMLDrawAreaController controller;
 	private RelationsDrawer relationPanel;
 	private Map<UMLComponent, Point> components;
+	private Map<UMLComponent, Resizable> resizables;
 	private Map<UMLRelation, UMLRelationPoints> relations;
 
 	public FigureViewingPanel(UMLDrawAreaController controller) {
 		this.setLayout(new MigLayout("fill", "grow", "grow"));
 		this.setBorder(Constants.RAISED_BEVEL_BORDER);
 		this.controller = controller;
+		this.controller.setViewPanel(this);
 		this.components = new HashMap<UMLComponent, Point>();
 		this.relations = new HashMap<UMLRelation, UMLRelationPoints>();
+		this.resizables = new HashMap<UMLComponent, Resizable>();
 		controller.registerMeAsObserver(this);
 		createComponents();
 
@@ -64,11 +67,23 @@ public class FigureViewingPanel extends JPanel implements Observer {
 				System.out.println("Deletar!" + "FigureViewingPanel");
 			}
 		};
+
+		Action printPointRelations = new AbstractAction() {
+			public void actionPerformed(ActionEvent e) {
+				for (UMLRelationPoints r : relations.values()) {
+					System.out.println("Start: " + r.start + "   " + "End: "
+							+ r.end);
+					System.out.println(System.identityHashCode(r.end));
+
+				}
+			}
+		};
+
 		this.getInputMap(WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(
 				KeyStroke.getKeyStroke("DELETE"), "doNothing");
 		this.getInputMap(WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(
-				KeyStroke.getKeyStroke("F2"), "doNothing");
-		this.getActionMap().put("doNothing", doNothing);
+				KeyStroke.getKeyStroke("F3"), "printPointRelations");
+		this.getActionMap().put("printPointRelations", printPointRelations);
 
 	}
 
@@ -83,8 +98,11 @@ public class FigureViewingPanel extends JPanel implements Observer {
 	}
 
 	private void addComponentToDrawArea(UMLComponent c) {
-		relationPanel.add(new Resizable(new ClassFigure(new UMLComponentController(
-				c, controller)), components.get(c)));
+		if (!resizables.containsKey(c))
+			resizables.put(c,
+					new Resizable(new ClassFigure(new UMLComponentController(c,
+							controller)), components.get(c)));
+		relationPanel.add(resizables.get(c));
 	}
 
 	@Override
@@ -93,15 +111,12 @@ public class FigureViewingPanel extends JPanel implements Observer {
 		Diagram d = (Diagram) o;
 		updateUMLComponents(d);
 		updateUMLRelations(d);
-
-		relationPanel.repaint();
-		relationPanel.revalidate();
 		this.repaint();
 		this.revalidate();
 
 	}
 
-	private void updateUMLRelations(Diagram d) {
+	public void updateUMLRelations(Diagram d) {
 
 		List<UMLRelation> diagramRelations = d.getRelations();
 		diagramRelations.stream().filter(c -> !relations.containsKey(c))
@@ -109,20 +124,12 @@ public class FigureViewingPanel extends JPanel implements Observer {
 					UMLRelationPoints points = new UMLRelationPoints();
 					points.start = new Point(50, 50);
 					points.end = new Point(100, 50);
-					UMLComponent root = c.getRoot();
-					UMLComponent dest = c.getDestination();
-
-					if (root != null)
-						points.start = components.get(root);
-
-					if (dest != null)
-						points.end = components.get(dest);
-
 					relations.put(c, points);
 				});
 
 		diagramRelations.forEach(c -> {
-			relationPanel.updateCoordinats(c,  components.get(c.getRoot()), components.get(c.getDestination()));
+			relationPanel.updateCoordinats(c, relations.get(c).start,
+					relations.get(c).end);
 		});
 
 		Set<UMLRelation> tmpRelations = new HashSet<UMLRelation>(

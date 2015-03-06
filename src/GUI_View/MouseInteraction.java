@@ -60,11 +60,8 @@ public class MouseInteraction extends MouseAdapter {
 			if (figureSelected(m, figure)) {
 				handleSelectedFigure(m, p, figure);
 			}
-
 		}
-
 		updateViewPanel();
-
 	}
 
 	@Override
@@ -75,11 +72,11 @@ public class MouseInteraction extends MouseAdapter {
 
 			if (selectedIndex == 0) {
 				viewpanel.setRootForRelation(rel, res.getGUIComponent()
-						.getUMLComponent());
-				
+						 .getUMLComponent(), res.getSnapPointFromMousePosition());
+
 			} else if (selectedIndex == 1) {
 				viewpanel.setDestinationForRelation(rel, res.getGUIComponent()
-						.getUMLComponent());
+						 .getUMLComponent(), res.getSnapPointFromMousePosition());
 			}
 		}
 	}

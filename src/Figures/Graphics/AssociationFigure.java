@@ -30,7 +30,7 @@ public class AssociationFigure extends GeomatricPosition {
 
 		for (int j = 0; j < rects.length; j++)
 			rects[j] = new Rectangle2D.Double();
-		
+
 		updateRects();
 
 	}
@@ -39,7 +39,6 @@ public class AssociationFigure extends GeomatricPosition {
 	protected void drawSpecific(Graphics g) {
 		updateRects();
 		setLine();
-		
 
 		Graphics2D g2 = (Graphics2D) g;
 		RenderingHints rh = new RenderingHints(RenderingHints.KEY_ANTIALIASING,
@@ -56,6 +55,8 @@ public class AssociationFigure extends GeomatricPosition {
 		g2.setStroke(new BasicStroke());
 
 		drawRects(g2);
+	
+
 	}
 
 	private void updateRects() {
@@ -64,7 +65,7 @@ public class AssociationFigure extends GeomatricPosition {
 		rects[1] = new Rectangle2D.Double(endPoint.x - recSize / 2, endPoint.y
 				- recSize / 2, recSize, recSize);
 		rects[2] = new Rectangle2D.Double();
-		setCenter();		
+		setCenter();
 	}
 
 	private void drawRects(Graphics2D g2) {
@@ -124,26 +125,28 @@ public class AssociationFigure extends GeomatricPosition {
 		return rects[0].contains(x, y) || rects[1].contains(x, y)
 				|| rects[2].contains(x, y);
 	}
-	
-	public Point getStartPoint(){
+
+	public Point getStartPoint() {
 		return startPoint;
 	}
-	public Point getEndPoint(){
+
+	public Point getEndPoint() {
 		return endPoint;
 	}
 
 	public void setEndPoint(Point endPoint2) {
-		if(endPoint2 != null)
+		if (endPoint2 != null) {
 			this.endPoint = endPoint2;
+		}
 	}
 
 	public void setStartPoint(Point startPoint2) {
-		if(startPoint2 != null)
+		if (startPoint2 != null)
 			this.startPoint = startPoint2;
 	}
 
 	public void updatePosition(int selectedRect, int x, int y) {
-		switch(selectedRect){
+		switch (selectedRect) {
 		case 0:
 			startPoint.x = (int) x;
 			startPoint.y = (int) y;
@@ -162,5 +165,5 @@ public class AssociationFigure extends GeomatricPosition {
 			break;
 		}
 	}
-	
+
 }

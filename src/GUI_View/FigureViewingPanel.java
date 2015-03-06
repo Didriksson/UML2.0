@@ -81,9 +81,9 @@ public class FigureViewingPanel extends JPanel implements Observer {
 		this.add(componentTools, "dock south");
 	}
 
-	public void createFigures() {
-		controller.newClass();
-	}
+//	public void createFigures() {
+//		controller.newClass();
+//	}
 
 	private void addComponentToDrawArea(UMLComponent c) {
 		relationPanel.add(new Resizable(this,new ClassFigure(new UMLComponentController(
@@ -191,6 +191,14 @@ public class FigureViewingPanel extends JPanel implements Observer {
 
 	public void setComponentSelected(Resizable resizable) {
 		componentTools.setSelectedComponent(resizable.getGUIComponent());
+	}
+
+	public void redoCommand() {
+	    controller.redoCommand();
+	}
+
+	public void undoCommand() {
+	    controller.undoCommand();
 	}
 
 }

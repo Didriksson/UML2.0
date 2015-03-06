@@ -2,6 +2,7 @@ package Controller;
 
 import java.util.Map;
 import java.util.Observer;
+import java.util.Stack;
 
 import runner.Diagram;
 import Command.ICommand;
@@ -14,57 +15,84 @@ import Command.RemoveClassComponentCommand;
 import Command.RemoveRelationCommand;
 import ConstantsAndEnums.Enums;
 import UML.Components.UMLComponent;
-import UML.Components.UMLMethod;
 import UML.Components.UMLRelation;
 
-public class UMLDrawAreaController{
+public class UMLDrawAreaController {
     private Diagram diagram;
     Map<Enums, ICommand> toolbarCommands;
+    Stack<ICommand> executedCommands;
+    Stack<ICommand> revertedCommands;
 
-    public UMLDrawAreaController(Diagram d, Map<Enums, ICommand>commands) {
+    public UMLDrawAreaController(Diagram d, Map<Enums, ICommand> commands) {
 	this.diagram = d;
 	this.toolbarCommands = commands;
-    }
-
-    public void addUMLComponent(UMLComponent c) {
-	diagram.addComponent(c);
-    }
-
-    public void newClass() {
-	new NewClassComponentCommand(diagram).execute();
+	executedCommands = new Stack<ICommand>();
+	revertedCommands = new Stack<ICommand>();
     }
 
     public void registerMeAsObserver(Observer o) {
 	diagram.addObserver(o);
     }
-    
+
     public void removeComponent(UMLComponent c) {
-	new RemoveClassComponentCommand(diagram, c).execute();
-    }
-    
-    
-    public void toolbarCommands(Enums command){
-    	toolbarCommands.get(command).execute();
+	ICommand command = new RemoveClassComponentCommand(diagram, c);
+	executedCommands.push(command);
+	command.execute();
     }
 
-	public void removeRelation(UMLRelation r) {
-		new RemoveRelationCommand(diagram, r).execute();
-	}
+    public void toolbarCommands(Enums command) {
+	ICommand cmd = toolbarCommands.get(command);
+	executedCommands.push(cmd);
+	cmd.execute();
+    }
 
-	public void setDestinationForRelation(UMLRelation rel, UMLComponent c) {
-		new NewDestinationForRelationCommand(diagram, rel, c).execute();
-	}
+    public void removeRelation(UMLRelation r) {
+	ICommand command = new RemoveRelationCommand(diagram, r);
+	executedCommands.push(command);
+	command.execute();
+    }
 
-	public void setRootForRelation(UMLRelation rel, UMLComponent c) {
-		new NewRootForRelationCommand(diagram, rel, c).execute();
-	}
+    public void setDestinationForRelation(UMLRelation rel, UMLComponent c) {
+	ICommand command = new NewDestinationForRelationCommand(diagram, rel, c);
+	executedCommands.push(command);
+	command.execute();
 
-	public void addMethod(UMLComponent c) {
-	    new NewMethodCommand(diagram, c).execute();
-	}
+    }
 
-	public void addVariable(UMLComponent c) {
-	    new NewClassVariableCommand(diagram, c).execute();
+    public void setRootForRelation(UMLRelation rel, UMLComponent c) {
+	ICommand command = new NewRootForRelationCommand(diagram, rel, c);
+	executedCommands.push(command);
+	command.execute();
+    }
+
+    public void addMethod(UMLComponent c) {
+	ICommand command = new NewMethodCommand(diagram, c);
+	executedCommands.push(command);
+	command.execute();
+    }
+
+    public void addVariable(UMLComponent c) {
+	ICommand command = new NewClassVariableCommand(diagram, c);
+	executedCommands.push(command);
+	command.execute();
+
+    }
+
+    public void redoCommand() {
+	if (!revertedCommands.isEmpty()) {
+	    ICommand command = revertedCommands.pop();
+	    executedCommands.push(command);
+	    command.execute();
+
 	}
+    }
+
+    public void undoCommand() {
+	if (!executedCommands.isEmpty()) {
+	    ICommand command = executedCommands.pop();
+	    revertedCommands.push(command);
+	    command.undo();
+	}
+    }
 
 }

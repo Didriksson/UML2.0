@@ -40,6 +40,7 @@ public class FigureViewingPanel extends JPanel implements Observer {
 	private Map<UMLComponent, Point> components;
 	private Map<UMLComponent, Resizable> resizables;
 	private Map<UMLRelation, UMLRelationPoints> relations;
+	private ComponentManipulationToolbar componentTools;
 
 	public FigureViewingPanel(UMLDrawAreaController controller) {
 		this.setLayout(new MigLayout("fill", "grow", "grow"));
@@ -49,6 +50,7 @@ public class FigureViewingPanel extends JPanel implements Observer {
 		this.components = new HashMap<UMLComponent, Point>();
 		this.relations = new HashMap<UMLRelation, UMLRelationPoints>();
 		this.resizables = new HashMap<UMLComponent, Resizable>();
+		this.componentTools = new ComponentManipulationToolbar();
 		controller.registerMeAsObserver(this);
 		createComponents();
 
@@ -91,18 +93,19 @@ public class FigureViewingPanel extends JPanel implements Observer {
 		this.relationPanel.setBackground(Color.WHITE);
 		this.add(relationPanel, "dock center");
 		this.add(new ToolbarUML(this), "dock west");
+		this.add(componentTools, "dock south");
 	}
 
-	public void createFigures() {
-		controller.newClass();
-	}
+	// public void createFigures() {
+	// controller.newClass();
+	// }
 
 	private void addComponentToDrawArea(UMLComponent c) {
+
 		if (!resizables.containsKey(c))
-			resizables.put(c,
-					new Resizable(new ClassFigure(new UMLComponentController(c,
-							controller)), components.get(c)));
+			resizables.put(c, new Resizable(this, new ClassFigure(new UMLComponentController(c, controller)), null, components.get(c)));
 		relationPanel.add(resizables.get(c));
+
 	}
 
 	@Override
@@ -191,6 +194,18 @@ public class FigureViewingPanel extends JPanel implements Observer {
 			}
 		}
 		return res;
+	}
+
+	public void setComponentSelected(Resizable resizable) {
+		componentTools.setSelectedComponent(resizable.getGUIComponent());
+	}
+
+	public void redoCommand() {
+		controller.redoCommand();
+	}
+
+	public void undoCommand() {
+		controller.undoCommand();
 	}
 
 }

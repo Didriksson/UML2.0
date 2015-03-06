@@ -35,6 +35,7 @@ public class ComponentMover extends MouseInputAdapter {
         ResizableBorder border = (ResizableBorder) res.getBorder();
         cursor = border.getCursor(me);
         startPos = me.getPoint();
+        res.setComponentSelectedInMainView();
         res.requestFocus();
         res.viewUpdated();
     }

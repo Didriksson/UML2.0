@@ -31,14 +31,12 @@ public class ClassFigure extends GUIComponent {
 	private JScrollPane vaiableScroll, methodScroll;
 	private JTextField classNameField;
 	private GridBagConstraints gbc;
-	private JButton addMethodButton;
 
 	public ClassFigure(UMLComponentController c) {
 		this.setLayout(new GridBagLayout());
 		controller = c;
 		gbc = new GridBagConstraints();
 		createAndAddComponents();
-
 	}
 
 	private void createAndAddComponents() {
@@ -104,20 +102,10 @@ public class ClassFigure extends GUIComponent {
 		gbc.gridx = 0;
 		gbc.gridy = 2;
 		this.add(methodScroll, gbc);
-		addMethodButton = new JButton("");
-		addMethodButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				controller.newMethod();
-				updatateList();
-			}
-		});
-		this.add(addMethodButton);
 
 	}
 
-	protected void updatateList() {
+	public void updatateList() {
 		this.removeAll();
 		createAndAddComponents();
 		repaint();

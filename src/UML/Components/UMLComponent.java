@@ -40,6 +40,11 @@ public class UMLComponent {
 	variables.add(new UMLClassVariable(scopeModifier, type, name));
     }
     
+    
+    public void addVariable(UMLClassVariable v){
+	variables.add(v);
+    }
+    
     public UMLMethod getMethod(int n){
 	return methods.get(n);
     }

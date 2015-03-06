@@ -39,11 +39,7 @@ public class UMLComponentController {
 	}
 
 	public void newMethod() {
-		try {
-			umlC.addMethod(new UMLMethod("public", "void", "MethodName"));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	    drawController.addMethod(umlC);
 	}
 
 	public void removeComponent() {
@@ -52,6 +48,10 @@ public class UMLComponentController {
 
 	public UMLComponent getComponent() {
 		return umlC;
+	}
+
+	public void newVariable() {
+	    drawController.addVariable(umlC);
 	}
 	
 }

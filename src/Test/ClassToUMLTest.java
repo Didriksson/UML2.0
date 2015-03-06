@@ -48,8 +48,6 @@ public class ClassToUMLTest {
 	assertEquals("testMethodParameters", methods.get(1).getMethodName());
 	assertEquals("String", methods.get(1).getVariables().get(0).getType());
 	
-	System.out.println(uml.toString());
-	
     }
 
 }

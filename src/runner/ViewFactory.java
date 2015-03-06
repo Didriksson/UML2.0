@@ -39,7 +39,6 @@ public class ViewFactory {
 		commands.put(ConstantsAndEnums.Enums.REALIZATION_ENUM, new NewRealisationComponentCommand(d));
 		commands.put(ConstantsAndEnums.Enums.AGGREGATION_ENUM, new NewAggregationComponentCommand(d));
 		commands.put(ConstantsAndEnums.Enums.COMPOSITION_ENUM, new NewCompositionComponentCommand(d));
-
 		return commands;
 	}
 

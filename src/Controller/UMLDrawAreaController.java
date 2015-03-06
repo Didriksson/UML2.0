@@ -3,11 +3,14 @@ package Controller;
 import java.awt.Point;
 import java.util.Map;
 import java.util.Observer;
+import java.util.Stack;
 
 import runner.Diagram;
 import Command.ICommand;
 import Command.NewClassComponentCommand;
+import Command.NewClassVariableCommand;
 import Command.NewDestinationForRelationCommand;
+import Command.NewMethodCommand;
 import Command.NewRootForRelationCommand;
 import Command.RemoveClassComponentCommand;
 import Command.RemoveRelationCommand;
@@ -17,47 +20,89 @@ import GUI_View.UMLRelationPoints;
 import UML.Components.UMLComponent;
 import UML.Components.UMLRelation;
 
-public class UMLDrawAreaController{
-    private Diagram diagram;
-    private Map<Enums, ICommand> toolbarCommands;
-    private FigureViewingPanel viewPanel;
-    private UMLRelationPoints points;
+public class UMLDrawAreaController {
+	private Diagram diagram;
 
-    public UMLDrawAreaController(Diagram d, Map<Enums, ICommand>commands) {
-	this.diagram = d;
-	this.toolbarCommands = commands;
-    }
+	private Map<Enums, ICommand> toolbarCommands;
+	private FigureViewingPanel viewPanel;
+	private UMLRelationPoints points;
 
-    public void setViewPanel(FigureViewingPanel view){
-    	this.viewPanel = view;
-    }
-    
-    public void addUMLComponent(UMLComponent c) {
-	diagram.addComponent(c);
-    }
+	Stack<ICommand> executedCommands;
+	Stack<ICommand> revertedCommands;
 
-    public void newClass() {
-	new NewClassComponentCommand(diagram).execute();
-    }
-
-    public void registerMeAsObserver(Observer o) {
-	diagram.addObserver(o);
-    }
-    
-    public void removeComponent(UMLComponent c) {
-	new RemoveClassComponentCommand(diagram, c).execute();
-    }
-    
-    
-    public void toolbarCommands(Enums command){
-    	toolbarCommands.get(command).execute();
-    }
-
-	public void removeRelation(UMLRelation r) {
-		new RemoveRelationCommand(diagram, r).execute();
+	public UMLDrawAreaController(Diagram d, Map<Enums, ICommand> commands) {
+		this.diagram = d;
+		this.toolbarCommands = commands;
+		executedCommands = new Stack<ICommand>();
+		revertedCommands = new Stack<ICommand>();
 	}
 
-	public void setDestinationForRelation(UMLRelation rel, UMLComponent c, Point point) {
+	public void setViewPanel(FigureViewingPanel view) {
+		this.viewPanel = view;
+	}
+
+	public void addUMLComponent(UMLComponent c) {
+		diagram.addComponent(c);
+	}
+
+	public void registerMeAsObserver(Observer o) {
+
+	}
+
+	public void removeComponent(UMLComponent c) {
+		ICommand command = new RemoveClassComponentCommand(diagram, c);
+		executedCommands.push(command);
+		command.execute();
+	}
+
+	public void toolbarCommands(Enums command) {
+		ICommand cmd = toolbarCommands.get(command);
+		executedCommands.push(cmd);
+		cmd.execute();
+	}
+
+	public void removeRelation(UMLRelation r) {
+		ICommand command = new RemoveRelationCommand(diagram, r);
+		executedCommands.push(command);
+		command.execute();
+	}
+
+	public void setDestinationForRelation(UMLRelation rel, UMLComponent c) {
+		ICommand command = new NewDestinationForRelationCommand(diagram, rel, c);
+		executedCommands.push(command);
+		command.execute();
+
+	}
+
+	public void setRootForRelation(UMLRelation rel, UMLComponent c) {
+		ICommand command = new NewRootForRelationCommand(diagram, rel, c);
+		executedCommands.push(command);
+		command.execute();
+	}
+
+	public void addMethod(UMLComponent c) {
+		ICommand command = new NewMethodCommand(diagram, c);
+		executedCommands.push(command);
+		command.execute();
+	}
+
+	public void addVariable(UMLComponent c) {
+		ICommand command = new NewClassVariableCommand(diagram, c);
+		executedCommands.push(command);
+		command.execute();
+
+	}
+
+	public void redoCommand() {
+		if (!revertedCommands.isEmpty()) {
+			ICommand command = revertedCommands.pop();
+			executedCommands.push(command);
+			command.execute();
+		}
+	}
+
+	public void setDestinationForRelation(UMLRelation rel, UMLComponent c,
+			Point point) {
 		points = viewPanel.getRelation().get(rel);
 		points.end = point;
 		new NewDestinationForRelationCommand(diagram, rel, c).execute();
@@ -67,6 +112,15 @@ public class UMLDrawAreaController{
 		points = viewPanel.getRelation().get(rel);
 		points.start = point;
 		new NewRootForRelationCommand(diagram, rel, c).execute();
+	}
+
+	public void undoCommand() {
+		if (!executedCommands.isEmpty()) {
+			ICommand command = executedCommands.pop();
+			revertedCommands.push(command);
+			command.undo();
+
+		}
 	}
 
 }

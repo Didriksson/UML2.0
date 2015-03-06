@@ -22,11 +22,10 @@ public class Resizable extends JComponent {
 	ComponentMover mouseListener;
 	GUIComponent content;
 	Point position;
-
 	Map<Integer, Point> pointMap;
 	ResizableBorder border;
-
 	FigureViewingPanel mainPanel;
+
 
 	public Resizable(FigureViewingPanel mainPanel, GUIComponent comp, Point p) {
 		this(mainPanel, comp, new ResizableBorder(8), p);
@@ -34,9 +33,9 @@ public class Resizable extends JComponent {
 
 	public Resizable(FigureViewingPanel mainPanel, GUIComponent comp, ResizableBorder border, Point p) {
 		this.position = p;
-		this.mainPanel = mainPanel;
 		mouseListener = new ComponentMover(this);
 		this.content = comp;
+		this.mainPanel = mainPanel;
 		setLayout(new BorderLayout());
 		add(content);
 		addMouseListener(mouseListener);
@@ -159,12 +158,8 @@ public class Resizable extends JComponent {
 	}
 
 	public void viewUpdated() {
-		this.mainPanel.repaint();
-		this.mainPanel.revalidate();
-	}
-
-	public void setComponentSelectedInMainView() {
-		this.mainPanel.setComponentSelected(this);
+		this.getParent().repaint();
+		this.getParent().revalidate();
 	}
 
 	public Point getPositionOfMarkers(int location) {
@@ -179,6 +174,10 @@ public class Resizable extends JComponent {
 		Point p = getPositionOfMarkers(closestsnappoint);
 		this.setHoveredState(false);
 		return p;
+	}
+	
+	public void setComponentSelectedInMainView() {
+		this.mainPanel.setComponentSelected(this);
 	}
 
 }

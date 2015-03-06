@@ -42,6 +42,7 @@ public class FigureViewingPanel extends JPanel implements Observer {
 	private Map<UMLRelation, UMLRelationPoints> relations;
 	private ComponentManipulationToolbar componentTools;
 
+	
 	public FigureViewingPanel(UMLDrawAreaController controller) {
 		this.setLayout(new MigLayout("fill", "grow", "grow"));
 		this.setBorder(Constants.RAISED_BEVEL_BORDER);
@@ -96,16 +97,12 @@ public class FigureViewingPanel extends JPanel implements Observer {
 		this.add(componentTools, "dock south");
 	}
 
-	// public void createFigures() {
-	// controller.newClass();
-	// }
-
 	private void addComponentToDrawArea(UMLComponent c) {
-
 		if (!resizables.containsKey(c))
-			resizables.put(c, new Resizable(this, new ClassFigure(new UMLComponentController(c, controller)), null, components.get(c)));
+			resizables.put(c,
+					new Resizable(this,new ClassFigure(new UMLComponentController(c,
+							controller)), components.get(c)));
 		relationPanel.add(resizables.get(c));
-
 	}
 
 	@Override
@@ -163,7 +160,7 @@ public class FigureViewingPanel extends JPanel implements Observer {
 			addComponentToDrawArea(c);
 		});
 	}
-
+	
 	public void toolbarCommand(Enums enumeration) {
 		controller.toolbarCommands(enumeration);
 	}
@@ -183,6 +180,18 @@ public class FigureViewingPanel extends JPanel implements Observer {
 		return cont;
 	}
 
+	public void setComponentSelected(Resizable resizable) {
+		componentTools.setSelectedComponent(resizable.getGUIComponent());
+	}
+	
+	public void redoCommand() {
+	    controller.redoCommand();
+	}
+
+	public void undoCommand() {
+	    controller.undoCommand();
+	}
+	
 	public Resizable returnOverlapsedComponent(Point p) {
 		Resizable res = null;
 		for (Component comp : relationPanel.getComponents()) {
@@ -194,18 +203,6 @@ public class FigureViewingPanel extends JPanel implements Observer {
 			}
 		}
 		return res;
-	}
-
-	public void setComponentSelected(Resizable resizable) {
-		componentTools.setSelectedComponent(resizable.getGUIComponent());
-	}
-
-	public void redoCommand() {
-		controller.redoCommand();
-	}
-
-	public void undoCommand() {
-		controller.undoCommand();
 	}
 
 }

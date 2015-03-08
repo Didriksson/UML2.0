@@ -53,7 +53,7 @@ public class ClassFigure extends GUIComponent {
 					controller.setVariableState(true);
 					JList<?> list = (JList<?>) e.getSource();
 					int index = list.locationToIndex(e.getPoint());
-					controller.setIndexOfList(index);
+					controller.setIndexOfVariableList(index);
 					
 					if (e.getClickCount() == 2 && !listVariables.isSelectionEmpty()) {
 						String variableName = JOptionPane.showInputDialog(null,
@@ -71,7 +71,7 @@ public class ClassFigure extends GUIComponent {
 					controller.setVariableState(false);
 					JList<?> list = (JList<?>) e.getSource();
 					int index = list.locationToIndex(e.getPoint());
-					controller.setIndexOfList(index);
+					controller.setIndexOfMethodList(index);
 					
 					if (e.getClickCount() == 2 && !listMethods.isSelectionEmpty()) {
 						String methodName = JOptionPane.showInputDialog(null,

@@ -11,8 +11,9 @@ public class UMLComponentController {
 
 	private UMLComponent umlC;
 	private UMLDrawAreaController drawController;
-	private int indexOfList = 0;
-	private boolean variableState;
+	private boolean variableState = false;
+	private int indexOfVariableList = 0;
+	private int indexOfMehodList = 0;
 
 	public UMLComponentController(UMLComponent c, UMLDrawAreaController cont) {
 		this.umlC = c;
@@ -56,21 +57,30 @@ public class UMLComponentController {
 		return umlC;
 	}
 
-	public void setIndexOfList(int index) {
-		this.indexOfList = index;
-	}
 	
-	public int getIndexOfList() {
-		return this.indexOfList;
-	}
 
 	public void setVariableState(boolean state) {
-		this.variableState = state;
-		
+		this.variableState = state;	
 	}
 	
 	public boolean getVariableState() {
 		return this.variableState;
+	}
+
+	public void setIndexOfVariableList(int index) {
+		this.indexOfVariableList = index;
+	}
+	
+	public int getIndexOfVariableList() {
+		return this.indexOfVariableList;
+	}
+
+	public void setIndexOfMethodList(int index) {
+		this.indexOfMehodList = index;
+	}
+	
+	public int getIndexOfMethodList() {
+		return this.indexOfMehodList; 
 	}
 
 

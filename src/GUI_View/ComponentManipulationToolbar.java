@@ -89,6 +89,16 @@ public class ComponentManipulationToolbar extends JPanel {
 		addingPanel.add(addMethodButton, "wrap");
 		addingPanel.add(addVariableButton);
 
+//		if(selectedComponent instanceof ClassFigure) {
+//		if(selectedComponent.getController().getVariableState()) {
+//			methodNameField.setEnabled(false);
+//			updateMethodButton.setEnabled(false);
+//		} else if(!selectedComponent.getController().getVariableState()) {
+//			variableNameField.setEnabled(false);
+//			updateVariableButton.setEnabled(false);
+//		}
+//	}
+		
 		
 		this.add(modifyingPanel);
 		this.add(addingPanel, "grow");

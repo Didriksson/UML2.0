@@ -12,7 +12,7 @@ public class NewAssociationComponentCommand implements ICommand{
 	}
 	
 	@Override
-	public void execute() {
+	public void redo() {
 		d.newRelation(Constants.ASSOCIATION_STRING);
 	}
 

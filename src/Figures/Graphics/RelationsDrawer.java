@@ -1,5 +1,6 @@
 package Figures.Graphics;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -28,10 +29,11 @@ public class RelationsDrawer extends JPanel {
 	public RelationsDrawer(FigureViewingPanel fwp,
 			UMLRelationsController controller) {
 		this.setLayout(null);
+		this.setBackground(Color.WHITE);
 		this.controller = controller;
-		topPanel = fwp;
-		figureList = new FigureList();
-		mouseInteraction = new MouseInteraction(figureList, this);
+		this.topPanel = fwp;
+		this.figureList = new FigureList();
+		this.mouseInteraction = new MouseInteraction(figureList, this);
 		addMouseListener(mouseInteraction);
 		addMouseMotionListener(mouseInteraction);
 		setUpKeyBinding();

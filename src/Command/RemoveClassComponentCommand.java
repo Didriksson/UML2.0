@@ -3,22 +3,22 @@ package Command;
 import runner.Diagram;
 import UML.Components.UMLComponent;
 
-public class RemoveClassComponentCommand implements ICommand{
-    Diagram diagram;
-    UMLComponent component;
-    public RemoveClassComponentCommand(Diagram d, UMLComponent c) {
-	this.diagram = d;
-	this.component = c;
-    }
-    
-    @Override
-    public void execute() {
-	diagram.removeComponent(component);
-    }
+public class RemoveClassComponentCommand implements ICommand {
+	private Diagram diagram;
+	private UMLComponent component;
 
-    @Override
-    public void undo() {
-	
-    }
+	public RemoveClassComponentCommand(Diagram d, UMLComponent c) {
+		this.diagram = d;
+		this.component = c;
+	}
+
+	@Override
+	public void redo() {
+		diagram.removeComponent(component);
+	}
+
+	@Override
+	public void undo() {
+	}
 
 }

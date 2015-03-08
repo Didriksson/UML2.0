@@ -91,17 +91,14 @@ public class FigureViewingPanel extends JPanel implements Observer {
 	}
 
 	private void setComponents() {
-		this.relationPanel.setBackground(Color.WHITE);
-		this.add(relationPanel, "dock center");
-		this.add(new ToolbarUML(this), "dock west");
 		this.add(componentTools, "dock south");
+		this.add(relationPanel, "grow");
+		this.add(new ToolbarUML(this), "dock west");
 	}
 
 	private void addComponentToDrawArea(UMLComponent c) {
 		if (!resizables.containsKey(c))
-			resizables.put(c,
-					new Resizable(this,new ClassFigure(new UMLComponentController(c,
-							controller)), components.get(c)));
+			resizables.put(c, new Resizable(this,new ClassFigure(new UMLComponentController(c, controller)), components.get(c)));
 		relationPanel.add(resizables.get(c));
 	}
 
@@ -161,9 +158,7 @@ public class FigureViewingPanel extends JPanel implements Observer {
 		});
 	}
 	
-	public void toolbarCommand(Enums enumeration) {
-		controller.toolbarCommands(enumeration);
-	}
+
 
 	public boolean checkIfRelationOverlaps(Point p) {
 		boolean cont = false;
@@ -190,6 +185,10 @@ public class FigureViewingPanel extends JPanel implements Observer {
 
 	public void undoCommand() {
 	    controller.undoCommand();
+	}
+	
+	public void toolbarCommand(Enums enumeration) {
+		controller.toolbarCommands(enumeration);
 	}
 	
 	public Resizable returnOverlapsedComponent(Point p) {

@@ -6,24 +6,29 @@ import UML.Components.UMLComponent;
 import UML.Components.UMLVariable;
 
 public class NewClassVariableCommand implements ICommand {
-    Diagram d;
-    UMLComponent c;
-    UMLClassVariable v;
+	private Diagram d;
+	private UMLComponent c;
+	private UMLClassVariable v;
 
-    public NewClassVariableCommand(Diagram d, UMLComponent c) {
-	this.d = d;
-	this.c = c;
-    }
-    @Override
-    public void execute() {
-	this.v = new UMLClassVariable("public", "String", "var");
-	d.addClassVariable(c, v);
-    }
+	public NewClassVariableCommand(Diagram d, UMLComponent c) {
+		this.d = d;
+		this.c = c;
+	}
 
-    @Override
-    public void undo() {
-	// TODO Auto-generated method stub
+	@Override
+	public void redo() {
+		this.v = new UMLClassVariable("public", "String", "var");
+		try {
+			d.addClassVariable(c, v);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-    }
+	@Override
+	public void undo() {
+		// TODO Auto-generated method stub
+
+	}
 
 }

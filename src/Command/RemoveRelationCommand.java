@@ -5,8 +5,8 @@ import UML.Components.UMLComponent;
 import UML.Components.UMLRelation;
 
 public class RemoveRelationCommand implements ICommand {
-	Diagram diagram;
-	UMLRelation relation;
+	private Diagram diagram;
+	private UMLRelation relation;
 
 	public RemoveRelationCommand(Diagram d, UMLRelation c) {
 		this.diagram = d;
@@ -14,13 +14,13 @@ public class RemoveRelationCommand implements ICommand {
 	}
 
 	@Override
-	public void execute() {
+	public void redo() {
 		diagram.removeRelation(relation);
 	}
 
 	@Override
 	public void undo() {
-
+		
 	}
 
 }

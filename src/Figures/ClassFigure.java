@@ -45,20 +45,44 @@ public class ClassFigure extends GUIComponent {
 		listVariables = new JList<UMLClassVariable>(
 				new Vector<UMLClassVariable>(controller.getVariables()));
 
-		listMethods.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				JList<?> list = (JList<?>) e.getSource();
+	
 
-				if (e.getClickCount() == 2) {
+			listVariables.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
+					listMethods.clearSelection();	
+					controller.setVariableState(true);
+					JList<?> list = (JList<?>) e.getSource();
 					int index = list.locationToIndex(e.getPoint());
-					String name = JOptionPane.showInputDialog(null,
-							"Rename method: ");
-					if (!isNullOrEmpty(name))
-						controller.getMethods().get(index).setMethodName(name);
+					controller.setIndexOfList(index);
+					
+					if (e.getClickCount() == 2 && !listVariables.isSelectionEmpty()) {
+						String variableName = JOptionPane.showInputDialog(null,
+								"Rename Variable: ");
+						if (!isNullOrEmpty(variableName))
+							controller.getVariables().get(index)
+									.setvariableName(variableName);
+					}
 				}
-			}
-
-		});
+			});
+	
+			listMethods.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
+					listVariables.clearSelection();
+					controller.setVariableState(false);
+					JList<?> list = (JList<?>) e.getSource();
+					int index = list.locationToIndex(e.getPoint());
+					controller.setIndexOfList(index);
+					
+					if (e.getClickCount() == 2 && !listMethods.isSelectionEmpty()) {
+						String methodName = JOptionPane.showInputDialog(null,
+								"Rename method: ");
+						if (!isNullOrEmpty(methodName))
+							controller.getMethods().get(index)
+									.setMethodName(methodName);
+					}
+				}
+			});
+		
 
 		vaiableScroll = new JScrollPane(listVariables);
 		methodScroll = new JScrollPane(listMethods);

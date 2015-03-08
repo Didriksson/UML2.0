@@ -5,6 +5,7 @@ import java.awt.Image;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 
 public class Constants {
 
@@ -61,7 +62,16 @@ public class Constants {
     public static final String DIRECT_ASSOCIATION_STRING = "DIRECT_ASSOCIATION";
     public static final String REALISATION_STRING = "REALISATION";
 
+   
     public static final Border RAISED_BEVEL_BORDER = BorderFactory
 	    .createRaisedBevelBorder();
+    public static final Border LOWERED_BEVEL_BORDER = BorderFactory
+        .createLoweredBevelBorder();
+
+    
+    public static final String PUBLIC_RETURN_TYPE = "Public";
+    public static final String PRIVATE_RETURN_TYPE = "Private";
+    public static final String PROTECTED_RETURN_TYPE = "Protected";
+    public static final String PACKAGE_RETURN_TYPE = "Package";
 
 }

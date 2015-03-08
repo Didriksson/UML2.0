@@ -12,7 +12,7 @@ public class NewRealisationComponentCommand implements ICommand {
 	}
 	
 	@Override
-	public void execute() {
+	public void redo() {
 	    diagram.newRelation(Constants.REALISATION_STRING);
 	}
 

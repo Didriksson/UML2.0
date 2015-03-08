@@ -14,7 +14,7 @@ public class NewClassComponentCommand implements ICommand{
 	}
 	
 	@Override
-	public void execute() {
+	public void redo() {
 	    c = diagram.newClassComponent(Constants.CLASSNAME_STRING);
 	}
 

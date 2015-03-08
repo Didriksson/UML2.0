@@ -12,7 +12,7 @@ public class NewInheritanceComponentCommand implements ICommand{
 	}
 	
 	@Override
-	public void execute() {
+	public void redo() {
 		d.newRelation(Constants.INHERITANCE_STRING);
 	}
 

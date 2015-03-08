@@ -9,8 +9,10 @@ import UML.Components.UMLRelation;
 
 public class UMLComponentController {
 
-	UMLComponent umlC;
-	UMLDrawAreaController drawController;
+	private UMLComponent umlC;
+	private UMLDrawAreaController drawController;
+	private int indexOfList = 0;
+	private boolean variableState;
 
 	public UMLComponentController(UMLComponent c, UMLDrawAreaController cont) {
 		this.umlC = c;
@@ -41,6 +43,10 @@ public class UMLComponentController {
 	public void newMethod() {
 	    drawController.addMethod(umlC);
 	}
+	
+	public void newVariable() {
+	    drawController.addVariable(umlC);
+	}
 
 	public void removeComponent() {
 		drawController.removeComponent(umlC);
@@ -50,8 +56,23 @@ public class UMLComponentController {
 		return umlC;
 	}
 
-	public void newVariable() {
-	    drawController.addVariable(umlC);
+	public void setIndexOfList(int index) {
+		this.indexOfList = index;
 	}
+	
+	public int getIndexOfList() {
+		return this.indexOfList;
+	}
+
+	public void setVariableState(boolean state) {
+		this.variableState = state;
+		
+	}
+	
+	public boolean getVariableState() {
+		return this.variableState;
+	}
+
+
 	
 }

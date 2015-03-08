@@ -20,90 +20,86 @@ import UML.Components.UMLComponent;
 import UML.Components.UMLRelation;
 
 public class UMLDrawAreaController {
-    private Diagram diagram;
-    Map<Enums, ICommand> toolbarCommands;
-    Stack<ICommand> executedCommands;
-    Stack<ICommand> revertedCommands;
-    private FigureViewingPanel viewPanel;
+	private Diagram diagram;
+	Map<Enums, ICommand> toolbarCommands;
+	Stack<ICommand> executedCommands;
+	Stack<ICommand> revertedCommands;
+	private FigureViewingPanel viewPanel;
 
-    public UMLDrawAreaController(Diagram d, Map<Enums, ICommand> commands) {
-	this.diagram = d;
-	this.toolbarCommands = commands;
-	executedCommands = new Stack<ICommand>();
-	revertedCommands = new Stack<ICommand>();
-    }
-
-    public void registerMeAsObserver(Observer o) {
-	diagram.addObserver(o);
-    }
-    
-    public void setViewPanel(FigureViewingPanel view){
-    	this.viewPanel = view;
-    }
-
-    public void removeComponent(UMLComponent c) {
-	ICommand command = new RemoveClassComponentCommand(diagram, c);
-	executedCommands.push(command);
-	command.execute();
-    }
-
-    public void toolbarCommands(Enums command) {
-	ICommand cmd = toolbarCommands.get(command);
-	executedCommands.push(cmd);
-	cmd.execute();
-    }
-
-    public void removeRelation(UMLRelation r) {
-	ICommand command = new RemoveRelationCommand(diagram, r);
-	executedCommands.push(command);
-	command.execute();
-    }
-
-    public void setDestinationForRelation(UMLRelation rel, UMLComponent c, Point point) {
-	ICommand command = new NewDestinationForRelationCommand(diagram, rel, c);
-	UMLRelationPoints points = viewPanel.getRelation().get(rel);
-	points.end = point;
-	executedCommands.push(command);
-	command.execute();
-
-    }
-
-    public void setRootForRelation(UMLRelation rel, UMLComponent c, Point point) {
-	ICommand command = new NewRootForRelationCommand(diagram, rel, c);
-	executedCommands.push(command);
-	UMLRelationPoints points = viewPanel.getRelation().get(rel);
-	points.start = point;
-	command.execute();
-    }
-
-    public void addMethod(UMLComponent c) {
-	ICommand command = new NewMethodCommand(diagram, c);
-	executedCommands.push(command);
-	command.execute();
-    }
-
-    public void addVariable(UMLComponent c) {
-	ICommand command = new NewClassVariableCommand(diagram, c);
-	executedCommands.push(command);
-	command.execute();
-
-    }
-
-    public void redoCommand() {
-	if (!revertedCommands.isEmpty()) {
-	    ICommand command = revertedCommands.pop();
-	    executedCommands.push(command);
-	    command.execute();
-
+	public UMLDrawAreaController(Diagram d, Map<Enums, ICommand> commands) {
+		this.diagram = d;
+		this.toolbarCommands = commands;
+		executedCommands = new Stack<ICommand>();
+		revertedCommands = new Stack<ICommand>();
 	}
-    }
 
-    public void undoCommand() {
-	if (!executedCommands.isEmpty()) {
-	    ICommand command = executedCommands.pop();
-	    revertedCommands.push(command);
-	    command.undo();
+	public void registerMeAsObserver(Observer o) {
+		diagram.addObserver(o);
 	}
-    }
+
+	public void setViewPanel(FigureViewingPanel view) {
+		this.viewPanel = view;
+	}
+
+	public void removeComponent(UMLComponent c) {
+		exectuteCommand(new RemoveClassComponentCommand(diagram, c));
+	}
+
+	public void removeRelation(UMLRelation r) {
+		exectuteCommand(new RemoveRelationCommand(diagram, r));
+	}
+
+	public void setDestinationForRelation(UMLRelation rel, UMLComponent c, Point point) {
+		UMLRelationPoints points = viewPanel.getRelation().get(rel);
+		points.end = point;
+		exectuteCommand(new NewDestinationForRelationCommand(diagram, rel, c));
+	}
+
+	public void setRootForRelation(UMLRelation rel, UMLComponent c, Point point) {
+		UMLRelationPoints points = viewPanel.getRelation().get(rel);
+		points.start = point;
+		exectuteCommand(new NewRootForRelationCommand(diagram, rel, c));
+	}
+	
+	public void addMethod(UMLComponent c) {
+		exectuteCommand(new NewMethodCommand(diagram, c));		
+	}
+
+	public void addVariable(UMLComponent c) {
+		exectuteCommand(new NewClassVariableCommand(diagram, c));
+	}
+
+	public void toolbarCommands(Enums command) {
+		exectuteCommand(toolbarCommands.get(command));
+	}
+
+	
+	private void exectuteCommand(ICommand command) {
+		executedCommands.push(command);
+		command.redo();
+	}
+		
+	
+	
+	public void redoCommand() {
+		if (!revertedCommands.isEmpty()) 
+			redoCommand(revertedCommands.pop());
+	}
+	
+	private void redoCommand(ICommand command) {
+		exectuteCommand(command);
+	}
+
+	public void undoCommand() {
+		if (!executedCommands.isEmpty()) 		
+			undoCommand(executedCommands.pop());		
+	}
+	
+	private void undoCommand(ICommand command) {
+		command.undo();
+		revertedCommands.push(command);
+	}
+	
+	
 
 }

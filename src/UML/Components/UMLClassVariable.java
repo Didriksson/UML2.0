@@ -1,5 +1,7 @@
 package UML.Components;
 
+import ConstantsAndEnums.Constants;
+
 public class UMLClassVariable extends UMLVariable{
     String modifiers;
     public UMLClassVariable(String scopeModifier, String type, String name) {
@@ -15,14 +17,17 @@ public class UMLClassVariable extends UMLVariable{
 	
 	String umlModify = "";
 	switch(modifiers){
-	case("public"):
+	case(Constants.PUBLIC_RETURN_TYPE):
 	    umlModify = "+";
 	    break;
-	case("private"):
+	case(Constants.PRIVATE_RETURN_TYPE):
 	    umlModify = "-";
 	    break;
-	case("protected"):
+	case(Constants.PROTECTED_RETURN_TYPE):
 	    umlModify = "#";
+		break;
+	case(Constants.PACKAGE_RETURN_TYPE):
+		umlModify = "~";
 	    break;
 	}
 	

@@ -9,6 +9,8 @@ import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
@@ -18,6 +20,8 @@ public class ResizableBorder implements Border {
 
 	private int dist = 8;
 	private boolean hovered;
+	private Map<Integer, Point> pointMap;
+	private Resizable component;
 
 	int locations[] = { SwingConstants.NORTH, SwingConstants.SOUTH,
 			SwingConstants.WEST, SwingConstants.EAST,
@@ -32,6 +36,7 @@ public class ResizableBorder implements Border {
 	public ResizableBorder(int dist) {
 		this.dist = dist;
 		this.hovered = false;
+	
 	}
 
 	@Override
@@ -67,6 +72,69 @@ public class ResizableBorder implements Border {
 				g.drawRect(rect.x, rect.y, rect.width - 1, rect.height - 1);
 			}
 		}
+	}
+	
+	public void setParentComponent(Resizable res) {
+		component = res;
+		createPointMap();
+	}
+	
+	private void createPointMap() {
+		pointMap = new HashMap<Integer, Point>();
+		pointMap.put(SwingConstants.NORTH, new Point());
+		pointMap.put(SwingConstants.SOUTH, new Point());
+		pointMap.put(SwingConstants.WEST, new Point());
+		pointMap.put(SwingConstants.EAST, new Point());
+		pointMap.put(SwingConstants.NORTH_WEST, new Point());
+		pointMap.put(SwingConstants.NORTH_EAST, new Point());
+		pointMap.put(SwingConstants.SOUTH_WEST, new Point());
+		pointMap.put(SwingConstants.SOUTH_EAST, new Point());
+		updatePointMap();
+	}
+
+	public void updatePointMap() {
+		Point p1;
+		Point position = component.position;
+		
+		p1 = pointMap.get(SwingConstants.NORTH);
+		p1.x = position.x + component.getWidth() / 2;
+		p1.y = position.y;
+
+		p1 = pointMap.get(SwingConstants.SOUTH);
+		p1.x = position.x + component.getWidth() / 2;
+		p1.y = position.y + component.getHeight();
+
+		p1 = pointMap.get(SwingConstants.WEST);
+		p1.x = position.x;
+		p1.y = position.y + component.getHeight() / 2;
+		
+		p1 = pointMap.get(SwingConstants.EAST);
+		p1.x = position.x + component.getWidth();
+		p1.y = position.y + component.getHeight() / 2;
+		
+		p1 = pointMap.get(SwingConstants.NORTH_WEST);
+		p1.x = position.x;
+		p1.y = position.y;
+		
+		p1 = pointMap.get(SwingConstants.NORTH_EAST);
+		p1.x = position.x + component.getWidth();
+		p1.y = position.y;
+		
+		p1 = pointMap.get(SwingConstants.SOUTH_WEST);
+		p1.x = position.x;
+		p1.y = position.y + component.getHeight();
+		
+		p1 = pointMap.get(SwingConstants.SOUTH_EAST);
+		p1.x = position.x + component.getWidth();
+		p1.y = position.y + component.getHeight();
+		
+	}
+	
+	public Point getPositionOfMarkers(int location) {
+		if (pointMap.containsKey(location)) {
+			return pointMap.get(location);
+		} else
+			return null;
 	}
 
 	public int getClosestSnappPoint(Component component) {

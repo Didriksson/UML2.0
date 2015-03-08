@@ -12,7 +12,7 @@ public class NewDirectAssociationComponentCommand implements ICommand{
 	}
 	
 	@Override
-	public void execute() {
+	public void redo() {
 		d.newRelation(Constants.DIRECT_ASSOCIATION_STRING);
 	}
 

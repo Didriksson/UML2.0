@@ -12,7 +12,7 @@ public class NewAggregationComponentCommand implements ICommand {
 	}
 	
 	@Override
-	public void execute() {
+	public void redo() {
 		d.newRelation(Constants.AGGREGATION_STRING);
 	}
 

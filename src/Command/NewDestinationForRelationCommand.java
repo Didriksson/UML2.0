@@ -19,7 +19,7 @@ public class NewDestinationForRelationCommand implements ICommand {
 	}
 
 	@Override
-	public void execute() {
+	public void redo() {
 		diagram.setDestinationForRelation(rel, comp);
 	}
 

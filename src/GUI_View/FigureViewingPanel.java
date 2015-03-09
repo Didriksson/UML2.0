@@ -191,27 +191,6 @@ public class FigureViewingPanel extends JPanel implements Observer,
 	controller.redoCommand();
     }
 
-    public void undoCommand() {
-	controller.undoCommand();
-    }
-
-    public void toolbarCommand(Enums enumeration) {
-	controller.toolbarCommands(enumeration);
-    }
-
-    public Resizable returnOverlapsedComponent(Point p) {
-	Resizable res = null;
-	for (Component comp : relationPanel.getComponents()) {
-	    if (comp instanceof Resizable) {
-		if (comp.contains(p)) {
-		    res = (Resizable) comp;
-		    res.setHoveredState(true);
-		}
-	    }
-	}
-	return res;
-    }
-
     public FigureViewingPanelPositionData getDataPosition() {
 	return dataPosition;
     }

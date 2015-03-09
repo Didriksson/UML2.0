@@ -2,6 +2,8 @@ package UML.Components;
 
 import java.io.Serializable;
 
+import com.google.gson.JsonObject;
+
 import ConstantsAndEnums.Constants;
 
 

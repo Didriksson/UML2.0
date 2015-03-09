@@ -22,7 +22,7 @@ public class GenerateSourceTest {
 	try {
 	    UMLMethod method = new UMLMethod("public", "void",
 		    "setNumberOfNanting");
-	    method.addVariable(new UMLVariable("int", "nanting"));
+	    method.addParameter(new UMLVariable("int", "nanting"));
 	    uml.addMethod(method);
 	} catch (Exception e) {
 	    e.printStackTrace();

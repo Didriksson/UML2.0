@@ -20,6 +20,7 @@ public class NewClassVariableCommand implements ICommand {
 		this.v = new UMLClassVariable("public", "String", "var");
 		try {
 			d.addClassVariable(c, v);
+			d.getParametersForMethod();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

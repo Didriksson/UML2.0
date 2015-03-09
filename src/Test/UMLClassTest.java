@@ -20,7 +20,7 @@ public class UMLClassTest {
 	assertEquals("public String getName(){}", method.generateSourceString());
 	
 	method = new UMLMethod("public", "String", "setName");
-	method.addVariable(new UMLVariable("String", "name"));
+	method.addParameter(new UMLVariable("String", "name"));
 	assertEquals("public String setName(String name){}", method.generateSourceString());
     }
     

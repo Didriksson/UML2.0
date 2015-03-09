@@ -46,6 +46,10 @@ public class RelationsDrawer extends JPanel {
 	public Resizable returnOverlapsedComponent(Point p) {
 		return topPanel.returnOverlapsedComponent(p);
 	}
+	
+	public void hideToolbar() {
+		topPanel.hideToolbar();
+	}
 
 	private void setUpKeyBinding() {
 		Action delete = new AbstractAction() {

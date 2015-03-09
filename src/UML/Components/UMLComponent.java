@@ -9,7 +9,6 @@ public class UMLComponent {
 	private List<UMLMethod> methods;
 	private List<UMLClassVariable> variables;
 
-	
 	public UMLComponent(String name, String type) {
 		this.name = name;
 		this.type = type;
@@ -29,61 +28,61 @@ public class UMLComponent {
 		return variables;
 	}
 
-    public void addMethod(UMLMethod method) throws Exception{
-	if(method.getMethodName().equals(this.name) && !(method instanceof UMLConstructor))
-	    throw new Exception("Method should have type UMLConstructor." + method);
-	    
-	methods.add(method);
-    }
-    
-    public void addVariable(String scopeModifier, String type, String name){
-	variables.add(new UMLClassVariable(scopeModifier, type, name));
-    }
-    
-    
-    public void addVariable(UMLClassVariable v){
-	variables.add(v);
-    }
-    
-    public UMLMethod getMethod(int n){
-	return methods.get(n);
-    }
-    
-    public List<UMLMethod> getMethods(){
-	return methods;
-    }
-    
-    public UMLClassVariable getVariable(int n){
-	return variables.get(n);
-    }
-    
-    public String toString(){
-	String tmp = getName() + "\n----------\n";
-	
-	for(UMLVariable v : variables){
-	    tmp += v.toString()+"\n";
+	public void addMethod(UMLMethod method) throws Exception {
+		if (method.getMethodName().equals(this.name)
+				&& !(method instanceof UMLConstructor))
+			throw new Exception("Method should have type UMLConstructor."
+					+ method);
+
+		methods.add(method);
 	}
 
-	tmp+= "----------\n";
-	
-	for(UMLMethod m : methods)
-	    tmp += m.toString()+"\n";
-	
-	return tmp;
-    }
-
-    public String generateSourceString() {
-	String tmp = "";
-	tmp += ("public " + type +" "+ name + " {\n");
-	for(UMLVariable v : variables){
-	    tmp += v.generateSourceString()+";"+"\n";
+	public void addVariable(String scopeModifier, String type, String name) {
+		variables.add(new UMLClassVariable(scopeModifier, type, name));
 	}
 
-	for(UMLMethod m : methods)
-	    tmp += m.generateSourceString()+"\n";
-	tmp += "}";
-	
-	
-	return tmp;
-    }
+	public void addVariable(UMLClassVariable v) {
+		variables.add(v);
+	}
+
+	public UMLMethod getMethod(int n) {
+		return methods.get(n);
+	}
+
+	public List<UMLMethod> getMethods() {
+		return methods;
+	}
+
+	public UMLClassVariable getVariable(int n) {
+		return variables.get(n);
+	}
+
+	public String toString() {
+		String tmp = getName() + "\n----------\n";
+
+		for (UMLVariable v : variables) {
+			tmp += v.toString() + "\n";
+		}
+
+		tmp += "----------\n";
+
+		for (UMLMethod m : methods)
+			tmp += m.toString() + "\n";
+
+		return tmp;
+	}
+
+	public String generateSourceString() {
+		String tmp = "";
+		tmp += ("public " + type + " " + name + " {\n");
+		for (UMLVariable v : variables) {
+			tmp += v.generateSourceString() + ";" + "\n";
+		}
+
+		for (UMLMethod m : methods)
+			tmp += m.generateSourceString() + "\n";
+		tmp += "}";
+
+		return tmp;
+	}
 }

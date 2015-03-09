@@ -3,6 +3,7 @@ package Controller;
 import java.awt.Point;
 import java.util.Map;
 import java.util.Observer;
+import java.util.Set;
 import java.util.Stack;
 
 import runner.Diagram;
@@ -77,6 +78,10 @@ public class UMLDrawAreaController {
 	private void exectuteCommand(ICommand command) {
 		executedCommands.push(command);
 		command.redo();
+	}
+	
+	public Set<String> getParameterList() {
+		return diagram.getParametersForMethod();
 	}
 		
 	

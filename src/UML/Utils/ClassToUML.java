@@ -43,7 +43,7 @@ public class ClassToUML {
 		p -> {
 		    UMLVariable variable = new UMLVariable(p.getType()
 			    .getSimpleName(), p.getName());
-		    method.addVariable(variable);
+		    method.addParameter(variable);
 		});
     }
 

@@ -191,6 +191,10 @@ public class FigureViewingPanel extends JPanel implements Observer {
 		controller.toolbarCommands(enumeration);
 	}
 	
+	public void hideToolbar() {
+		componentTools.hideToolbar();
+	}
+	
 	public Resizable returnOverlapsedComponent(Point p) {
 		Resizable res = null;
 		for (Component comp : relationPanel.getComponents()) {

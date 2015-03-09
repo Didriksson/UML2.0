@@ -20,11 +20,11 @@ public class MouseInteraction extends MouseAdapter {
 
 	private AssociationFigure selectedFigure;
 	private FigureList figureList;
-	private RelationsDrawer viewpanel;
+	private RelationsDrawer relationDrawer;
 
-	public MouseInteraction(FigureList figureList, RelationsDrawer viewpanel) {
+	public MouseInteraction(FigureList figureList, RelationsDrawer relationDrawer) {
 		this.figureList = figureList;
-		this.viewpanel = viewpanel;
+		this.relationDrawer = relationDrawer;
 		this.offset = new Point2D.Double();
 	}
 
@@ -34,9 +34,8 @@ public class MouseInteraction extends MouseAdapter {
 			double x = m.getX() - offset.x;
 			double y = m.getY() - offset.y;
 			selectedFigure.updatePosition(selectedIndex, (int) x, (int) y);
+			relationDrawer.checkIfOverlapping(m.getPoint());
 		}
-
-		viewpanel.checkIfOverlapping(m.getPoint());
 		updateViewPanel();
 	}
 
@@ -45,9 +44,10 @@ public class MouseInteraction extends MouseAdapter {
 	}
 
 	private void updateViewPanel() {
-		viewpanel.requestFocus();
-		viewpanel.repaint();
-		viewpanel.revalidate();
+		relationDrawer.requestFocus();
+		relationDrawer.repaint();
+		relationDrawer.revalidate();
+		relationDrawer.hideToolbar();
 	}
 
 	@Override
@@ -60,23 +60,23 @@ public class MouseInteraction extends MouseAdapter {
 			if (figureSelected(m, figure)) {
 				handleSelectedFigure(m, p, figure);
 			}
-		}
+		}		
 		updateViewPanel();
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent m) {
-		if (viewpanel.checkIfOverlapping(m.getPoint())) {
-			Resizable res = viewpanel.returnOverlapsedComponent(m.getPoint());
+		if (relationDrawer.checkIfOverlapping(m.getPoint())) {
+			Resizable res = relationDrawer.returnOverlapsedComponent(m.getPoint());
 			UMLRelation rel = figureList.getRelation(selectedFigure);
 
 			if (selectedIndex == 0) {
-				viewpanel.setRootForRelation(rel, res.getGUIComponent()
+				relationDrawer.setRootForRelation(rel, res.getGUIComponent()
 						 .getUMLComponent(), res.getSnapPointFromMousePosition());
 
 
 			} else if (selectedIndex == 1) {
-				viewpanel.setDestinationForRelation(rel, res.getGUIComponent()
+				relationDrawer.setDestinationForRelation(rel, res.getGUIComponent()
 						 .getUMLComponent(), res.getSnapPointFromMousePosition());
 			}
 		}

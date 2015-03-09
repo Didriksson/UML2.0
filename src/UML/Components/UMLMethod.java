@@ -26,7 +26,7 @@ public class UMLMethod implements Comparable<UMLMethod> {
 		this.variables = v;
 	}
 
-	public void addVariable(UMLVariable v) {
+	public void addParameter(UMLVariable v) {
 		variables.add(v);
 	}
 

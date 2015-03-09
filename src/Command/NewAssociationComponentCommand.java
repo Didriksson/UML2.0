@@ -1,25 +1,26 @@
 package Command;
 
+import UML.Components.UMLRelation;
 import ConstantsAndEnums.Constants;
 import runner.Diagram;
 
-public class NewAssociationComponentCommand implements ICommand{
+public class NewAssociationComponentCommand extends ToolbarCommand{
 	
-	private Diagram d;
+	UMLRelation r;
 	
-	public NewAssociationComponentCommand(Diagram dia) {
-		this.d = dia;
+	public NewAssociationComponentCommand(Diagram d) {
+		super(d);
 	}
-	
 	@Override
-	public void redo() {
-		d.newRelation(Constants.ASSOCIATION_STRING);
+	public void execute() {
+		if(r == null)
+			r = diagram.newRelation(Constants.ASSOCIATION_STRING);
+		else
+			diagram.addRelation(r);
 	}
 
 	@Override
 	public void undo() {
-		
+		diagram.removeRelation(r);
 	}
-
-
 }

@@ -15,7 +15,7 @@ public class NewMethodCommand implements ICommand {
 	}
 
 	@Override
-	public void redo() {
+	public void execute() {
 		m = new UMLMethod("public", "void", "MethodName");
 		try {
 			d.addMethod(c, m);

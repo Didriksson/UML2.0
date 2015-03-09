@@ -74,10 +74,21 @@ public class RelationsDrawer extends JPanel {
 					e.printStackTrace();
 				}
 		}
+
+		checkIfThereIsSomeRelationsInFigurelistThatDoNotExistInTheDiagramAndRemoveThem();
+
 		for (AssociationFigure f : figureList) {
 			f.draw(g);
 		}
 
+	}
+
+	private void checkIfThereIsSomeRelationsInFigurelistThatDoNotExistInTheDiagramAndRemoveThem() {
+		Set<UMLRelation> tmpRelations = new HashSet<UMLRelation>(
+				figureList.getAllRelations());
+		tmpRelations.removeAll(topPanel.getRelation().keySet());
+		for (UMLRelation r : tmpRelations)
+			figureList.removeKeyFromValue(r);
 	}
 
 	private void addNewAssociationFigure(UMLRelation r) throws Exception {
@@ -86,10 +97,10 @@ public class RelationsDrawer extends JPanel {
 		AssociationFigure figure = FigureFactory.getRelationsFigure(
 				r.getType(), start, endPoint);
 		figureList.add(figure, r);
-
 	}
 
-	public void setDestinationForRelation(UMLRelation rel, UMLComponent umlComponent, Point point) {
+	public void setDestinationForRelation(UMLRelation rel,
+			UMLComponent umlComponent, Point point) {
 		controller.setDestinationForRelation(rel, umlComponent, point);
 	}
 
@@ -101,7 +112,8 @@ public class RelationsDrawer extends JPanel {
 		}
 	}
 
-	public void setRootForRelation(UMLRelation rel, UMLComponent umlComponent, Point point) {
+	public void setRootForRelation(UMLRelation rel, UMLComponent umlComponent,
+			Point point) {
 		controller.setRootForRelation(rel, umlComponent, point);
 	}
 

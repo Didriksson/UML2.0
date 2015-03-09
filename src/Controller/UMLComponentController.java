@@ -1,5 +1,6 @@
 package Controller;
 
+import java.io.Serializable;
 import java.util.List;
 
 import UML.Components.UMLClassVariable;
@@ -7,17 +8,17 @@ import UML.Components.UMLComponent;
 import UML.Components.UMLMethod;
 import UML.Components.UMLRelation;
 
-public class UMLComponentController {
+public class UMLComponentController implements Serializable {
 
 	private UMLComponent umlC;
-	private UMLDrawAreaController drawController;
+	private transient UMLDrawAreaController drawController;
 	private boolean variableState = false;
 	private int indexOfVariableList = 0;
 	private int indexOfMehodList = 0;
 
 	public UMLComponentController(UMLComponent c, UMLDrawAreaController cont) {
 		this.umlC = c;
-		
+
 		this.drawController = cont;
 	}
 
@@ -42,11 +43,11 @@ public class UMLComponentController {
 	}
 
 	public void newMethod() {
-	    drawController.addMethod(umlC);
+		drawController.addMethod(umlC);
 	}
-	
+
 	public void newVariable() {
-	    drawController.addVariable(umlC);
+		drawController.addVariable(umlC);
 	}
 
 	public void removeComponent() {
@@ -57,12 +58,10 @@ public class UMLComponentController {
 		return umlC;
 	}
 
-	
-
 	public void setVariableState(boolean state) {
-		this.variableState = state;	
+		this.variableState = state;
 	}
-	
+
 	public boolean getVariableState() {
 		return this.variableState;
 	}
@@ -70,7 +69,7 @@ public class UMLComponentController {
 	public void setIndexOfVariableList(int index) {
 		this.indexOfVariableList = index;
 	}
-	
+
 	public int getIndexOfVariableList() {
 		return this.indexOfVariableList;
 	}
@@ -78,11 +77,9 @@ public class UMLComponentController {
 	public void setIndexOfMethodList(int index) {
 		this.indexOfMehodList = index;
 	}
-	
+
 	public int getIndexOfMethodList() {
-		return this.indexOfMehodList; 
+		return this.indexOfMehodList;
 	}
 
-
-	
 }

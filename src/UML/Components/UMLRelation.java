@@ -1,6 +1,12 @@
 package UML.Components;
 
-public class UMLRelation {
+import java.io.Serializable;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
+public class UMLRelation implements Serializable{
 	private final String type;
 	private UMLComponent root;
 	private UMLComponent destination;
@@ -8,7 +14,7 @@ public class UMLRelation {
 	public UMLRelation(String type) {
 		this.type = type;
 	}
-	
+
 	public String getType() {
 		return type;
 	}
@@ -28,4 +34,13 @@ public class UMLRelation {
 	public void setDestination(UMLComponent destination) {
 		this.destination = destination;
 	}
+
+	public JsonElement toJson() {
+		JsonObject json = new JsonObject();
+		json.addProperty("type", type);
+		json.add("root", root.toJson());
+		json.add("destination", destination.toJson());
+		return json;
+	}
+
 }

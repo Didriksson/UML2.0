@@ -1,11 +1,12 @@
 package Figures.Graphics;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Set;
 
 import UML.Components.UMLRelation;
 
@@ -26,6 +27,17 @@ public class FigureList extends Observable implements Observer, Iterable<Associa
 		this.setChanged();
 		this.notifyObservers();
 		return r;
+	}
+	
+	public Set<UMLRelation> getAllRelations(){
+			return new HashSet<UMLRelation>(relationFigureMap.values());
+	}
+	
+	public void removeKeyFromValue(UMLRelation r) {
+		AssociationFigure a = getAssociationFromRelation(r);
+		relationFigureMap.remove(a);
+		this.setChanged();
+		this.notifyObservers();
 	}
 
 	public UMLRelation getRelation(AssociationFigure a){

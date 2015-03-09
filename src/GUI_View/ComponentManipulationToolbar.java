@@ -88,17 +88,6 @@ public class ComponentManipulationToolbar extends JPanel {
 		
 		addingPanel.add(addMethodButton, "wrap");
 		addingPanel.add(addVariableButton);
-
-//		if(selectedComponent instanceof ClassFigure) {
-//		if(selectedComponent.getController().getVariableState()) {
-//			methodNameField.setEnabled(false);
-//			updateMethodButton.setEnabled(false);
-//		} else if(!selectedComponent.getController().getVariableState()) {
-//			variableNameField.setEnabled(false);
-//			updateVariableButton.setEnabled(false);
-//		}
-//	}
-		
 		
 		this.add(modifyingPanel);
 		this.add(addingPanel, "grow");
@@ -143,7 +132,7 @@ public class ComponentManipulationToolbar extends JPanel {
 
 	private void updateMethod() {
 		if (selectedComponent instanceof ClassFigure) {
-			int index = selectedComponent.getController().getIndexOfVariableList();
+			int index = selectedComponent.getController().getIndexOfMethodList();
 			selectedComponent.getController().getMethods().get(index).setMethodName(methodNameField.getText());
 			selectedComponent.getController().getMethods().get(index).setScopeModifier(visabilityIdentyfier);
 			updateListInClassComponent();
@@ -153,7 +142,7 @@ public class ComponentManipulationToolbar extends JPanel {
 	
 	private void updateVariable() {
 		if (selectedComponent instanceof ClassFigure) {
-			int index = selectedComponent.getController().getIndexOfMethodList();
+			int index = selectedComponent.getController().getIndexOfVariableList();
 			selectedComponent.getController().getVariables().get(index).setvariableName(variableNameField.getText());
 			selectedComponent.getController().getVariables().get(index).setScopeModifier(visabilityIdentyfier);
 			updateListInClassComponent();

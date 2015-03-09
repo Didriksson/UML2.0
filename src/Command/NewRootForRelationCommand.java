@@ -18,7 +18,7 @@ public class NewRootForRelationCommand implements ICommand {
 	}
 
 	@Override
-	public void redo() {
+	public void execute() {
 		diagram.setRootForRelation(rel, comp);
 	}
 

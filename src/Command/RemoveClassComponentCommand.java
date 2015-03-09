@@ -13,7 +13,7 @@ public class RemoveClassComponentCommand implements ICommand {
 	}
 
 	@Override
-	public void redo() {
+	public void execute() {
 		diagram.removeComponent(component);
 	}
 

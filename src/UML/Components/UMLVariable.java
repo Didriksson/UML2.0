@@ -1,31 +1,43 @@
 package UML.Components;
 
-public class UMLVariable {
-    private String variableName;
-    private String type;
+import java.io.Serializable;
 
-    public UMLVariable(String type, String name) {
-	this.variableName = name;
-	this.type = type;
-    }
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
-    public String getName() {
-        return variableName;
-    }
+public class UMLVariable implements Serializable{
+	private String variableName;
+	private String type;
 
-    public void setvariableName(String methodName) {
-        this.variableName = methodName;
-    }
+	public UMLVariable(String type, String name) {
+		this.variableName = name;
+		this.type = type;
+	}
 
-    public String toString(){
-	return variableName +" : "+ type;
-    }
+	public String getName() {
+		return variableName;
+	}
 
-    public String getType() {
-	return this.type;
-    }
+	public void setvariableName(String methodName) {
+		this.variableName = methodName;
+	}
 
-    public String generateSourceString() {
-	return type + " " + variableName;
-    }
+	public String toString() {
+		return variableName + " : " + type;
+	}
+
+	public String getType() {
+		return this.type;
+	}
+
+	public String generateSourceString() {
+		return type + " " + variableName;
+	}
+
+	public JsonObject toJson() {
+		JsonObject json = new JsonObject();
+		json.addProperty("name", variableName);
+		json.addProperty("type", type);
+		return json;
+	}
 }

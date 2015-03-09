@@ -16,7 +16,7 @@ public class NewClassVariableCommand implements ICommand {
 	}
 
 	@Override
-	public void redo() {
+	public void execute() {
 		this.v = new UMLClassVariable("public", "String", "var");
 		try {
 			d.addClassVariable(c, v);

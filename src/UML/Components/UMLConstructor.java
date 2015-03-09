@@ -1,6 +1,8 @@
 package UML.Components;
 
-public class UMLConstructor extends UMLMethod{
+import java.io.Serializable;
+
+public class UMLConstructor extends UMLMethod implements Serializable{
 
     public UMLConstructor(String scopeModifier, String name){
 	super(scopeModifier, "", name);

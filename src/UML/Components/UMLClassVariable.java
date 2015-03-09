@@ -1,8 +1,12 @@
 package UML.Components;
 
+import java.io.Serializable;
+
 import ConstantsAndEnums.Constants;
 
-public class UMLClassVariable extends UMLVariable {
+
+public class UMLClassVariable extends UMLVariable implements Serializable {
+
 	String modifiers;
 
 	public UMLClassVariable(String scopeModifier, String type, String name) {
@@ -41,6 +45,14 @@ public class UMLClassVariable extends UMLVariable {
 
 	public void setScopeModifier(String scopeModifier) {
 		this.modifiers = scopeModifier;
+
+	}
+
+	public JsonObject toJson() {
+		JsonObject json = super.toJson();
+		json.addProperty("modifier", this.modifiers);
+		return json;
+
 	}
 
 }

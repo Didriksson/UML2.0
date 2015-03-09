@@ -1,33 +1,31 @@
 package runner;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Observable;
+import java.util.Observer;
 import java.util.Optional;
 import java.util.Set;
-import java.util.TreeSet;
 
-import ConstantsAndEnums.Constants;
 import UML.Components.UMLClassVariable;
 import UML.Components.UMLComponent;
 import UML.Components.UMLMethod;
 import UML.Components.UMLRelation;
-import UML.Components.UMLVariable;
 
-public class Diagram extends Observable {
+public class Diagram extends Observable implements Serializable {
 	private List<UMLComponent> components;
 	private List<UMLRelation> relations;
 	private Set<String> parameterSet;
-	
-	
+
 	public Diagram() {
 		this.components = new ArrayList<UMLComponent>();
 		this.relations = new ArrayList<UMLRelation>();
 		this.parameterSet = new HashSet<String>();
 		addingTypesToParameterSet();
 	}
-	
+
 	
 	private void addingTypesToParameterSet() {
 		parameterSet.add("byte");
@@ -39,24 +37,30 @@ public class Diagram extends Observable {
 		parameterSet.add("char");
 		parameterSet.add("String");		
 	}
-
+	
 	public void addComponent(UMLComponent c) {
 		this.components.add(c);
 		setChanged();
 		notifyObservers(this);
+		signalUpdate();
+	}
+
+	public void removeObserver(Observer o) {
+		this.removeObserver(o);
 	}
 
 	public boolean removeComponent(UMLComponent c) {
 		boolean operationOK = this.components.remove(c);
 		setChanged();
 		notifyObservers(this);
-		System.out.println("meeep");
+		signalUpdate();
 		return operationOK;
 	}
 
 	public boolean removeComponent(String name) {
 		setChanged();
 		notifyObservers(this);
+		signalUpdate();
 		return components.removeIf(c -> c.equals(name));
 	}
 
@@ -85,20 +89,23 @@ public class Diagram extends Observable {
 		return c;
 	}
 
-	public void newRelation(String type) {
-		relations.add(new UMLRelation(type));
-		setChanged();
-		notifyObservers(this);
+
+	public UMLRelation newRelation(String type) {
+		UMLRelation relation = new UMLRelation(type);
+		relations.add(relation);
+		signalUpdate();
+		return relation;
 	}
 
 	public List<UMLRelation> getRelations() {
 		return relations;
 	}
 
-	public void removeRelation(UMLRelation relation) {
-		relations.remove(relation);
-		setChanged();
-		notifyObservers(this);
+
+	public boolean removeRelation(UMLRelation relation) {
+		boolean operationOK = relations.remove(relation);
+		signalUpdate();
+		return operationOK;
 	}
 
 	public void setDestinationForRelation(UMLRelation rel, UMLComponent comp) {
@@ -106,6 +113,7 @@ public class Diagram extends Observable {
 			rel.setDestination(comp);
 		setChanged();
 		notifyObservers(this);
+		signalUpdate();
 	}
 
 	public void setRootForRelation(UMLRelation rel, UMLComponent comp) {
@@ -113,6 +121,7 @@ public class Diagram extends Observable {
 			rel.setRoot(comp);
 		setChanged();
 		notifyObservers(this);
+		signalUpdate();
 	}
 
 	public void addMethod(UMLComponent c, UMLMethod m) throws Exception {
@@ -123,12 +132,28 @@ public class Diagram extends Observable {
 		c.addVariable(v);
 	}
 
-	
-	
 	public Set<String> getParametersForMethod() {
 		return parameterSet;
 	}
 	
-	
-	
+	public void addRelation(UMLRelation r) {
+		relations.add(r);
+		signalUpdate();
+	}
+
+	@Override
+	public String toString() {
+		String tmp = "";
+		for (UMLComponent c : components)
+			tmp = tmp + " " + c.toString();
+
+		for (UMLRelation r : relations)
+			tmp = tmp + " " + r.toString();
+		return tmp;
+	}
+
+	public void signalUpdate() {
+		this.setChanged();
+		this.notifyObservers(this);
+	}
 }

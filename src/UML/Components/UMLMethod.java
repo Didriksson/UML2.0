@@ -1,21 +1,26 @@
 package UML.Components;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
 import ConstantsAndEnums.Constants;
 
-public class UMLMethod implements Comparable<UMLMethod> {
+public class UMLMethod implements Comparable<UMLMethod>, Serializable{
 	String methodName;
 	String returnType;
 	String modifier;
-	List<UMLVariable> variables;
+	List<UMLVariable> parameters;
 
 	public UMLMethod(String scopeModifier, String returntype, String name) {
 		this.methodName = name;
 		this.returnType = returntype;
 		this.modifier = scopeModifier;
-		this.variables = new ArrayList<UMLVariable>();
+		this.parameters = new ArrayList<UMLVariable>();
 	}
 
 	public UMLMethod(String scopeModifier, String returntype, String name,
@@ -23,15 +28,20 @@ public class UMLMethod implements Comparable<UMLMethod> {
 		this.methodName = name;
 		this.returnType = returntype;
 		this.modifier = scopeModifier;
-		this.variables = v;
+		this.parameters = v;
 	}
 
+
 	public void addParameter(UMLVariable v) {
-		variables.add(v);
+		parameters.add(v);
+	}
+
+	public void addVariable(UMLVariable v) {
+		parameters.add(v);
 	}
 
 	public List<UMLVariable> getVariables() {
-		return variables;
+		return parameters;
 	}
 
 	public String getMethodName() {
@@ -71,17 +81,17 @@ public class UMLMethod implements Comparable<UMLMethod> {
 			break;
 		case (Constants.PROTECTED_RETURN_TYPE):
 			umlModifier = "#";
-			break;	
-		case(Constants.PACKAGE_RETURN_TYPE):
+			break;
+		case (Constants.PACKAGE_RETURN_TYPE):
 			umlModifier = "~";
-		    break;
+			break;
 		}
 
 		String tmp = umlModifier + " " + methodName + "(";
 
-		for (int i = 0; i < variables.size(); i++) {
-			tmp += variables.get(i).toString();
-			if (i != variables.size() - 1)
+		for (int i = 0; i < parameters.size(); i++) {
+			tmp += parameters.get(i).toString();
+			if (i != parameters.size() - 1)
 				tmp += ", ";
 		}
 		tmp += ")" + " : " + returnType;
@@ -91,9 +101,9 @@ public class UMLMethod implements Comparable<UMLMethod> {
 
 	public String generateSourceString() {
 		String tmp = modifier + " " + returnType + " " + methodName + "(";
-		for (int i = 0; i < variables.size(); i++) {
-			tmp += variables.get(i).generateSourceString();
-			if (i != variables.size() - 1)
+		for (int i = 0; i < parameters.size(); i++) {
+			tmp += parameters.get(i).generateSourceString();
+			if (i != parameters.size() - 1)
 				tmp += ", ";
 		}
 		tmp += "){}";
@@ -104,5 +114,19 @@ public class UMLMethod implements Comparable<UMLMethod> {
 	@Override
 	public int compareTo(UMLMethod o) {
 		return this.getMethodName().compareTo(o.getMethodName());
+	}
+
+	public JsonObject toJson() {
+		JsonObject json = new JsonObject();
+		json.addProperty("name", this.getMethodName());
+		json.addProperty("returnType", this.getReturnType());
+		json.addProperty("modifier", this.getScopeModifier());
+		JsonArray jsonParameters = new JsonArray();
+		parameters.stream().forEach(v -> {
+			jsonParameters.add(v.toJson());
+		});
+		json.add("parameters", jsonParameters);
+		
+		return json;
 	}
 }

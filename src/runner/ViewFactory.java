@@ -1,50 +1,71 @@
 package runner;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
-import Command.ICommand;
-import Command.NewAggregationComponentCommand;
-import Command.NewAssociationComponentCommand;
-import Command.NewClassComponentCommand;
-import Command.NewCompositionComponentCommand;
-import Command.NewDependencyComponentCommand;
-import Command.NewDirectAssociationComponentCommand;
-import Command.NewInheritanceComponentCommand;
-import Command.NewRealisationComponentCommand;
-import Command.RemoveClassComponentCommand;
-import ConstantsAndEnums.Enums;
 import Controller.UMLDrawAreaController;
 import GUI_View.FigureViewingPanel;
 
 public class ViewFactory {
 	private static FigureViewingPanel currentPanel;
 	private static UMLDrawAreaController controller;
+	private static Diagram d;
 
 	public static UMLDrawAreaController getUMLDrawController() {
 		if (controller == null) {
-			Diagram d = new Diagram();
-			controller = new UMLDrawAreaController(d, getCommands(d));
+			controller = new UMLDrawAreaController(d);
 		}
 		return controller;
 	}
 
-	private static Map<Enums, ICommand> getCommands(Diagram d) {
-		Map<Enums, ICommand> commands = new HashMap<Enums, ICommand>();
-		commands.put(ConstantsAndEnums.Enums.CLASS_ENUM, new NewClassComponentCommand(d));
-		commands.put(ConstantsAndEnums.Enums.ASSOCIATION_ENUM, new NewAssociationComponentCommand(d));
-		commands.put(ConstantsAndEnums.Enums.DIRECT_ASSOCIATION_ENUM, new NewDirectAssociationComponentCommand(d));
-		commands.put(ConstantsAndEnums.Enums.INHERITANCE_ENUM, new NewInheritanceComponentCommand(d));
-		commands.put(ConstantsAndEnums.Enums.DEPENDENCY_ENUM, new NewDependencyComponentCommand(d));
-		commands.put(ConstantsAndEnums.Enums.REALIZATION_ENUM, new NewRealisationComponentCommand(d));
-		commands.put(ConstantsAndEnums.Enums.AGGREGATION_ENUM, new NewAggregationComponentCommand(d));
-		commands.put(ConstantsAndEnums.Enums.COMPOSITION_ENUM, new NewCompositionComponentCommand(d));
-		return commands;
+	public static FigureViewingPanel getFigureViewingPanel() {
+		if (currentPanel == null) {
+			if (d == null)
+				d = new Diagram();
+			currentPanel = new FigureViewingPanel(getUMLDrawController());
+		}
+		return currentPanel;
 	}
 
-	public static FigureViewingPanel getFigureViewingPanel() {
-		if (currentPanel == null)
-			currentPanel = new FigureViewingPanel(getUMLDrawController());
-		return currentPanel;
+	public static void saveCurrentState() {
+		try {
+			FileOutputStream f_out = new FileOutputStream("myobject.data");
+
+			ObjectOutputStream obj_out = new ObjectOutputStream(f_out);
+
+			SavedDataHolder savedData = new SavedDataHolder();
+			savedData.diagram = controller.getDiagram();
+			savedData.positionData = getFigureViewingPanel().getDataPosition();
+
+			obj_out.writeObject(savedData);
+		}
+
+		catch (Exception e) {
+			System.out.println("Spartok!\n ");
+			e.printStackTrace();
+		}
+	}
+
+	public static void loadFromDiagram() {
+		try {
+			FileInputStream f_in = new FileInputStream("myobject.data");
+
+			ObjectInputStream obj_in = new ObjectInputStream(f_in);
+
+			// Read an object
+			Object obj = obj_in.readObject();
+			if (obj instanceof SavedDataHolder) {
+				SavedDataHolder data = (SavedDataHolder) obj;
+				d = data.diagram;
+				System.out.println(d);
+				d.addObserver(getFigureViewingPanel());
+				getFigureViewingPanel().setDataPosition(data.positionData);
+				d.signalUpdate();
+			}
+		} catch (Exception e) {
+		}
+
 	}
 }

@@ -1,19 +1,19 @@
 package Controller;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
-import GUI_View.IVisability;
 import GUI_View.MethodMenu;
 import GUI_View.VariableMenu;
 import UML.Components.UMLClassVariable;
 import UML.Components.UMLComponent;
 import UML.Components.UMLMethod;
 
-public class UMLComponentController {
+public class UMLComponentController implements Serializable {
 
 	private UMLComponent umlC;
-	private UMLDrawAreaController drawController;
+	private transient UMLDrawAreaController drawController;
 	private boolean variableState = false;
 	private int indexOfVariableList = 0;
 	private int indexOfMehodList = 0;
@@ -22,7 +22,7 @@ public class UMLComponentController {
 
 	public UMLComponentController(UMLComponent c, UMLDrawAreaController cont) {
 		this.umlC = c;
-		
+
 		this.drawController = cont;
 	}
 
@@ -47,11 +47,11 @@ public class UMLComponentController {
 	}
 
 	public void newMethod() {
-	    drawController.addMethod(umlC);
+		drawController.addMethod(umlC);
 	}
-	
+
 	public void newVariable() {
-	    drawController.addVariable(umlC);
+		drawController.addVariable(umlC);
 	}
 
 	public void removeComponent() {
@@ -66,11 +66,19 @@ public class UMLComponentController {
 		return drawController.getParameterList();
 	}
 	
+	public void setVariableState(boolean state) {
+		this.variableState = state;
+	}
+
+	public boolean getVariableState() {
+		return this.variableState;
+	}
+
 	public void setIndexOfVariableList(int index, String fieldText) {
 		this.indexOfVariableList = index;
 		this.variableMenu.updateTextField(fieldText);
 	}
-	
+
 	public int getIndexOfVariableList() {
 		return this.indexOfVariableList;
 	}
@@ -79,9 +87,9 @@ public class UMLComponentController {
 		this.indexOfMehodList = index;
 		this.methodMenu.updateTextField(fieldText);
 	}
-	
+
 	public int getIndexOfMethodList() {
-		return this.indexOfMehodList; 
+		return this.indexOfMehodList;
 	}
 
 	public void setVariableMenu(VariableMenu variableMenu) {

@@ -4,23 +4,26 @@ import UML.Components.UMLComponent;
 import ConstantsAndEnums.Constants;
 import runner.Diagram;
 
-public class NewClassComponentCommand implements ICommand{
+public class NewClassComponentCommand extends ToolbarCommand {
 
-	Diagram diagram;
-	UMLComponent c;
-    
-    public NewClassComponentCommand(Diagram d) {
-		this.diagram= d;
+	public NewClassComponentCommand(Diagram d) {
+		super(d);
 	}
-	
+
+	UMLComponent c;
+
 	@Override
-	public void redo() {
-	    c = diagram.newClassComponent(Constants.CLASSNAME_STRING);
+	public void execute() {
+		if (c == null)
+			c = diagram.newClassComponent(Constants.CLASSNAME_STRING);
+		else
+			diagram.addComponent(c);
 	}
 
 	@Override
 	public void undo() {
-	    diagram.removeComponent(c);
+		System.out.println(c);
+		diagram.removeComponent(c);
 	}
 
 }

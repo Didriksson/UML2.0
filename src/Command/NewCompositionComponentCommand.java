@@ -1,23 +1,28 @@
 package Command;
 
+import UML.Components.UMLRelation;
 import runner.Diagram;
 import ConstantsAndEnums.Constants;
 
-public class NewCompositionComponentCommand implements ICommand {
+public class NewCompositionComponentCommand extends ToolbarCommand {
 
-	Diagram diagram;
-    
-    public NewCompositionComponentCommand(Diagram d) {
-		this.diagram= d;
+	private UMLRelation r;
+
+	public NewCompositionComponentCommand(Diagram d) {
+		super(d);
 	}
-	
+
 	@Override
-	public void redo() {
-	    diagram.newRelation(Constants.COMPOSITION_STRING);
+	public void execute() {
+		if(r == null)
+			r = diagram.newRelation(Constants.COMPOSITION_STRING);
+		else
+			diagram.addRelation(r);
 	}
 
 	@Override
 	public void undo() {
+		diagram.removeRelation(r);
 	}
-	
+
 }

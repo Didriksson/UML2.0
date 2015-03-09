@@ -14,13 +14,13 @@ public class RemoveRelationCommand implements ICommand {
 	}
 
 	@Override
-	public void redo() {
+	public void execute() {
 		diagram.removeRelation(relation);
 	}
 
 	@Override
 	public void undo() {
-		
+		diagram.addRelation(relation);
 	}
 
 }

@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.geom.Point2D;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +18,7 @@ import javax.swing.SwingConstants;
 
 import GUI_View.FigureViewingPanel;
 
-public class Resizable extends JComponent {
+public class Resizable extends JComponent{
 
 	private FigureViewingPanel mainPanel;
 	private GUIComponent content;
@@ -25,18 +26,17 @@ public class Resizable extends JComponent {
 	private ResizableBorder border;
 	private ComponentMover mouseListener;
 
-
 	public Resizable(FigureViewingPanel mainPanel, GUIComponent comp, Point p) {
 		this(mainPanel, comp, new ResizableBorder(8), p);
 	}
 
-	public Resizable(FigureViewingPanel mainPanel, GUIComponent comp, ResizableBorder border, Point p) {
+	public Resizable(FigureViewingPanel mainPanel, GUIComponent comp,
+			ResizableBorder border, Point p) {
 		this.position = p;
 		this.mainPanel = mainPanel;
 		this.content = comp;
 		this.border = border;
 		mouseListener = new ComponentMover(this);
-		
 
 		setLayout(new BorderLayout());
 		setBorder(border);
@@ -46,11 +46,9 @@ public class Resizable extends JComponent {
 		addMouseListener(mouseListener);
 		addMouseMotionListener(mouseListener);
 		setupKeyBindings();
-		
+
 		this.border.setParentComponent(this);
 	}
-
-	
 
 	private void setupKeyBindings() {
 		Action deleteMethod = new AbstractAction() {
@@ -67,7 +65,7 @@ public class Resizable extends JComponent {
 	public void updatePosition(int x, int y) {
 		this.position.x = x;
 		this.position.y = y;
-		border.updatePointMap();	
+		border.updatePointMap();
 		viewUpdated();
 	}
 

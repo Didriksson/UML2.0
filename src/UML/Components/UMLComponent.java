@@ -1,9 +1,14 @@
 package UML.Components;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UMLComponent {
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
+public class UMLComponent implements Serializable{
 	private String name;
 	private String type;
 	private List<UMLMethod> methods;
@@ -84,5 +89,27 @@ public class UMLComponent {
 		tmp += "}";
 
 		return tmp;
+	}
+
+	public JsonObject toJson() {
+		JsonObject json = new JsonObject();
+		json.addProperty("name", name);
+		json.addProperty("type", type);
+
+		JsonArray jsonMethods = new JsonArray();
+		methods.stream().forEach(m -> {
+			jsonMethods.add(m.toJson());
+		});
+
+		json.add("methods", jsonMethods);
+
+		JsonArray jsonVariables = new JsonArray();
+		variables.stream().forEach(v -> {
+			jsonVariables.add(v.toJson());
+		});
+
+		json.add("variables", jsonVariables);
+
+		return json;
 	}
 }

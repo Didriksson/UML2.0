@@ -1,4 +1,4 @@
-package startProgram; 
+package startProgram;
 
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;

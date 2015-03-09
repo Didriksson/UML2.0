@@ -6,6 +6,7 @@ import java.util.Observer;
 import java.util.Set;
 import java.util.Stack;
 
+import runner.CommandFactory;
 import runner.Diagram;
 import Command.ICommand;
 import Command.NewClassVariableCommand;
@@ -22,16 +23,18 @@ import UML.Components.UMLRelation;
 
 public class UMLDrawAreaController {
 	private Diagram diagram;
-	Map<Enums, ICommand> toolbarCommands;
 	Stack<ICommand> executedCommands;
 	Stack<ICommand> revertedCommands;
 	private FigureViewingPanel viewPanel;
 
-	public UMLDrawAreaController(Diagram d, Map<Enums, ICommand> commands) {
+	public UMLDrawAreaController(Diagram d) {
 		this.diagram = d;
-		this.toolbarCommands = commands;
 		executedCommands = new Stack<ICommand>();
 		revertedCommands = new Stack<ICommand>();
+	}
+	
+	public void setDiagram(Diagram d){
+		this.diagram = d;
 	}
 
 	public void registerMeAsObserver(Observer o) {
@@ -50,7 +53,8 @@ public class UMLDrawAreaController {
 		exectuteCommand(new RemoveRelationCommand(diagram, r));
 	}
 
-	public void setDestinationForRelation(UMLRelation rel, UMLComponent c, Point point) {
+	public void setDestinationForRelation(UMLRelation rel, UMLComponent c,
+			Point point) {
 		UMLRelationPoints points = viewPanel.getRelation().get(rel);
 		points.end = point;
 		exectuteCommand(new NewDestinationForRelationCommand(diagram, rel, c));
@@ -61,9 +65,9 @@ public class UMLDrawAreaController {
 		points.start = point;
 		exectuteCommand(new NewRootForRelationCommand(diagram, rel, c));
 	}
-	
+
 	public void addMethod(UMLComponent c) {
-		exectuteCommand(new NewMethodCommand(diagram, c));		
+		exectuteCommand(new NewMethodCommand(diagram, c));
 	}
 
 	public void addVariable(UMLComponent c) {
@@ -71,40 +75,42 @@ public class UMLDrawAreaController {
 	}
 
 	public void toolbarCommands(Enums command) {
-		exectuteCommand(toolbarCommands.get(command));
+		exectuteCommand(CommandFactory.getToolbarCommand(command, diagram));
 	}
 
-	
 	private void exectuteCommand(ICommand command) {
+		System.out.println("Köttar command: " + command);
 		executedCommands.push(command);
-		command.redo();
+		command.execute();
 	}
 	
 	public Set<String> getParameterList() {
 		return diagram.getParametersForMethod();
 	}
-		
-	
-	
+
 	public void redoCommand() {
-		if (!revertedCommands.isEmpty()) 
+		if (!revertedCommands.isEmpty())
 			redoCommand(revertedCommands.pop());
 	}
-	
+
 	private void redoCommand(ICommand command) {
 		exectuteCommand(command);
 	}
 
 	public void undoCommand() {
-		if (!executedCommands.isEmpty()) 		
-			undoCommand(executedCommands.pop());		
+		if (!executedCommands.isEmpty()) {
+			undoCommand(executedCommands.pop());
+		}
 	}
-	
+
 	private void undoCommand(ICommand command) {
-		command.undo();
+		System.out.println("Ångrar command: " + command);
 		revertedCommands.push(command);
+		command.undo();
 	}
-	
-	
+
+	public Diagram getDiagram() {
+		return diagram;
+	}
 
 }

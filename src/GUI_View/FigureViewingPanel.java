@@ -221,6 +221,7 @@ public class FigureViewingPanel extends JPanel implements Observer,
 
     public void setDataPosition(FigureViewingPanelPositionData dataPosition) {
 	this.dataPosition = dataPosition;
+	this.dataPosition.checkForMissingPositionValues();
 
     }
 

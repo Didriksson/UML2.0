@@ -13,7 +13,7 @@ import UML.Components.UMLRelation;
 public class FigureViewingPanelPositionData implements Serializable {
     public Map<UMLComponent, Point> components;
     public transient Map<UMLComponent, Resizable> resizables;
-    public transient Map<UMLRelation, UMLRelationPoints> relations;
+    public Map<UMLRelation, UMLRelationPoints> relations;
 
     public FigureViewingPanelPositionData() {
     }

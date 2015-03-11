@@ -1,90 +1,95 @@
 package GUI_View;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.io.File;
 
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-import UML.Components.UMLComponentsFactory;
-import runner.Diagram;
 import runner.ViewFactory;
 import ConstantsAndEnums.Constants;
-import Controller.UMLDrawAreaController;
+import UML.Utils.GenerateSource;
 
 public class WindowFrame extends JFrame {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private JMenuBar menuBAR;
-	private JMenu menuFILE, menuEDIT, menuSAVE;
-	private JMenuItem itemEXIT, subMenuSave, subMenuOpen, subMenuNew;
+    private JMenuBar menuBAR;
+    private JMenu menuFILE, menuEDIT, menuSAVE;
+    private JMenuItem itemEXIT, subMenuSave, subMenuOpen, subMenuNew, subMenuExport;
 
-	public WindowFrame() {
-		this.setSize(800, 800);
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setLocationRelativeTo(null);
-		this.setVisible(true);
+    public WindowFrame() {
+	this.setSize(800, 800);
+	this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+	this.setLocationRelativeTo(null);
+	this.setVisible(true);
 
-		createComponents();
-	}
+	createComponents();
+    }
 
-	private void createComponents() {
-		menuBAR = new JMenuBar();
+    private void createComponents() {
+	menuBAR = new JMenuBar();
 
-		menuFILE = new JMenu("File");
-		menuEDIT = new JMenu("Edit");
+	menuFILE = new JMenu("File");
+	menuEDIT = new JMenu("Edit");
 
-		subMenuNew = new JMenuItem("New diagram");
-		subMenuOpen = new JMenuItem("Open File", Constants.OPEN_FILE_ICON);
+	subMenuNew = new JMenuItem("New diagram");
+	subMenuNew.addActionListener(e -> newDiagram());
 
-		subMenuOpen.addActionListener(new ActionListener() {
+	subMenuOpen = new JMenuItem("Open File", Constants.OPEN_FILE_ICON);
+	subMenuOpen.addActionListener(e -> loadDiagram());
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				setContentPane(new LayoutPanel(ViewFactory.loadFromDiagram()));
-				revalidate();
-				repaint();
-			}
+	subMenuSave = new JMenuItem("Save File As", Constants.SAVE_FILE_ICON);
+	subMenuSave.addActionListener(e -> ViewFactory.saveCurrentState());
 
-		});
+	subMenuExport = new JMenuItem("Generate skeleton");
+	subMenuExport.addActionListener(e -> generateSkeletonCode());
+	
+	itemEXIT = new JMenuItem("Exit");
+	itemEXIT.addActionListener(e -> exit());
 
-		subMenuSave = new JMenuItem("Save File As", Constants.SAVE_FILE_ICON);
+	setComponents();
+    }
 
-		subMenuSave.addActionListener(new ActionListener() {
+    private void setComponents() {
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				ViewFactory.saveCurrentState();
-			}
-		});
+	menuFILE.add(subMenuNew);
+	menuFILE.add(subMenuOpen);
+	menuFILE.add(subMenuSave);
+	menuFILE.add(subMenuExport);
+	menuFILE.add(itemEXIT);
 
-		itemEXIT = new JMenuItem("Exit");
+	menuBAR.add(menuFILE);
+	menuBAR.add(menuEDIT);
 
-		setComponents();
-	}
+	this.setJMenuBar(menuBAR);
+	newDiagram();
+    }
 
-	private void setComponents() {
+    private void newDiagram() {
+	this.setContentPane(new LayoutPanel(ViewFactory.newFigureViewPanel()));
+	revalidate();
+	repaint();
+    }
 
-		menuFILE.add(subMenuNew);
-		menuFILE.add(subMenuOpen);
-		menuFILE.add(subMenuSave);
-		menuFILE.add(itemEXIT);
+    private void loadDiagram() {
+	setContentPane(new LayoutPanel(
+		ViewFactory.figureViewFromloadedDiagram()));
+	revalidate();
+	repaint();
+    }
+    
+    private void generateSkeletonCode() {
+	JFileChooser fileChooser = new JFileChooser();
+	fileChooser.setCurrentDirectory(new File("."));
+	fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+	fileChooser.setDialogTitle("Select target folder to generate code.");
+	if(fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION )
+		GenerateSource.generateFromDiagram(ViewFactory.getDiagram(), fileChooser.getSelectedFile().getPath());
+    }
 
-		menuBAR.add(menuFILE);
-		menuBAR.add(menuEDIT);
-
-		this.setJMenuBar(menuBAR);
-		this.setContentPane(new LayoutPanel(ViewFactory.getFigureViewingPanel()));
-
-	}
-
-	private void updateContentPane() {
-		this.removeAll();
-		this.setComponents();
-	}
-
+    private void exit() {
+	this.dispose();
+    }
 }

@@ -9,7 +9,7 @@ public class UMLConverter {
     }
     
     public static void generateSource(UMLComponent component, String path) {
-	GenerateSourceFromUML.generate(component, path);
+	GenerateSource.generateFromComponent(component, path);
     }
 
 }

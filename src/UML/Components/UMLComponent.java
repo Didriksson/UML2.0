@@ -79,7 +79,7 @@ public class UMLComponent implements Serializable{
 
 	public String generateSourceString() {
 		String tmp = "";
-		tmp += ("public " + type + " " + name + " {\n");
+		tmp += ("public " + type.toLowerCase() + " " + name + " {\n");
 		for (UMLVariable v : variables) {
 			tmp += v.generateSourceString() + ";" + "\n";
 		}

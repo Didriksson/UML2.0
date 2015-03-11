@@ -28,6 +28,13 @@ public class ViewFactory {
 		}
 		return currentPanel;
 	}
+	
+	public static FigureViewingPanel newFigureViewPanel(){
+	    d = new Diagram();
+	    controller = new UMLDrawAreaController(d);
+	    currentPanel = new FigureViewingPanel(controller);
+	    return currentPanel;
+	}
 
 	public static void saveCurrentState() {
 		try {
@@ -48,7 +55,7 @@ public class ViewFactory {
 		}
 	}
 
-	public static FigureViewingPanel loadFromDiagram() {
+	public static FigureViewingPanel figureViewFromloadedDiagram() {
 		try {
 			FileInputStream f_in = new FileInputStream("myobject.data");
 
@@ -69,6 +76,10 @@ public class ViewFactory {
 		}
 		
 		return currentPanel;
+	}
+
+	public static Diagram getDiagram() {
+	    return d;
 	}
 
 }

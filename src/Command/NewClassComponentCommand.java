@@ -22,7 +22,6 @@ public class NewClassComponentCommand extends ToolbarCommand {
 
 	@Override
 	public void undo() {
-		System.out.println(c);
 		diagram.removeComponent(c);
 	}
 

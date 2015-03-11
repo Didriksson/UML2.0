@@ -38,7 +38,7 @@ public class ViewFactory {
 			SavedDataHolder savedData = new SavedDataHolder();
 			savedData.diagram = controller.getDiagram();
 			savedData.positionData = getFigureViewingPanel().getDataPosition();
-
+			System.out.println("Sparar diagram: \n" + controller.getDiagram());
 			obj_out.writeObject(savedData);
 		}
 
@@ -48,24 +48,27 @@ public class ViewFactory {
 		}
 	}
 
-	public static void loadFromDiagram() {
+	public static FigureViewingPanel loadFromDiagram() {
 		try {
 			FileInputStream f_in = new FileInputStream("myobject.data");
 
 			ObjectInputStream obj_in = new ObjectInputStream(f_in);
-
+			
 			// Read an object
 			Object obj = obj_in.readObject();
 			if (obj instanceof SavedDataHolder) {
 				SavedDataHolder data = (SavedDataHolder) obj;
 				d = data.diagram;
-				System.out.println(d);
-				d.addObserver(getFigureViewingPanel());
-				getFigureViewingPanel().setDataPosition(data.positionData);
+				controller = new UMLDrawAreaController(d);
+				currentPanel = new FigureViewingPanel(controller);
+				currentPanel.setDataPosition(data.positionData);
 				d.signalUpdate();
+				System.out.println("Diagram:\n"+d);
 			}
 		} catch (Exception e) {
 		}
-
+		
+		return currentPanel;
 	}
+
 }

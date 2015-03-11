@@ -58,6 +58,7 @@ public class Diagram extends Observable implements Serializable {
 	}
 
 	public boolean removeComponent(String name) {
+		System.out.println("Removing!!");
 		setChanged();
 		notifyObservers(this);
 		signalUpdate();
@@ -82,6 +83,7 @@ public class Diagram extends Observable implements Serializable {
 	}
 
 	public UMLComponent newClassComponent(String name) {
+		System.out.println(components.size());
 		UMLComponent c = new UMLComponent(name, "Class");
 		components.add(c);
 		setChanged();

@@ -32,8 +32,8 @@ public class UMLDrawAreaController {
 		executedCommands = new Stack<ICommand>();
 		revertedCommands = new Stack<ICommand>();
 	}
-	
-	public void setDiagram(Diagram d){
+
+	public void setDiagram(Diagram d) {
 		this.diagram = d;
 	}
 
@@ -79,11 +79,10 @@ public class UMLDrawAreaController {
 	}
 
 	private void exectuteCommand(ICommand command) {
-		System.out.println("Köttar command: " + command);
 		executedCommands.push(command);
 		command.execute();
 	}
-	
+
 	public Set<String> getParameterList() {
 		return diagram.getParametersForMethod();
 	}
@@ -104,7 +103,6 @@ public class UMLDrawAreaController {
 	}
 
 	private void undoCommand(ICommand command) {
-		System.out.println("Ångrar command: " + command);
 		revertedCommands.push(command);
 		command.undo();
 	}

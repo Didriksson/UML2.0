@@ -23,5 +23,7 @@ public class FigureViewingPanelPositionData implements Serializable {
 	    resizables = new HashMap<UMLComponent, Resizable>();
 	if (relations == null)
 	    relations = new HashMap<UMLRelation, UMLRelationPoints>();
+	if(components == null)
+	    components = new HashMap<UMLComponent, Point>();
     }
 }

@@ -15,9 +15,9 @@ public class LayoutPanel extends JPanel {
 	private TreePanel treePanel;
 	private JPanel figurePanel;
 
-	public LayoutPanel() {
+	public LayoutPanel(JPanel figurePanel) {
 		this.setLayout(new MigLayout("", "[grow, fill]", "[grow]"));
-
+		this.figurePanel = figurePanel;
 		createComponents();
 
 		this.setBorder(Constants.RAISED_BEVEL_BORDER);
@@ -25,7 +25,6 @@ public class LayoutPanel extends JPanel {
 
 	private void createComponents() {
 		treePanel = new TreePanel();
-		figurePanel = ViewFactory.getFigureViewingPanel();
 		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treePanel,
 				figurePanel);
 

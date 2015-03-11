@@ -45,7 +45,9 @@ public class WindowFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ViewFactory.loadFromDiagram();
+				setContentPane(new LayoutPanel(ViewFactory.loadFromDiagram()));
+				revalidate();
+				repaint();
 			}
 
 		});
@@ -76,7 +78,7 @@ public class WindowFrame extends JFrame {
 		menuBAR.add(menuEDIT);
 
 		this.setJMenuBar(menuBAR);
-		this.setContentPane(new LayoutPanel());
+		this.setContentPane(new LayoutPanel(ViewFactory.getFigureViewingPanel()));
 
 	}
 

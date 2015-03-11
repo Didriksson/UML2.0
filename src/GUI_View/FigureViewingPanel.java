@@ -50,7 +50,6 @@ public class FigureViewingPanel extends JPanel implements Observer,
 	this.componentTools = new ComponentManipulationToolbar();
 	controller.registerMeAsObserver(this);
 	createComponents();
-
     }
 
     private void createDataPositions() {
@@ -73,23 +72,8 @@ public class FigureViewingPanel extends JPanel implements Observer,
 	    }
 	};
 
-	Action printPointRelations = new AbstractAction() {
-	    public void actionPerformed(ActionEvent e) {
-		for (UMLRelationPoints r : getDataPosition().relations.values()) {
-		    System.out.println("Start: " + r.start + "   " + "End: "
-			    + r.end);
-		    System.out.println(System.identityHashCode(r.end));
-
-		}
-	    }
-	};
-
 	this.getInputMap(WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(
 		KeyStroke.getKeyStroke("DELETE"), "doNothing");
-	this.getInputMap(WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(
-		KeyStroke.getKeyStroke("F3"), "printPointRelations");
-	this.getActionMap().put("printPointRelations", printPointRelations);
-
     }
 
     private void setComponents() {
@@ -100,10 +84,14 @@ public class FigureViewingPanel extends JPanel implements Observer,
 
     private void addComponentToDrawArea(UMLComponent c) {
 	if (!getDataPosition().resizables.containsKey(c))
-	    getDataPosition().resizables.put(c, new Resizable(this,
-		    new ClassFigure(new UMLComponentController(c, controller)),
-		    getDataPosition().components.get(c)));
+	    addComponentToResizeableList(c);
 	relationPanel.add(getDataPosition().resizables.get(c));
+    }
+
+    private void addComponentToResizeableList(UMLComponent c) {
+	getDataPosition().resizables.put(c, new Resizable(this,
+		new ClassFigure(new UMLComponentController(c, controller)),
+		getDataPosition().components.get(c)));
     }
 
     @Override
@@ -114,7 +102,6 @@ public class FigureViewingPanel extends JPanel implements Observer,
 	updateUMLRelations(d);
 	this.repaint();
 	this.revalidate();
-
     }
 
     public void updateUMLRelations(Diagram d) {
@@ -195,34 +182,57 @@ public class FigureViewingPanel extends JPanel implements Observer,
 	return dataPosition;
     }
 
-	public void undoCommand() {
-	    controller.undoCommand();
-	}
-	
-	public void toolbarCommand(Enums enumeration) {
-		controller.toolbarCommands(enumeration);
-	}
-	
-	public void hideToolbar() {
-		componentTools.hideToolbar();
-	}
-	
-	public Resizable returnOverlapsedComponent(Point p) {
-		Resizable res = null;
-		for (Component comp : relationPanel.getComponents()) {
-			if (comp instanceof Resizable) {
-				if (comp.contains(p)) {
-					res = (Resizable) comp;
-					res.setHoveredState(true);
-				}
-			}
+    public void undoCommand() {
+	controller.undoCommand();
+    }
+
+    public void toolbarCommand(Enums enumeration) {
+	controller.toolbarCommands(enumeration);
+    }
+
+    public void hideToolbar() {
+	componentTools.hideToolbar();
+    }
+
+    public Resizable returnOverlapsedComponent(Point p) {
+	Resizable res = null;
+	for (Component comp : relationPanel.getComponents()) {
+	    if (comp instanceof Resizable) {
+		if (comp.contains(p)) {
+		    res = (Resizable) comp;
+		    res.setHoveredState(true);
 		}
-		return res;
+	    }
 	}
+	return res;
+    }
 
     public void setDataPosition(FigureViewingPanelPositionData dataPosition) {
 	this.dataPosition = dataPosition;
 	this.dataPosition.checkForMissingPositionValues();
+
+	this.dataPosition.components.keySet().forEach(
+		c -> addComponentToResizeableList(c));
+
+	this.dataPosition.relations.keySet().forEach(
+		r -> {
+		    UMLRelationPoints points = this.dataPosition.relations
+			    .get(r);
+
+		    Resizable root = this.dataPosition.resizables.get(r
+			    .getRoot());
+		    Resizable destination = this.dataPosition.resizables.get(r
+			    .getDestination());
+
+		    if (root != null)
+			points.start = root
+				.getSnapPointFromPosition(points.start);
+
+		    if (destination != null)
+			points.end = destination
+				.getSnapPointFromPosition(points.end);
+
+		});
 
     }
 }

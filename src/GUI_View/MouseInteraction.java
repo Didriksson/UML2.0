@@ -29,16 +29,6 @@ public class MouseInteraction extends MouseAdapter {
 	this.offset = new Point2D.Double();
     }
 
-    @Override
-    public void mouseDragged(MouseEvent m) {
-	if (dragging && selectedFigure != null) {
-	    double x = m.getX() - offset.x;
-	    double y = m.getY() - offset.y;
-	    selectedFigure.updatePosition(selectedIndex, (int) x, (int) y);
-	    relationDrawer.checkIfOverlapping(m.getPoint());
-	}
-	updateViewPanel();
-    }
 
     public AssociationFigure getSelectedFigure() {
 	return selectedFigure;
@@ -63,6 +53,17 @@ public class MouseInteraction extends MouseAdapter {
 	    }
 	}
 	updateViewPanel();
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent m) {
+    	if (dragging && selectedFigure != null) {
+    		double x = m.getX() - offset.x;
+    		double y = m.getY() - offset.y;
+    		selectedFigure.updatePosition(selectedIndex, (int) x, (int) y);
+    		relationDrawer.checkIfOverlapping(m.getPoint());
+    	}
+    	updateViewPanel();
     }
 
     @Override

@@ -74,18 +74,20 @@ public class UMLComponentController implements Serializable {
 		return this.variableState;
 	}
 
-	public void setIndexOfVariableList(int index, String fieldText) {
+	public void setIndexOfVariableList(int index, String fieldText, boolean isSelected) {
 		this.indexOfVariableList = index;
 		this.variableMenu.updateTextField(fieldText);
+		this.variableMenu.setIsSelectedInList(isSelected);
 	}
 
 	public int getIndexOfVariableList() {
 		return this.indexOfVariableList;
 	}
 
-	public void setIndexOfMethodList(int index, String fieldText) {
+	public void setIndexOfMethodList(int index, String fieldText, boolean isSelected) {
 		this.indexOfMehodList = index;
 		this.methodMenu.updateTextField(fieldText);
+		this.methodMenu.setIsSelectedInList(isSelected);
 	}
 
 	public int getIndexOfMethodList() {

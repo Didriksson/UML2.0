@@ -50,12 +50,15 @@ public class ClassFigure extends GUIComponent {
 		listVariables.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				listMethods.clearSelection();
+				
+				controller.setVariableState(true);
+				
 				JList<?> list = (JList<?>) e.getSource();
 				int index = list.locationToIndex(e.getPoint());
 				if (index >= 0) {
 					String text = controller.getVariables().get(index)
 							.getName();
-					controller.setIndexOfVariableList(index, text);
+					controller.setIndexOfVariableList(index, text, !listMethods.isSelectionEmpty());
 				}
 				if (e.getClickCount() == 2 && !listVariables.isSelectionEmpty()) {
 					String variableName = JOptionPane.showInputDialog(null,
@@ -70,12 +73,16 @@ public class ClassFigure extends GUIComponent {
 		listMethods.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				listVariables.clearSelection();
+				
+				controller.setVariableState(false);
+				
 				JList<?> list = (JList<?>) e.getSource();
 				int index = list.locationToIndex(e.getPoint());
+				
 				if (index >= 0) {
 					String text = controller.getMethods().get(index)
 							.getMethodName();
-					controller.setIndexOfMethodList(index, text);
+					controller.setIndexOfMethodList(index, text, !listMethods.isSelectionEmpty());
 				}
 				if (e.getClickCount() == 2 && !listMethods.isSelectionEmpty()) {
 					String methodName = JOptionPane.showInputDialog(null,

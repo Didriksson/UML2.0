@@ -41,6 +41,8 @@ public class MethodMenu extends JPanel implements IVisability {
 
 	private String visabilityIdentyfier = "";
 
+	private boolean isSelected = false;
+
 	public MethodMenu(GUIComponent selectedComponent) {
 		this.selectedComponent = selectedComponent;
 		this.selectedComponent.getController().setMethodMenu(this);
@@ -182,7 +184,7 @@ public class MethodMenu extends JPanel implements IVisability {
 		if (selectedComponent instanceof ClassFigure) {
 			int index = selectedComponent.getController()
 					.getIndexOfMethodList();
-			if (index >= 0) {
+			if (index >= 0 && isSelected) {
 				if (!returnTypeField.getText().isEmpty()) {
 					selectedComponent
 							.getController()
@@ -207,6 +209,15 @@ public class MethodMenu extends JPanel implements IVisability {
 		}
 		parameterNameField.setText("");
 	}
+	
+	public void setIsSelectedInList(boolean isSelected) {
+		this.isSelected = isSelected;
+	}
+	
+	public boolean getIfSelectedInList() {
+		return this.isSelected;
+	}
+	
 
 	public void updateTextField(String nameInField) {
 		methodNameField.setText(nameInField);

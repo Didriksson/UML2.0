@@ -24,6 +24,8 @@ public class VariableMenu extends JPanel implements IVisability{
 	
 	private String visabilityIdentyfier = "";
 
+	private boolean isSelected;
+
 	public VariableMenu(GUIComponent selectedComponent) {
 		this.selectedComponent = selectedComponent;
 		this.selectedComponent.getController().setVariableMenu(this);
@@ -90,7 +92,7 @@ public class VariableMenu extends JPanel implements IVisability{
 		if (selectedComponent instanceof ClassFigure) {
 			int index = selectedComponent.getController().getIndexOfVariableList();
 			
-			if(index >= 0) {
+			if(index >= 0 && isSelected) {
 				selectedComponent.getController().getVariables().get(index).setvariableName(variableNameField.getText());
 				selectedComponent.getController().getVariables().get(index).setScopeModifier(visabilityIdentyfier);
 			}
@@ -113,5 +115,13 @@ public class VariableMenu extends JPanel implements IVisability{
 	@Override
 	public void updateVisability(String returnType) {
 		visabilityIdentyfier = returnType;	
+	}
+
+	public void setIsSelectedInList(boolean isSelected) {
+		this.isSelected = isSelected;
+	}
+	
+	public boolean getIfSelectedInList() {
+		return this.isSelected;
 	}
 }

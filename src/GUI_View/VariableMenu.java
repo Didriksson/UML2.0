@@ -1,5 +1,6 @@
 package GUI_View;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -13,6 +14,8 @@ import Figures.GUIComponent;
 public class VariableMenu extends JPanel implements IVisability{
 
 	private GUIComponent selectedComponent;
+	
+	private JPanel variablePanel;
 	
 	private JButton addVariableButton, updateVariableButton;
 
@@ -35,8 +38,9 @@ public class VariableMenu extends JPanel implements IVisability{
 
 	private void createComponents() {
 
+		variablePanel = panelSetup("Variable Name:");
+		
 		variableNameField = textFieldSetup("Variable Name:");
-
 
 		addVariableButton = buttonSetup("Add field");
 		updateVariableButton = buttonSetup("Update field");
@@ -46,11 +50,12 @@ public class VariableMenu extends JPanel implements IVisability{
 
 	private void manipulateComponents() {
 		
-		this.add(addVariableButton, "wrap");
-		this.add(variableNameField, "span 2 1");
-		this.add(updateVariableButton, "wrap");
-		this.add(new RadioButtonVisability(this));
+		variablePanel.add(variableNameField);
 		
+		this.add(addVariableButton, "wrap");
+		this.add(variablePanel, "wrap");
+		this.add(new RadioButtonVisability(this), "wrap");
+		this.add(updateVariableButton);
 		
 		addVariableButton.addActionListener(e -> newVariable());
 		updateVariableButton.addActionListener(e -> updateVariable());
@@ -61,12 +66,17 @@ public class VariableMenu extends JPanel implements IVisability{
 	public String setVisabilityIdentyfier(String title) {
 		return visabilityIdentyfier = title;
 	}
-
+	
+	private JPanel panelSetup(String title) {
+		JPanel panel = new JPanel();
+		panel.setLayout(new MigLayout("", "[grow, fill]", "grow"));
+		titledBorder = BorderFactory.createTitledBorder(title);
+		panel.setBorder(titledBorder);	
+		return panel;	
+	}
 
 	private JTextField textFieldSetup(String title) {
 		JTextField textfield = new JTextField();
-//		titledBorder = BorderFactory.createTitledBorder(title);
-//		textfield.setBorder(titledBorder);
 		return textfield;
 	}
 

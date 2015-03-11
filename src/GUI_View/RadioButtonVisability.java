@@ -14,11 +14,11 @@ public class RadioButtonVisability extends JPanel {
 	
 	
 	private IVisability listener;
-	public ButtonGroup buttonGroup;
-	public JRadioButton visabilityPrivate;
-	public JRadioButton visabilityPublic;
-	public JRadioButton visabilityProtected;
-	public JRadioButton visabilityPackage;
+	private ButtonGroup buttonGroup;
+	private JRadioButton visabilityPrivate;
+	private JRadioButton visabilityPublic;
+	private JRadioButton visabilityProtected;
+	private JRadioButton visabilityPackage;
 
 	public TitledBorder titledBorder;
 	
@@ -30,7 +30,7 @@ public class RadioButtonVisability extends JPanel {
 
 	private void init() {
 		this.setLayout(new MigLayout("", "[grow, fill]", ""));
-		titledBorder = BorderFactory.createTitledBorder("Visability");
+		titledBorder = BorderFactory.createTitledBorder("Visability:");
 		this.setBorder(titledBorder);
 		createComponents();
 	}

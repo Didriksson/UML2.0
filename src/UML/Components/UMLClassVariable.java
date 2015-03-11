@@ -38,7 +38,7 @@ public class UMLClassVariable extends UMLVariable implements Serializable {
 			break;
 		}
 
-		return umlModify + super.toString();
+		return umlModify + " " + super.toString();
 	}
 
 	public String getModifiers() {

@@ -184,7 +184,7 @@ public class MethodMenu extends JPanel implements IVisability {
 		if (selectedComponent instanceof ClassFigure) {
 			int index = selectedComponent.getController()
 					.getIndexOfMethodList();
-			if (index >= 0 && isSelected) {
+			if (index >= 0 && isSelected && !parameterNameField.getText().isEmpty()) {
 				if (!returnTypeField.getText().isEmpty()) {
 					selectedComponent
 							.getController()

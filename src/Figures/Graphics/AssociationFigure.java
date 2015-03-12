@@ -20,6 +20,8 @@ public class AssociationFigure extends GeomatricPosition {
 	private Rectangle2D.Double[] rects;
 	protected boolean selected;
 	protected Point startPoint, endPoint;
+	private String rootMulString = "";
+	private String destinationMulString = "";
 
 	public AssociationFigure(Point startPoint, Point endPoint) {
 		super(startPoint.x, startPoint.y);
@@ -55,11 +57,17 @@ public class AssociationFigure extends GeomatricPosition {
 
 		g2.setStroke(new BasicStroke());
 
-		double cx = rects[0].getX() + (rects[1].getX() - rects[0].getX()) / 10;
-		double cy = rects[0].getY() + (rects[1].getY() - rects[0].getY()) / 10;
 		drawRects(g2);
 		g2.setFont(new Font("Helvetica", Font.BOLD, 18));
-		g2.drawString("1", (float) cx, (float) cy);
+		double cx = rects[0].getX() + (rects[1].getX() - rects[0].getX()) / 10;
+		double cy = rects[0].getY() + (rects[1].getY() - rects[0].getY()) / 10;
+	
+		g2.drawString(getRootMulString(), (float) cx, (float) cy);
+
+		cx = rects[0].getX() + ((rects[1].getX() - rects[0].getX()) / 10) * 9;
+		cy = rects[0].getY() + ((rects[1].getY() - rects[0].getY()) / 10) * 9;
+
+		g2.drawString(getDestinationMulString(), (float) cx, (float) cy);
 
 	}
 
@@ -168,5 +176,21 @@ public class AssociationFigure extends GeomatricPosition {
 			endPoint.y += dy;
 			break;
 		}
+	}
+
+	public String getDestinationMulString() {
+	    return destinationMulString;
+	}
+
+	public void setDestinationMulString(String destinationMulString) {
+	    this.destinationMulString = destinationMulString;
+	}
+
+	public String getRootMulString() {
+	    return rootMulString;
+	}
+
+	public void setRootMulString(String rootMulString) {
+	    this.rootMulString = rootMulString;
 	}
 }

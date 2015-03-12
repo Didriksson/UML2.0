@@ -1,6 +1,7 @@
 package GUI_View;
 
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
 import net.miginfocom.swing.MigLayout;
 import ConstantsAndEnums.Constants;
@@ -11,6 +12,7 @@ public class ComponentManipulationToolbar extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	private GUIComponent selectedComponent;
+	private JTabbedPane tabbPane;
 
 	public ComponentManipulationToolbar() {
 		init();
@@ -19,10 +21,7 @@ public class ComponentManipulationToolbar extends JPanel {
 	private void init() {
 		this.setLayout(new MigLayout("", "[grow, fill]", ""));
 		this.setBorder(Constants.RAISED_BEVEL_BORDER);
-	}
-
-	public void updateListInClassComponent() {
-		((ClassFigure) selectedComponent).updatateList();
+		tabbPane = new JTabbedPane();
 	}
 
 	public GUIComponent getSelectedComponent() {
@@ -31,8 +30,9 @@ public class ComponentManipulationToolbar extends JPanel {
 
 	public void setSelectedComponent(GUIComponent selectedComponent) {
 		this.selectedComponent = selectedComponent;		
-		if (selectedComponent instanceof ClassFigure) 
-			setClassFigureState();
+		if (selectedComponent instanceof ClassFigure) {
+			setClassFigureState();		
+		}
 	}
 
 	public void hideToolbar() {
@@ -42,8 +42,14 @@ public class ComponentManipulationToolbar extends JPanel {
 	
 	private void setClassFigureState() {
 		this.removeAll();
-		this.add(new MethodMenu(selectedComponent), "grow");
-		this.add(new VariableMenu(selectedComponent), "grow");
+		tabbPane.removeAll();
+		tabbPane.addTab("Method Settings", new MethodMenu(selectedComponent));
+		tabbPane.addTab("Variable Settings", new VariableMenu(selectedComponent));
+		this.add(tabbPane);
+	}
+
+	public void updateMenyToolbar(int index) {
+		tabbPane.setSelectedIndex(index);
 	}
 
 }

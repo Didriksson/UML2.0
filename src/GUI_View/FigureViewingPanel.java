@@ -90,8 +90,7 @@ public class FigureViewingPanel extends JPanel implements Observer,
 
     private void addComponentToResizeableList(UMLComponent c) {
 	getDataPosition().resizables.put(c, new Resizable(this,
-		new ClassFigure(new UMLComponentController(c, controller)),
-		getDataPosition().components.get(c)));
+		new ClassFigure(componentTools, new UMLComponentController(c, controller)),getDataPosition().components.get(c)));
     }
 
     @Override

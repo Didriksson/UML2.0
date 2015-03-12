@@ -23,21 +23,24 @@ public class MethodMenu extends JPanel implements IVisability {
 
 	private GUIComponent selectedComponent;
 
-	private JPanel methodPanel, parameterPanel;
+	private JPanel methodPanel, methodReturnTypePanel, parameterPanel;
 
-	private JLabel parameterNameLabel, returnTypeListLabel,
-			returnTypeFieldLabel;
-	private JTextField methodNameField, parameterNameField, returnTypeField;
+	private JLabel methodNameLabel, returnTypeMethodListLabel, returnTypeMethodFieldLabel, parameterNameLabel, returnTypeParameterListLabel,
+			returnTypeParameterFieldLabel;
+	
+	private JTextField methodNameField, parameterNameField, returnTypeMethodField ,returnTypeParameterField;
 
 	private JButton addMethodButton, updateMethodButton, addParameterButton;
-	private ButtonGroup buttonGroup;
-	private JRadioButton returnTypeListRButton;
-	private JRadioButton returnTypeFieldRButton;
+	private ButtonGroup buttonGroupParameters, buttonGroupMethods;
+	private JRadioButton returnTypeListParaRButton;
+	private JRadioButton returnTypeFieldParaRButton;
+	private JRadioButton returnTypeListMethodsRButton;
+	private JRadioButton returnTypeFieldMethodsRButton;
 
 	private TitledBorder titledBorder;
 
-	private JComboBox<String> returnTypelist;
-	private Vector<String> paratmeterVectorList;
+	private JComboBox<String> returnTypelistParameter, returnTypelistMethod;
+	private Vector<String> returnTypeVectorList;
 
 	private String visabilityIdentyfier = "";
 
@@ -57,66 +60,101 @@ public class MethodMenu extends JPanel implements IVisability {
 
 	private void createComponents() {
 
-		methodPanel = panelSetup("Method Name:");
-		parameterPanel = panelSetup("Parameters:");
+		methodPanel = panelSetup("Method Settings:");
+		methodReturnTypePanel = panelSetup("Return Type");
+		parameterPanel = panelSetup("Parameter Settings:");
 
+		methodNameLabel = labelSetup("Mehod Name:");
+		returnTypeMethodListLabel = labelSetup("Return Type");
+		returnTypeMethodFieldLabel = labelSetup("Return Type");
+		
 		parameterNameLabel = labelSetup("Parameter Name:");
-		returnTypeListLabel = labelSetup("Return Type List:");
-		returnTypeFieldLabel = labelSetup("Return Type:");
+		returnTypeParameterListLabel = labelSetup("Return Type:");
+		returnTypeParameterFieldLabel = labelSetup("Return Type:");
 
 		methodNameField = textFieldSetup();
+		returnTypeMethodField = textFieldSetup();
 		parameterNameField = textFieldSetup();
-		returnTypeField = textFieldSetup();
+		returnTypeParameterField = textFieldSetup();
 
-		addMethodButton = buttonSetup("Add New Method");
+		addMethodButton = buttonSetup("Add Default Method");
 		updateMethodButton = buttonSetup("Update Method");
 		addParameterButton = buttonSetup("Add");
 
-		buttonGroup = new ButtonGroup();
-		returnTypeListRButton = radioButtonSetup();
-		returnTypeFieldRButton = radioButtonSetup();
+		buttonGroupParameters = new ButtonGroup();
+		returnTypeListParaRButton = radioButtonSetup(false);
+		returnTypeFieldParaRButton = radioButtonSetup(false);
+		
+		buttonGroupMethods = new ButtonGroup();
+		returnTypeListMethodsRButton = radioButtonSetup(true);
+		returnTypeFieldMethodsRButton = radioButtonSetup(true);
 
-		paratmeterVectorList = new Vector<String>(selectedComponent
+		returnTypeVectorList = new Vector<String>(selectedComponent
 				.getController().getParameterList());
-		returnTypelist = new JComboBox<String>(paratmeterVectorList);
+	
+		returnTypelistParameter = new JComboBox<String>(returnTypeVectorList);
+		returnTypelistMethod = new JComboBox<String>(returnTypeVectorList);
+		
 		manipulateComponents();
 	}
 
 	private void manipulateComponents() {
+		methodReturnTypePanel.add(returnTypeMethodListLabel, "wrap");
+		methodReturnTypePanel.add(returnTypeListMethodsRButton);
+		methodReturnTypePanel.add(returnTypelistMethod, "wrap");
+		methodReturnTypePanel.add(returnTypeMethodFieldLabel, "wrap");
+		methodReturnTypePanel.add(returnTypeFieldMethodsRButton);
+		methodReturnTypePanel.add(returnTypeMethodField);
 		
-		methodPanel.add(methodNameField);
+		methodPanel.add(addMethodButton);
+		methodPanel.add(methodReturnTypePanel, "span 1 4, wrap");
+		methodPanel.add(methodNameLabel, "wrap");
+		methodPanel.add(methodNameField, "wrap");
+		methodPanel.add(new RadioButtonVisability(this), "wrap");
+		methodPanel.add(updateMethodButton, "span 2 1");		
 
+		
 		parameterPanel.add(parameterNameLabel, "wrap");
 		parameterPanel.add(parameterNameField, "span 2 1, wrap");
-		parameterPanel.add(returnTypeListLabel, "wrap");
-		parameterPanel.add(returnTypeListRButton);
-		parameterPanel.add(returnTypelist, "wrap");
-		parameterPanel.add(returnTypeFieldLabel, "wrap");
-		parameterPanel.add(returnTypeFieldRButton);
-		parameterPanel.add(returnTypeField, "wrap");
+		parameterPanel.add(returnTypeParameterListLabel, "wrap");
+		parameterPanel.add(returnTypeListParaRButton);
+		parameterPanel.add(returnTypelistParameter, "wrap");
+		parameterPanel.add(returnTypeParameterFieldLabel, "wrap");
+		parameterPanel.add(returnTypeFieldParaRButton);
+		parameterPanel.add(returnTypeParameterField, "wrap");
 		parameterPanel.add(addParameterButton, "span 2 1");
 
-		this.add(addMethodButton);
-		this.add(parameterPanel, "span 1 6, wrap");
-		this.add(methodPanel, "wrap");
-		this.add(new RadioButtonVisability(this), "wrap");
-		this.add(updateMethodButton);
+		this.add(methodPanel);
+		this.add(parameterPanel);
+
 
 		addMethodButton.addActionListener(e -> newMethod());
 		updateMethodButton.addActionListener(e -> updateMethod());
 		addParameterButton.addActionListener(e -> addParametersFromList());
 
-		
-		returnTypeListRButton.doClick();
-		returnTypeListRButton.addActionListener(e -> {
-			returnTypelist.setEnabled(true);
-			returnTypeField.setEnabled(false);
+		returnTypeListMethodsRButton.doClick();
+		returnTypeListMethodsRButton.addActionListener(e -> {
+			returnTypelistMethod.setEnabled(true);
+			returnTypeMethodField.setEnabled(false);
 		});
 
-		returnTypeField.setEnabled(false);
-		returnTypeFieldRButton.addActionListener(e -> {
-			returnTypeField.setEnabled(true);
-			returnTypelist.setEnabled(false);
+		returnTypeMethodField.setEnabled(false);
+		returnTypeFieldMethodsRButton.addActionListener(e -> {
+			returnTypeMethodField.setEnabled(true);
+			returnTypelistMethod.setEnabled(false);
+		});
+	
+		
+		returnTypeListParaRButton.doClick();
+		returnTypeListParaRButton.addActionListener(e -> {
+			returnTypelistParameter.setEnabled(true);
+			returnTypeParameterField.setEnabled(false);
+		});
+
+		returnTypeParameterField.setEnabled(false);
+		returnTypeFieldParaRButton.addActionListener(e -> {
+			returnTypeParameterField.setEnabled(true);
+			returnTypelistParameter.setEnabled(false);
 		});
 	}
 
@@ -137,9 +175,13 @@ public class MethodMenu extends JPanel implements IVisability {
 		return label;
 	}
 
-	private JRadioButton radioButtonSetup() {
+	private JRadioButton radioButtonSetup(boolean methodType) {
 		JRadioButton rbutton = new JRadioButton();
-		buttonGroup.add(rbutton);
+		
+		if(methodType) {
+			buttonGroupMethods.add(rbutton);
+		} else
+			buttonGroupParameters.add(rbutton);
 		return rbutton;
 	}
 
@@ -168,8 +210,24 @@ public class MethodMenu extends JPanel implements IVisability {
 		if (selectedComponent instanceof ClassFigure) {
 			int index = selectedComponent.getController()
 					.getIndexOfMethodList();
-			if (index >= 0 && isSelected) {
-
+			if (index >= 0 && isSelected && !methodNameField.getText().isEmpty()) {
+				if (!returnTypeMethodField.getText().isEmpty()) {
+					selectedComponent
+							.getController()
+							.getMethods()
+							.get(index)
+							.setReturnType(returnTypeMethodField.getText());
+							
+				} else {
+					String returnType = String.valueOf(returnTypelistMethod.getSelectedItem());
+					selectedComponent
+							.getController()
+							.getMethods()
+							.get(index)
+							.setReturnType(returnType);
+				}
+				
+				
 				selectedComponent.getController().getMethods().get(index)
 						.setMethodName(methodNameField.getText());
 				selectedComponent.getController().getMethods().get(index)
@@ -185,16 +243,16 @@ public class MethodMenu extends JPanel implements IVisability {
 			int index = selectedComponent.getController()
 					.getIndexOfMethodList();
 			if (index >= 0 && isSelected && !parameterNameField.getText().isEmpty()) {
-				if (!returnTypeField.getText().isEmpty()) {
+				if (!returnTypeParameterField.getText().isEmpty()) {
 					selectedComponent
 							.getController()
 							.getMethods()
 							.get(index)
 							.addParameter(
-									new UMLVariable(returnTypeField.getText(),
+									new UMLVariable(returnTypeParameterField.getText(),
 											parameterNameField.getText()));
 				} else {
-					String returnType = String.valueOf(returnTypelist
+					String returnType = String.valueOf(returnTypelistParameter
 							.getSelectedItem());
 					selectedComponent
 							.getController()
@@ -210,6 +268,7 @@ public class MethodMenu extends JPanel implements IVisability {
 		parameterNameField.setText("");
 	}
 	
+		
 	public void setIsSelectedInList(boolean isSelected) {
 		this.isSelected = isSelected;
 	}

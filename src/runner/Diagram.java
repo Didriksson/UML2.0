@@ -2,12 +2,15 @@ package runner;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TreeSet;
 
 import UML.Components.UMLClassVariable;
 import UML.Components.UMLComponent;
@@ -22,7 +25,7 @@ public class Diagram extends Observable implements Serializable {
 	public Diagram() {
 		this.components = new ArrayList<UMLComponent>();
 		this.relations = new ArrayList<UMLRelation>();
-		this.parameterSet = new HashSet<String>();
+		this.parameterSet = new TreeSet<String>();
 		addingTypesToParameterSet();
 	}
 
@@ -36,6 +39,7 @@ public class Diagram extends Observable implements Serializable {
 		parameterSet.add("double");
 		parameterSet.add("char");
 		parameterSet.add("String");		
+		parameterSet.add("boolean");
 	}
 	
 	public void addComponent(UMLComponent c) {
@@ -83,7 +87,6 @@ public class Diagram extends Observable implements Serializable {
 	}
 
 	public UMLComponent newClassComponent(String name) {
-		System.out.println(components.size());
 		UMLComponent c = new UMLComponent(name, "Class");
 		components.add(c);
 		setChanged();

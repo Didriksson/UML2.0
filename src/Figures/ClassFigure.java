@@ -22,21 +22,24 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import Controller.UMLComponentController;
+import GUI_View.ComponentManipulationToolbar;
 import UML.Components.UMLClassVariable;
 import UML.Components.UMLMethod;
 
 public class ClassFigure extends GUIComponent {
-
 	private static final long serialVersionUID = -3733269893885327522L;
+	
+	private ComponentManipulationToolbar componentTools;
 	private JList<UMLMethod> listMethods;
 	private JList<UMLClassVariable> listVariables;
 	private JScrollPane vaiableScroll, methodScroll;
 	private JTextField classNameField;
 	private GridBagConstraints gbc;
 
-	public ClassFigure(UMLComponentController c) {
+	public ClassFigure(ComponentManipulationToolbar componentTools, UMLComponentController c) {
 		this.setLayout(new GridBagLayout());
 		controller = c;
+		this.componentTools = componentTools;
 		gbc = new GridBagConstraints();
 		createAndAddComponents();
 	}
@@ -52,6 +55,7 @@ public class ClassFigure extends GUIComponent {
 				listMethods.clearSelection();
 				
 				controller.setVariableState(true);
+				componentTools.updateMenyToolbar(1);
 				
 				JList<?> list = (JList<?>) e.getSource();
 				int index = list.locationToIndex(e.getPoint());
@@ -68,6 +72,8 @@ public class ClassFigure extends GUIComponent {
 								.setvariableName(variableName);
 				}
 			}
+
+
 		});
 
 		listMethods.addMouseListener(new MouseAdapter() {
@@ -75,6 +81,7 @@ public class ClassFigure extends GUIComponent {
 				listVariables.clearSelection();
 				
 				controller.setVariableState(false);
+				componentTools.updateMenyToolbar(0);
 				
 				JList<?> list = (JList<?>) e.getSource();
 				int index = list.locationToIndex(e.getPoint());

@@ -101,4 +101,5 @@ public class UMLComponentController implements Serializable {
 	public void setMethodMenu(MethodMenu methodMenu) {
 		 this.methodMenu = methodMenu;
 	}
+
 }

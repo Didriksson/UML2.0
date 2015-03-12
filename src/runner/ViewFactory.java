@@ -54,7 +54,15 @@ public class ViewFactory {
 			e.printStackTrace();
 		}
 	}
+	
+	public static FigureViewingPanel figureViewFromDiagram(Diagram d){
+		controller = new UMLDrawAreaController(d);
+		currentPanel = new FigureViewingPanel(controller);
+		d.signalUpdate();
+		return currentPanel;
+	}
 
+	
 	public static FigureViewingPanel figureViewFromloadedDiagram() {
 		try {
 			FileInputStream f_in = new FileInputStream("myobject.data");

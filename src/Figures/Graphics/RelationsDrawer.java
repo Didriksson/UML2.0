@@ -82,7 +82,7 @@ public class RelationsDrawer extends JPanel {
 		checkIfThereIsSomeRelationsInFigurelistThatDoNotExistInTheDiagramAndRemoveThem();
 
 		for (AssociationFigure f : figureList) {
-			f.draw(g);
+		    f.draw(g);
 		}
 
 	}
@@ -100,6 +100,8 @@ public class RelationsDrawer extends JPanel {
 		Point endPoint = topPanel.getRelation().get(r).end;
 		AssociationFigure figure = FigureFactory.getRelationsFigure(
 				r.getType(), start, endPoint);
+		figure.setDestinationMulString(""+r.getMultiplicityDestination());
+		figure.setRootMulString(""+r.getMultiplicityDestination());
 		figureList.add(figure, r);
 	}
 

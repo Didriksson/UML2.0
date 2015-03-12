@@ -66,14 +66,6 @@ public class UMLComponentController implements Serializable {
 		return drawController.getParameterList();
 	}
 	
-	public void setVariableState(boolean state) {
-		this.variableState = state;
-	}
-
-	public boolean getVariableState() {
-		return this.variableState;
-	}
-
 	public void setIndexOfVariableList(int index, String fieldText, boolean isSelected) {
 		this.indexOfVariableList = index;
 		this.variableMenu.updateTextField(fieldText);

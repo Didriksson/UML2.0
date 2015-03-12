@@ -54,7 +54,6 @@ public class ClassFigure extends GUIComponent {
 			public void mouseClicked(MouseEvent e) {
 				listMethods.clearSelection();
 				
-				controller.setVariableState(true);
 				componentTools.updateMenyToolbar(1);
 				
 				JList<?> list = (JList<?>) e.getSource();
@@ -80,7 +79,6 @@ public class ClassFigure extends GUIComponent {
 			public void mouseClicked(MouseEvent e) {
 				listVariables.clearSelection();
 				
-				controller.setVariableState(false);
 				componentTools.updateMenyToolbar(0);
 				
 				JList<?> list = (JList<?>) e.getSource();

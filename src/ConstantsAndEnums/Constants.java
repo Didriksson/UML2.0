@@ -44,13 +44,6 @@ public class Constants {
     public static final Image FIGURE_VIEWER_BACKGROUND = new ImageIcon(
 	    "src/images/figureviewer.png").getImage();
 
-    public static final ImageIcon MINIMIZE_ICON = new ImageIcon(
-	    "src/images/minimizeIcon.png");
-    public static final String MINIMIZE_STRING = "Minimize";
-    public static final ImageIcon HIDETREE_ICON = new ImageIcon(
-	    "src/images/hideIcon.png");
-    public static final String HIDETREE_STRING = "Hide Tree";
-
     public static final String CLASSNAME_STRING = "CLASS";
     public static final String COMPOSITION_STRING = "COMPOSITION";
     public static final String REDO_STRING = "REDO";

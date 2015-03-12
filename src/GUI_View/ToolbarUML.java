@@ -27,14 +27,15 @@ public class ToolbarUML extends JPanel {
 	public void addButtonsToToolbar() {
 		JButton jbnToolbarButtons = null;
 
-		jbnToolbarButtons = buttonSettings(Constants.REDO_ICON,
-				Constants.REDO_STRING);
-		jbnToolbarButtons.addActionListener(e -> redoLastCommand());
-		add(jbnToolbarButtons);
 
 		jbnToolbarButtons = buttonSettings(Constants.UNDO_ICON,
 				Constants.UNDO_STRING);
 		jbnToolbarButtons.addActionListener(e -> undoLastCommand());
+		add(jbnToolbarButtons);
+
+		jbnToolbarButtons = buttonSettings(Constants.REDO_ICON,
+				Constants.REDO_STRING);
+		jbnToolbarButtons.addActionListener(e -> redoLastCommand());
 		add(jbnToolbarButtons);
 
 		jbnToolbarButtons = buttonSettings(Constants.CLASS_ICON,

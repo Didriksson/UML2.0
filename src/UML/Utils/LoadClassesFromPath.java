@@ -11,10 +11,7 @@ public class LoadClassesFromPath {
 
     public static List<Class<?>> loadClasses(String path) {
 	List<String> classPaths = null;
-	File root = new File(LoadClassesFromPath.class.getClassLoader()
-		.getResource("").getPath());
-	String rootPath = root.getPath();
-	String pathToClassDirectory = rootPath + path;
+	String pathToClassDirectory = path;
 	try {
 	    classPaths = Files.walk(Paths.get(pathToClassDirectory))
 		    .filter(item -> item.toString().contains(".class"))
@@ -25,7 +22,7 @@ public class LoadClassesFromPath {
 
 	classPaths = classPaths
 		.stream()
-		.map(item -> item.substring(rootPath.length() + 1,
+		.map(item -> item.substring(path.length() + 1,
 			item.length() - 6))
 		.map(item -> item.replace('\\', '.'))
 		.collect(Collectors.toList());

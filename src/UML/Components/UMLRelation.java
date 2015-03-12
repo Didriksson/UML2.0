@@ -2,14 +2,15 @@ package UML.Components;
 
 import java.io.Serializable;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-public class UMLRelation implements Serializable{
+public class UMLRelation implements Serializable {
 	private final String type;
 	private UMLComponent root;
 	private UMLComponent destination;
+	private int multiplicityRoot;
+	private int multiplicityDestination;
 
 	public UMLRelation(String type) {
 		this.type = type;
@@ -41,6 +42,33 @@ public class UMLRelation implements Serializable{
 		json.add("root", root.toJson());
 		json.add("destination", destination.toJson());
 		return json;
+	}
+
+	public String toString() {
+		return "Relation type: " + type + "\n" + "Root element: "
+				+ root.getName() + "\n" + 
+				"Destination element: " + destination.getName() + "\n";
+	}
+
+	public int getMultiplicityRoot() {
+		return multiplicityRoot;
+	}
+
+	public int getMultiplicityDestination() {
+		return multiplicityDestination;
+	}
+
+	public void setMultiplicityRoot(int multiplicityRoot) throws Exception {
+		if (multiplicityRoot <= 0)
+			throw new Exception("Multiplicity must be greater than 0.");
+		this.multiplicityRoot = multiplicityRoot;
+	}
+
+	public void setMultiplicityDestination(int multiplicityDestination)
+			throws Exception {
+		if (multiplicityDestination <= 0)
+			throw new Exception("Multiplicity must be greater than 0.");
+		this.multiplicityDestination = multiplicityDestination;
 	}
 
 }

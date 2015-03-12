@@ -2,6 +2,7 @@ package Figures.Graphics;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -54,8 +55,11 @@ public class AssociationFigure extends GeomatricPosition {
 
 		g2.setStroke(new BasicStroke());
 
+		double cx = rects[0].getX() + (rects[1].getX() - rects[0].getX()) / 10;
+		double cy = rects[0].getY() + (rects[1].getY() - rects[0].getY()) / 10;
 		drawRects(g2);
-	
+		g2.setFont(new Font("Helvetica", Font.BOLD, 18));
+		g2.drawString("1", (float) cx, (float) cy);
 
 	}
 
@@ -165,5 +169,4 @@ public class AssociationFigure extends GeomatricPosition {
 			break;
 		}
 	}
-
 }

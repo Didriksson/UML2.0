@@ -36,6 +36,18 @@ public class RealisationFigure extends AssociationFigure {
 	}
 
 	@Override
+	public String getDestinationMulString(){
+	    return "";
+	    
+	}
+	
+	@Override
+	public String getRootMulString(){
+	    return "";
+	    
+	}
+	
+	@Override
 	public boolean encloses(int x, int y) {
 	    return super.encloses(x, y) || arrowHead.encloses(x,y);
 	}

@@ -30,7 +30,7 @@ public class FigureFactory {
 	    figure = new InheritanceFigure(start, endPoint);
 	    break;
 	case Constants.REALISATION_STRING:
-	    figure = new InheritanceFigure(start, endPoint);
+	    figure = new RealisationFigure(start, endPoint);
 	    break;
 	default:
 	    throw new Exception("Unable to find associated relationfigure.");

@@ -92,7 +92,7 @@ public class VariableMenu extends JPanel implements IVisability{
 		if (selectedComponent instanceof ClassFigure) {
 			int index = selectedComponent.getController().getIndexOfVariableList();
 			
-			if(index >= 0 && isSelected) {
+			if(index >= 0 && isSelected && !variableNameField.getText().isEmpty()) {
 				selectedComponent.getController().getVariables().get(index).setvariableName(variableNameField.getText());
 				selectedComponent.getController().getVariables().get(index).setScopeModifier(visabilityIdentyfier);
 			}

@@ -5,12 +5,14 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.Line2D;
 
+import Controller.RelationController;
+
 public class CompositionFigure extends AssociationFigure {
 
 	private ArrowHeadFigure arrowHead;
 
-	public CompositionFigure(Point startPoint, Point endPoint) {
-		super(startPoint, endPoint);
+	public CompositionFigure(RelationController controller,Point startPoint, Point endPoint) {
+		super(controller, startPoint, endPoint);
 		arrowHead = new ArrowHeadFigure("Arrow.POLYGON");
 	}
 

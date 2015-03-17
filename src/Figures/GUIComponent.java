@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 import UML.Components.UMLComponent;
 import Controller.UMLComponentController;
 
-public class GUIComponent extends JPanel implements Serializable {
+public class GUIComponent extends JPanel implements Serializable, ISelectable {
 	protected UMLComponentController controller;
 
 	public UMLComponentController getController() {

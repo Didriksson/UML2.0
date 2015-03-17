@@ -11,7 +11,7 @@ public class UMLVariable implements Serializable{
 
 	public UMLVariable(String type, String name) {
 		this.variableName = name;
-		this.type = type;
+		this.setType(type);
 	}
 
 	public String getName() {
@@ -23,7 +23,7 @@ public class UMLVariable implements Serializable{
 	}
 
 	public String toString() {
-		return variableName + " : " + type;
+		return variableName + " : " + getType();
 	}
 
 	public String getType() {
@@ -31,13 +31,17 @@ public class UMLVariable implements Serializable{
 	}
 
 	public String generateSourceString() {
-		return type + " " + variableName;
+		return getType() + " " + variableName;
 	}
 
 	public JsonObject toJson() {
 		JsonObject json = new JsonObject();
 		json.addProperty("name", variableName);
-		json.addProperty("type", type);
+		json.addProperty("type", getType());
 		return json;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 }

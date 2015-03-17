@@ -37,7 +37,7 @@ public class MouseInteraction extends MouseAdapter {
 	relationDrawer.requestFocus();
 	relationDrawer.repaint();
 	relationDrawer.revalidate();
-	relationDrawer.hideToolbar();
+	relationDrawer.updateToolbar(selectedFigure);
     }
 
     @Override
@@ -105,7 +105,7 @@ public class MouseInteraction extends MouseAdapter {
 	selectedFigure = figure;
 
 	figure.setSelected(true);
-
+	
 	Rectangle2D.Double[] rects = figure.getRects();
 	for (int j = 0; j < rects.length; j++) {
 	    if (rects[j].contains(p)) {

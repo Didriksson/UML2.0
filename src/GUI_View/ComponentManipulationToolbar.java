@@ -1,19 +1,25 @@
 package GUI_View;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
 
+import junit.framework.TestFailure;
 import net.miginfocom.swing.MigLayout;
 import ConstantsAndEnums.Constants;
 import Figures.ClassFigure;
 import Figures.GUIComponent;
+import Figures.ISelectable;
+import Figures.Graphics.AssociationFigure;
 
 public class ComponentManipulationToolbar extends JPanel {
 	private static final long serialVersionUID = 1L;
 
-	private GUIComponent selectedComponent;
+	private ISelectable selectedComponent;
 	private JTabbedPane tabbPane;
 
+	
 	public ComponentManipulationToolbar() {
 		init();
 	}
@@ -24,32 +30,45 @@ public class ComponentManipulationToolbar extends JPanel {
 		tabbPane = new JTabbedPane();
 	}
 
-	public GUIComponent getSelectedComponent() {
+	public ISelectable getSelectedComponent() {
 		return selectedComponent;
 	}
 
-	public void setSelectedComponent(GUIComponent selectedComponent) {
-		this.selectedComponent = selectedComponent;		
-		if (selectedComponent instanceof ClassFigure) {
+	public void setSelectedComponent(ISelectable selectedFigure) {
+		this.selectedComponent = selectedFigure;		
+		if (selectedFigure instanceof ClassFigure) {
 			setClassFigureState();		
-		}
+		} else if(selectedFigure instanceof AssociationFigure)
+			setAssociationState();
 	}
 
-	public void hideToolbar() {
+	private void setAssociationState() {
 		this.removeAll();
-		this.revalidate();
+		JPanel panel = new AssocationMenu((AssociationFigure)selectedComponent);
+		
+		this.add(panel);
+	}
+
+	public void updateToolbar(ISelectable selectedFigure) {
+		if(selectedFigure != null)
+			setSelectedComponent(selectedFigure);
+		else{
+			this.removeAll();
+			this.revalidate();
+		}
 	}
 	
 	private void setClassFigureState() {
 		this.removeAll();
 		tabbPane.removeAll();
-		tabbPane.addTab("Method Settings", new MethodMenu(selectedComponent));
-		tabbPane.addTab("Variable Settings", new VariableMenu(selectedComponent));
+		tabbPane.addTab("Method Settings", new MethodMenu((GUIComponent)selectedComponent));
+		tabbPane.addTab("Variable Settings", new VariableMenu((GUIComponent)selectedComponent));
 		this.add(tabbPane);
 	}
 
 	public void updateMenyToolbar(int index) {
-		tabbPane.setSelectedIndex(index);
+		if (this.selectedComponent instanceof ClassFigure)
+			tabbPane.setSelectedIndex(index);				
 	}
 
 }

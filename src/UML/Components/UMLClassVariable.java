@@ -9,10 +9,11 @@ import ConstantsAndEnums.Constants;
 
 public class UMLClassVariable extends UMLVariable implements Serializable {
 
-	String modifiers;
+	private String modifiers;
 
 	public UMLClassVariable(String scopeModifier, String type, String name) {
 		super(type, name);
+		this.setType(type);
 		this.modifiers = scopeModifier;
 	}
 
@@ -56,5 +57,4 @@ public class UMLClassVariable extends UMLVariable implements Serializable {
 		return json;
 
 	}
-
 }

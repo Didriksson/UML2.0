@@ -45,7 +45,6 @@ public class ComponentManipulationToolbar extends JPanel {
 	private void setAssociationState() {
 		this.removeAll();
 		JPanel panel = new AssocationMenu((AssociationFigure)selectedComponent);
-		
 		this.add(panel);
 	}
 

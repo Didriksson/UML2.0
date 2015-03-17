@@ -85,6 +85,8 @@ public class MouseInteraction extends MouseAdapter {
 			.getSnapPointFromMousePosition());
 	    }
 	}
+	
+	updateViewPanel();
     }
 
     private boolean figureSelected(MouseEvent m, AssociationFigure figure) {

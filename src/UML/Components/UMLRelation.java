@@ -6,9 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 public class UMLRelation implements Serializable {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1888514158819310180L;
 	private final String type;
 	private UMLComponent root;

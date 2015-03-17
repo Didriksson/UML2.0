@@ -14,6 +14,7 @@ import java.awt.geom.Rectangle2D.Double;
 
 import Controller.RelationController;
 import Figures.ISelectable;
+import UML.Components.UMLComponent;
 
 public class AssociationFigure extends GeomatricPosition implements ISelectable  {
 
@@ -193,5 +194,12 @@ public class AssociationFigure extends GeomatricPosition implements ISelectable 
 		controller.updateMulti(text, text2);		
 	}
 	
+	public UMLComponent getRootComponent() {
+		return controller.getRootComponent();
+	}
+	
+	public UMLComponent getDestinationComponent() {
+		return controller.getDestinationComponent();
+	}
 
 }

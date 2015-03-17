@@ -31,8 +31,6 @@ public class AssocationMenu extends JPanel {
 	private void init() {
 		this.setLayout(new MigLayout("", "[grow, fill]", "grow"));
 		this.setBorder(Constants.LOWERED_BEVEL_BORDER);
-		Dimension dim = new Dimension(200, 200);
-		this.setMaximumSize(dim);
 		createComponents();
 	}
 
@@ -61,7 +59,7 @@ public class AssocationMenu extends JPanel {
 		figureSettingPanel.add(textfieldDest);
 		figureSettingPanel.add(updateButton);
 		
-		this.add(figureSettingPanel);
+		this.add(figureSettingPanel, "dock west");
 		
 		updateButton.addActionListener(e -> {
 			selectedFigure.updateMultiplicites(textfieldRoot.getText(),

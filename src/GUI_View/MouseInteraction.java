@@ -29,7 +29,6 @@ public class MouseInteraction extends MouseAdapter {
 	this.offset = new Point2D.Double();
     }
 
-
     public AssociationFigure getSelectedFigure() {
 	return selectedFigure;
     }
@@ -57,21 +56,22 @@ public class MouseInteraction extends MouseAdapter {
 
     @Override
     public void mouseDragged(MouseEvent m) {
-    	if (dragging && selectedFigure != null) {
-    		double x = m.getX() - offset.x;
-    		double y = m.getY() - offset.y;
-    		selectedFigure.updatePosition(selectedIndex, (int) x, (int) y);
-    		relationDrawer.checkIfOverlapping(m.getPoint());
-    	}
-    	updateViewPanel();
+	if (dragging && selectedFigure != null) {
+	    double x = m.getX() - offset.x;
+	    double y = m.getY() - offset.y;
+	    selectedFigure.updatePosition(selectedIndex, (int) x, (int) y);
+	    relationDrawer.checkIfOverlapping(m.getPoint());
+	}
+	updateViewPanel();
     }
 
     @Override
     public void mouseReleased(MouseEvent m) {
+	UMLRelation rel = figureList.getRelation(selectedFigure);
+	System.out.println(rel);
 	if (relationDrawer.checkIfOverlapping(m.getPoint())) {
 	    Resizable res = relationDrawer.returnOverlapsedComponent(m
 		    .getPoint());
-	    UMLRelation rel = figureList.getRelation(selectedFigure);
 
 	    if (selectedIndex == 0) {
 		relationDrawer
@@ -84,6 +84,14 @@ public class MouseInteraction extends MouseAdapter {
 			.getGUIComponent().getUMLComponent(), res
 			.getSnapPointFromMousePosition());
 	    }
+	}
+
+	else if (selectedFigure != null) {
+	    if (selectedIndex == 1)
+		relationDrawer.removeDestinationForRelation(rel);
+
+	    else if (selectedIndex == 0)
+		relationDrawer.removeRootForRelation(rel);
 	}
     }
 

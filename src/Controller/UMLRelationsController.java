@@ -22,4 +22,12 @@ public class UMLRelationsController {
 	public void setRootForRelation(UMLRelation rel, UMLComponent c, Point point) {
 		drawController.setRootForRelation(rel, c, point);
 	}
+
+	public void removeDestinationForRelation(UMLRelation rel) {
+		drawController.removeDestinationForRelation(rel);
+	}
+
+	public void removeRootForRelation(UMLRelation rel) {
+		drawController.removeRootForRelation(rel);
+	}
 }

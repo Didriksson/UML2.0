@@ -111,4 +111,14 @@ public class UMLDrawAreaController {
 		return diagram;
 	}
 
+	public void removeDestinationForRelation(UMLRelation rel) {
+		exectuteCommand(new NewDestinationForRelationCommand(diagram, rel, null));
+	}
+
+	public void removeRootForRelation(UMLRelation rel) {
+		System.out.println(rel);
+		exectuteCommand(new NewRootForRelationCommand(diagram, rel, null));
+		
+	}
+
 }

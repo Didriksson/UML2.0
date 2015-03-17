@@ -123,4 +123,11 @@ public class RelationsDrawer extends JPanel {
 		controller.setRootForRelation(rel, umlComponent, point);
 	}
 
+	public void removeDestinationForRelation(UMLRelation rel) {
+		controller.removeDestinationForRelation(rel);
+	}
+	public void removeRootForRelation(UMLRelation rel) {
+		controller.removeRootForRelation(rel);
+	}
+
 }

@@ -61,7 +61,7 @@ public class ClassFigure extends GUIComponent {
 				if (index >= 0) {
 					String text = controller.getVariables().get(index)
 							.getName();
-					controller.setIndexOfVariableList(index, text, !listMethods.isSelectionEmpty());
+					controller.setIndexOfVariableList(index, text, !listVariables.isSelectionEmpty());
 				}
 				if (e.getClickCount() == 2 && !listVariables.isSelectionEmpty()) {
 					String variableName = JOptionPane.showInputDialog(null,

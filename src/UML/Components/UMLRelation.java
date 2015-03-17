@@ -45,9 +45,18 @@ public class UMLRelation implements Serializable {
 	}
 
 	public String toString() {
+		String rootName = "";
+		String destName = "";
+		
+		if(root != null)
+			rootName = root.getName();
+		if(destination != null)
+			destName = destination.getName();
+		
+		
 		return "Relation type: " + type + "\n" + "Root element: "
-				+ root.getName() + "\n" + 
-				"Destination element: " + destination.getName() + "\n";
+				+ rootName + "\n" + 
+				"Destination element: " + destName + "\n";
 	}
 
 	public int getMultiplicityRoot() {

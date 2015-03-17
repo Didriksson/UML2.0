@@ -145,7 +145,6 @@ public class WindowFrame extends JFrame {
 			Diagram d = GenerateSource.reverseEngineer(
 					ViewFactory.getDiagram(), fileChooser.getSelectedFile()
 							.getPath());
-			System.out.println(d);
 			setContentPane(ViewFactory.figureViewFromDiagram(d));
 			revalidate();
 			repaint();

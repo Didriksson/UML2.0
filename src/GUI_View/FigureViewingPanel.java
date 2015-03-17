@@ -64,18 +64,7 @@ public class FigureViewingPanel extends JPanel implements Observer,
 	relationPanel = new RelationsDrawer(this, new UMLRelationsController(
 		controller));
 	setComponents();
-	setUpKeyBinding();
-    }
 
-    private void setUpKeyBinding() {
-	Action doNothing = new AbstractAction() {
-	    public void actionPerformed(ActionEvent e) {
-		System.out.println("Deletar!" + "FigureViewingPanel");
-	    }
-	};
-
-	this.getInputMap(WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(
-		KeyStroke.getKeyStroke("DELETE"), "doNothing");
     }
 
     private void setComponents() {

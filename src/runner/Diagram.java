@@ -62,7 +62,6 @@ public class Diagram extends Observable implements Serializable {
 	}
 
 	public boolean removeComponent(String name) {
-		System.out.println("Removing!!");
 		setChanged();
 		notifyObservers(this);
 		signalUpdate();

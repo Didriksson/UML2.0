@@ -45,12 +45,10 @@ public class ViewFactory {
 			SavedDataHolder savedData = new SavedDataHolder();
 			savedData.diagram = controller.getDiagram();
 			savedData.positionData = getFigureViewingPanel().getDataPosition();
-			System.out.println("Sparar diagram: \n" + controller.getDiagram());
 			obj_out.writeObject(savedData);
 		}
 
 		catch (Exception e) {
-			System.out.println("Spartok!\n ");
 			e.printStackTrace();
 		}
 	}
@@ -78,7 +76,6 @@ public class ViewFactory {
 				currentPanel = new FigureViewingPanel(controller);
 				currentPanel.setDataPosition(data.positionData);
 				d.signalUpdate();
-				System.out.println("Diagram:\n"+d);
 			}
 		} catch (Exception e) {
 		}

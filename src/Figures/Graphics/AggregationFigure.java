@@ -5,12 +5,14 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.Line2D;
 
+import Controller.RelationController;
+
 public class AggregationFigure extends AssociationFigure {
 
     private ArrowHeadFigure arrowHead;
 
-    public AggregationFigure(Point startPoint, Point endPoint) {
-	super(startPoint, endPoint);
+    public AggregationFigure(RelationController controller, Point startPoint, Point endPoint) {
+	super(controller, startPoint, endPoint);
 	arrowHead = new ArrowHeadFigure("Arrow.POLYGON");
     }
 

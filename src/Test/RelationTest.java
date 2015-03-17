@@ -41,8 +41,8 @@ public class RelationTest {
 		relation.setRoot(umlClass1);
 		relation.setDestination(umlClass2);
 		try {
-			relation.setMultiplicityDestination(1);
-			relation.setMultiplicityRoot(2);
+			relation.setMultiplicityDestination("1");
+			relation.setMultiplicityRoot("2");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -51,8 +51,8 @@ public class RelationTest {
 				+ "\n" + "Root element: " + umlClass1.getName() + "\n"
 				+ "Destination element: " + umlClass2.getName() + "\n";
 		assertEquals(shouldBe, relation.toString());
-		assertEquals(2, relation.getMultiplicityRoot());
-		assertEquals(1, relation.getMultiplicityDestination());
+		assertEquals("2", relation.getMultiplicityRoot());
+		assertEquals("1", relation.getMultiplicityDestination());
 
 	}
 

@@ -23,9 +23,10 @@ import ConstantsAndEnums.Constants;
 import ConstantsAndEnums.Enums;
 import Controller.UMLComponentController;
 import Controller.UMLDrawAreaController;
-import Controller.UMLRelationsController;
+import Controller.UMLRelationsComponentController;
 import Figures.ClassFigure;
 import Figures.Resizable;
+import Figures.Graphics.AssociationFigure;
 import Figures.Graphics.RelationsDrawer;
 import UML.Components.UMLComponent;
 import UML.Components.UMLRelation;
@@ -59,7 +60,7 @@ public class FigureViewingPanel extends JPanel implements Observer,
     }
 
     private void createComponents() {
-	relationPanel = new RelationsDrawer(this, new UMLRelationsController(
+	relationPanel = new RelationsDrawer(this, new UMLRelationsComponentController(
 		controller));
 	setComponents();
 	setUpKeyBinding();
@@ -189,8 +190,8 @@ public class FigureViewingPanel extends JPanel implements Observer,
 	controller.toolbarCommands(enumeration);
     }
 
-    public void hideToolbar() {
-	componentTools.hideToolbar();
+    public void updateToolbar(AssociationFigure selectedFigure) {
+	componentTools.updateToolbar(selectedFigure);
     }
 
     public Resizable returnOverlapsedComponent(Point p) {

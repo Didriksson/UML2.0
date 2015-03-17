@@ -112,7 +112,6 @@ public class MethodMenu extends JPanel implements IVisability {
 		methodPanel.add(methodNameField, "wrap");
 		methodPanel.add(new RadioButtonVisability(this), "wrap");
 		methodPanel.add(updateMethodButton, "span 2 1");		
-
 		
 		parameterPanel.add(parameterNameLabel, "wrap");
 		parameterPanel.add(parameterNameField, "span 2 1, wrap");

@@ -5,12 +5,14 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.Line2D;
 
+import Controller.RelationController;
+
 public class DirectAssociationFigure extends AssociationFigure {
 
 	private ArrowHeadFigure arrowHead;
 	
-	public DirectAssociationFigure(Point startPoint, Point endPoint) {
-		super(startPoint, endPoint);
+	public DirectAssociationFigure(RelationController controller,Point startPoint, Point endPoint) {
+		super(controller, startPoint, endPoint);
 		arrowHead = new ArrowHeadFigure("none");
 	}
 

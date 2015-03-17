@@ -15,6 +15,7 @@ import Command.NewMethodCommand;
 import Command.NewRootForRelationCommand;
 import Command.RemoveClassComponentCommand;
 import Command.RemoveRelationCommand;
+import Command.UpdateMultiplicitesCommand;
 import ConstantsAndEnums.Enums;
 import GUI_View.FigureViewingPanel;
 import GUI_View.UMLRelationPoints;
@@ -46,39 +47,39 @@ public class UMLDrawAreaController {
 	}
 
 	public void removeComponent(UMLComponent c) {
-		exectuteCommand(new RemoveClassComponentCommand(diagram, c));
+		executeCommand(new RemoveClassComponentCommand(diagram, c));
 	}
 
 	public void removeRelation(UMLRelation r) {
-		exectuteCommand(new RemoveRelationCommand(diagram, r));
+		executeCommand(new RemoveRelationCommand(diagram, r));
 	}
 
 	public void setDestinationForRelation(UMLRelation rel, UMLComponent c,
 			Point point) {
 		UMLRelationPoints points = viewPanel.getRelation().get(rel);
 		points.end = point;
-		exectuteCommand(new NewDestinationForRelationCommand(diagram, rel, c));
+		executeCommand(new NewDestinationForRelationCommand(diagram, rel, c));
 	}
 
 	public void setRootForRelation(UMLRelation rel, UMLComponent c, Point point) {
 		UMLRelationPoints points = viewPanel.getRelation().get(rel);
 		points.start = point;
-		exectuteCommand(new NewRootForRelationCommand(diagram, rel, c));
+		executeCommand(new NewRootForRelationCommand(diagram, rel, c));
 	}
 
 	public void addMethod(UMLComponent c) {
-		exectuteCommand(new NewMethodCommand(diagram, c));
+		executeCommand(new NewMethodCommand(diagram, c));
 	}
 
 	public void addVariable(UMLComponent c) {
-		exectuteCommand(new NewClassVariableCommand(diagram, c));
+		executeCommand(new NewClassVariableCommand(diagram, c));
 	}
 
 	public void toolbarCommands(Enums command) {
-		exectuteCommand(CommandFactory.getToolbarCommand(command, diagram));
+		executeCommand(CommandFactory.getToolbarCommand(command, diagram));
 	}
 
-	private void exectuteCommand(ICommand command) {
+	private void executeCommand(ICommand command) {
 		executedCommands.push(command);
 		command.execute();
 	}
@@ -93,7 +94,7 @@ public class UMLDrawAreaController {
 	}
 
 	private void redoCommand(ICommand command) {
-		exectuteCommand(command);
+		executeCommand(command);
 	}
 
 	public void undoCommand() {
@@ -109,6 +110,10 @@ public class UMLDrawAreaController {
 
 	public Diagram getDiagram() {
 		return diagram;
+	}
+
+	public void updateMultiplicites(UMLRelation r, String root, String dest) {
+		executeCommand(new UpdateMultiplicitesCommand(r, root, dest, diagram));
 	}
 
 }

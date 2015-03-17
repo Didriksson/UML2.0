@@ -19,13 +19,18 @@ public class NewRootForRelationCommand implements ICommand {
 
 	@Override
 	public void execute() {
+		UMLComponent oldComp = rel.getDestination();
 		diagram.setRootForRelation(rel, comp);
+		comp = oldComp;
+		diagram.signalUpdate();
+		
+		
+		
 	}
 
 	@Override
 	public void undo() {
-		// TODO Auto-generated method stub
-
+		execute();
 	}
 
 }

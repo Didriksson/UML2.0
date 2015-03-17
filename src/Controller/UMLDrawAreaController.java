@@ -1,7 +1,6 @@
 package Controller;
 
 import java.awt.Point;
-import java.util.Map;
 import java.util.Observer;
 import java.util.Set;
 import java.util.Stack;
@@ -112,8 +111,17 @@ public class UMLDrawAreaController {
 		return diagram;
 	}
 
+	public void removeDestinationForRelation(UMLRelation rel) {
+		executeCommand(new NewDestinationForRelationCommand(diagram, rel, null));
+	}
+
+	public void removeRootForRelation(UMLRelation rel) {
+		System.out.println(rel);
+		executeCommand(new NewRootForRelationCommand(diagram, rel, null));
+	}
 	public void updateMultiplicites(UMLRelation r, String root, String dest) {
 		executeCommand(new UpdateMultiplicitesCommand(r, root, dest, diagram));
+
 	}
 
 }

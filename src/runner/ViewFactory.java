@@ -36,9 +36,9 @@ public class ViewFactory {
 	    return currentPanel;
 	}
 
-	public static void saveCurrentState() {
+	public static void saveCurrentState(String path) {
 		try {
-			FileOutputStream f_out = new FileOutputStream("myobject.data");
+			FileOutputStream f_out = new FileOutputStream(path);
 
 			ObjectOutputStream obj_out = new ObjectOutputStream(f_out);
 
@@ -63,9 +63,9 @@ public class ViewFactory {
 	}
 
 	
-	public static FigureViewingPanel figureViewFromloadedDiagram() {
+	public static FigureViewingPanel figureViewFromloadedDiagram(String path) {
 		try {
-			FileInputStream f_in = new FileInputStream("myobject.data");
+			FileInputStream f_in = new FileInputStream(path);
 
 			ObjectInputStream obj_in = new ObjectInputStream(f_in);
 			

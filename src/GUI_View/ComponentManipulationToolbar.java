@@ -67,7 +67,8 @@ public class ComponentManipulationToolbar extends JPanel {
 	}
 
 	public void updateMenyToolbar(int index) {
-		tabbPane.setSelectedIndex(index);
+		if (this.selectedComponent instanceof ClassFigure)
+			tabbPane.setSelectedIndex(index);				
 	}
 
 }

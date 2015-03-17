@@ -37,8 +37,6 @@ public class MethodMenu extends JPanel implements IVisability {
 	private JRadioButton returnTypeListMethodsRButton;
 	private JRadioButton returnTypeFieldMethodsRButton;
 
-	private TitledBorder titledBorder;
-
 	private JComboBox<String> returnTypelistParameter, returnTypelistMethod;
 	private Vector<String> returnTypeVectorList;
 
@@ -193,7 +191,7 @@ public class MethodMenu extends JPanel implements IVisability {
 	private JPanel panelSetup(String title) {
 		JPanel panel = new JPanel();
 		panel.setLayout(new MigLayout("", "[grow, fill]", "grow"));
-		titledBorder = BorderFactory.createTitledBorder(title);
+		TitledBorder titledBorder = BorderFactory.createTitledBorder(title);
 		panel.setBorder(titledBorder);
 		return panel;
 	}

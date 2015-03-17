@@ -37,6 +37,7 @@ public class VariableMenu extends JPanel implements IVisability{
 	private JRadioButton returnTypeListVariablesRButton;
 	private JRadioButton returnTypeFieldVariablesRButton;
 
+	private JLabel variableNameLabel;
 	private JLabel returnTypeVariableListLabel;
 	private JLabel returnTypeVariableFieldLabel;
 
@@ -65,6 +66,7 @@ public class VariableMenu extends JPanel implements IVisability{
 		variableNameField = textFieldSetup();
 		returnTypeVariableField = textFieldSetup();
 		
+		variableNameLabel = labelSetup("Variable Name:");
 		returnTypeVariableListLabel = labelSetup("Return Type");
 		returnTypeVariableFieldLabel = labelSetup("Return Type");
 
@@ -93,6 +95,8 @@ public class VariableMenu extends JPanel implements IVisability{
 		variableReturnTypePanel.add(returnTypeVariableField);
 			
 		variablePanel.add(addVariableButton, "wrap");
+		variablePanel.add(variableNameLabel, "wrap");
+		variablePanel.add(variableNameField, "wrap");
 		variablePanel.add(new RadioButtonVisability(this), "wrap");
 		variablePanel.add(updateVariableButton);
 		

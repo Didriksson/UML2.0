@@ -1,38 +1,82 @@
 package GUI_View;
 
+import java.awt.Dimension;
+
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
+
+import org.junit.experimental.theories.internal.Assignments;
 
 import net.miginfocom.swing.MigLayout;
+import ConstantsAndEnums.Constants;
 import Figures.Graphics.AssociationFigure;
 
 public class AssocationMenu extends JPanel {
 
-	public AssocationMenu(AssociationFigure selectedComponent) {
-		this.setLayout(new MigLayout("wrap 2", "[grow, fill]", ""));
+	private JButton updateButton;
+	private JLabel rootLabel, destLabel;
+	private JTextField textfieldRoot, textfieldDest; 
+	private AssociationFigure selectedFigure;
+	private JPanel figureSettingPanel;
+	
+	public AssocationMenu(AssociationFigure selectedFigure) {
+		this.selectedFigure = selectedFigure;
+		init();
+	}
 
-		JButton updateButton = new JButton("Update");
-		JLabel rootLabel = new JLabel("rootmulty");
-		JLabel destLabel = new JLabel("destmulty");
-		JTextField textfieldRoot = new JTextField();
-		JTextField textfieldDest = new JTextField();
+	private void init() {
+		this.setLayout(new MigLayout("", "[grow, fill]", "grow"));
+		this.setBorder(Constants.LOWERED_BEVEL_BORDER);
+		Dimension dim = new Dimension(200, 200);
+		this.setMaximumSize(dim);
+		createComponents();
+	}
 
-		textfieldRoot.setText(selectedComponent.getRootMulString());
-		textfieldDest.setText(selectedComponent.getDestinationMulString());
+	private void createComponents() {
+		figureSettingPanel = panelSetup("Figure Settings:");
+		
+		updateButton = new JButton("Update");
+		
+		rootLabel = new JLabel("Root Multiplicities");
+		destLabel = new JLabel("Desitnation Multiplicities");
 
-		add(rootLabel);
-		add(textfieldRoot);
-		add(destLabel);
-		add(textfieldDest);
-		add(updateButton);
+		textfieldRoot = new JTextField();
+		textfieldDest = new JTextField();
+		
+		
+		manipulateComponents();
+	}
 
+	private void manipulateComponents() {
+		textfieldRoot.setText(selectedFigure.getRootMulString());
+		textfieldDest.setText(selectedFigure.getDestinationMulString());
+		
+		figureSettingPanel.add(rootLabel);
+		figureSettingPanel.add(textfieldRoot);
+		figureSettingPanel.add(destLabel);
+		figureSettingPanel.add(textfieldDest);
+		figureSettingPanel.add(updateButton);
+		
+		this.add(figureSettingPanel);
+		
 		updateButton.addActionListener(e -> {
-			selectedComponent.updateMultiplicites(textfieldRoot.getText(),
+			selectedFigure.updateMultiplicites(textfieldRoot.getText(),
 					textfieldDest.getText());
 		});
-
 	}
+	
+	
+	private JPanel panelSetup(String title) {
+		JPanel panel = new JPanel();
+		panel.setLayout(new MigLayout("wrap", "[grow, fill]", "grow"));
+		TitledBorder titledBorder = BorderFactory.createTitledBorder(title);
+		panel.setBorder(titledBorder);
+		return panel;
+	}
+	
 
 }

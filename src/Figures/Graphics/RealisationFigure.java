@@ -6,15 +6,13 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.Line2D;
 
-import Controller.RelationController;
-
 public class RealisationFigure extends AssociationFigure {
 
 	private ArrowHeadFigure arrowHead;
 	private float[] dash4 = {8f, 8f};
 	
-	public RealisationFigure(RelationController controller, Point startPoint, Point endPoint) {
-		super(controller, startPoint, endPoint);
+	public RealisationFigure(Point startPoint, Point endPoint) {
+		super(startPoint, endPoint);
 		arrowHead = new ArrowHeadFigure("Arrow.TRIANGLE");
 	}
 

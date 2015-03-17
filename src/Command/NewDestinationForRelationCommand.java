@@ -20,13 +20,15 @@ public class NewDestinationForRelationCommand implements ICommand {
 
 	@Override
 	public void execute() {
+		UMLComponent oldComp = rel.getDestination();
 		diagram.setDestinationForRelation(rel, comp);
+		comp = oldComp;
+		diagram.signalUpdate();
 	}
 
 	@Override
 	public void undo() {
-		// TODO Auto-generated method stub
-
+		execute();
 	}
 
 }

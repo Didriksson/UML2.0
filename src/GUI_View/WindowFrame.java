@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import runner.Diagram;
 import runner.ViewFactory;
@@ -21,6 +23,8 @@ public class WindowFrame extends JFrame {
 	private JMenuItem itemEXIT, subMenuSave, subMenuOpen, subMenuNew,
 			subMenuExport, subMenuReverse;
 
+	private JFileChooser fileChooser;
+
 	public WindowFrame() {
 		this.setSize(800, 800);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -31,6 +35,10 @@ public class WindowFrame extends JFrame {
 	}
 
 	private void createComponents() {
+
+		fileChooser = new JFileChooser();
+		fileChooser.setCurrentDirectory(new File("."));
+
 		menuBAR = new JMenuBar();
 
 		menuFILE = new JMenu("File");
@@ -43,7 +51,7 @@ public class WindowFrame extends JFrame {
 		subMenuOpen.addActionListener(e -> loadDiagram());
 
 		subMenuSave = new JMenuItem("Save File As", Constants.SAVE_FILE_ICON);
-		subMenuSave.addActionListener(e -> ViewFactory.saveCurrentState());
+		subMenuSave.addActionListener(e -> saveDiagram());
 
 		subMenuExport = new JMenuItem("Generate skeleton");
 		subMenuExport.addActionListener(e -> generateSkeletonCode());
@@ -55,6 +63,25 @@ public class WindowFrame extends JFrame {
 		itemEXIT.addActionListener(e -> exit());
 
 		setComponents();
+	}
+
+	private void saveDiagram() {
+		String path = "";
+		fileChooser.setDialogTitle("Specify where to save the file.");
+		fileChooser
+				.setFileFilter(new FileNameExtensionFilter("UML-Type", "uml"));
+		if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+
+			File file = fileChooser.getSelectedFile();
+			path = file.getParent();
+			String fileName = file.getName();
+			int extensionPosition = fileName.indexOf(".");
+			if (extensionPosition != -1)
+				fileName = fileName.substring(0, extensionPosition);
+			path = path + "\\" + fileName + ".uml";
+
+		}
+		ViewFactory.saveCurrentState(path);
 	}
 
 	private void setComponents() {
@@ -81,14 +108,29 @@ public class WindowFrame extends JFrame {
 	}
 
 	private void loadDiagram() {
-		setContentPane(ViewFactory.figureViewFromloadedDiagram());
+		String path = "";
+		fileChooser.setDialogTitle("Select file to load");
+		fileChooser
+				.setFileFilter(new FileNameExtensionFilter("UML-Type", "uml"));
+		if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+
+			File file = fileChooser.getSelectedFile();
+			path = file.getParent();
+			String fileName = file.getName();
+			int extensionPosition = fileName.indexOf(".");
+			if (extensionPosition != -1)
+				fileName = fileName.substring(0, extensionPosition);
+			path = path + "\\" + fileName + ".uml";
+
+		}
+
+		setContentPane(ViewFactory.figureViewFromloadedDiagram(path));
 		revalidate();
 		repaint();
 	}
 
 	private void generateSkeletonCode() {
-		JFileChooser fileChooser = new JFileChooser();
-		fileChooser.setCurrentDirectory(new File("."));
+
 		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		fileChooser.setDialogTitle("Select target folder to generate code.");
 		if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION)
@@ -97,12 +139,12 @@ public class WindowFrame extends JFrame {
 	}
 
 	private void reverseEngineer() {
-		JFileChooser fileChooser = new JFileChooser();
-		fileChooser.setCurrentDirectory(new File("."));
 		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		fileChooser.setDialogTitle("Select project to reverse engineer.");
 		if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-			Diagram d = GenerateSource.reverseEngineer(ViewFactory.getDiagram(),fileChooser.getSelectedFile().getPath());
+			Diagram d = GenerateSource.reverseEngineer(
+					ViewFactory.getDiagram(), fileChooser.getSelectedFile()
+							.getPath());
 			System.out.println(d);
 			setContentPane(ViewFactory.figureViewFromDiagram(d));
 			revalidate();

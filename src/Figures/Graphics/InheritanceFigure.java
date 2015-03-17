@@ -5,14 +5,12 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.Line2D;
 
-import Controller.RelationController;
-
 public class InheritanceFigure extends AssociationFigure {
 
 	private ArrowHeadFigure arrowHead;
 	
-	public InheritanceFigure(RelationController controller, Point startPoint, Point endPoint) {
-		super(controller, startPoint, endPoint);
+	public InheritanceFigure(Point startPoint, Point endPoint) {
+		super(startPoint, endPoint);
 		arrowHead = new ArrowHeadFigure("Arrow.TRIANGLE");
 	}
 

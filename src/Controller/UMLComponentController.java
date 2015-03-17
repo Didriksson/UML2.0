@@ -14,6 +14,7 @@ public class UMLComponentController implements Serializable {
 
 	private UMLComponent umlC;
 	private transient UMLDrawAreaController drawController;
+	private boolean variableState = false;
 	private int indexOfVariableList = 0;
 	private int indexOfMehodList = 0;
 	private MethodMenu methodMenu;
@@ -36,11 +37,6 @@ public class UMLComponentController implements Serializable {
 	public List<UMLMethod> getMethods() {
 		return umlC.getMethods();
 	}
-	
-	public List<UMLClassVariable> getClassVariable() {
-		return umlC.getVariables();
-	}
-	
 
 	public String getUMLtoString() {
 		return umlC.toString();
@@ -97,4 +93,5 @@ public class UMLComponentController implements Serializable {
 	public void setMethodMenu(MethodMenu methodMenu) {
 		 this.methodMenu = methodMenu;
 	}
+
 }

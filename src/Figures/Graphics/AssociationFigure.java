@@ -12,10 +12,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Rectangle2D.Double;
 
-import Controller.RelationController;
-import Figures.ISelectable;
-
-public class AssociationFigure extends GeomatricPosition implements ISelectable  {
+public class AssociationFigure extends GeomatricPosition {
 
 	private double recSize = 10.0;
 
@@ -23,11 +20,11 @@ public class AssociationFigure extends GeomatricPosition implements ISelectable 
 	private Rectangle2D.Double[] rects;
 	protected boolean selected;
 	protected Point startPoint, endPoint;
-	protected RelationController controller;
+	private String rootMulString = "";
+	private String destinationMulString = "";
 
-	public AssociationFigure(RelationController cont, Point startPoint, Point endPoint) {
+	public AssociationFigure(Point startPoint, Point endPoint) {
 		super(startPoint.x, startPoint.y);
-		this.controller = cont;
 		this.selected = false;
 		this.startPoint = startPoint;
 		this.endPoint = endPoint;
@@ -182,16 +179,18 @@ public class AssociationFigure extends GeomatricPosition implements ISelectable 
 	}
 
 	public String getDestinationMulString() {
-	    return controller.getDestinationMultiplicity();
+	    return destinationMulString;
+	}
+
+	public void setDestinationMulString(String destinationMulString) {
+	    this.destinationMulString = destinationMulString;
 	}
 
 	public String getRootMulString() {
-	    return controller.getRootMultiplicity();
+	    return rootMulString;
 	}
 
-	public void updateMultiplicites(String text, String text2) {
-		controller.updateMulti(text, text2);		
+	public void setRootMulString(String rootMulString) {
+	    this.rootMulString = rootMulString;
 	}
-	
-
 }

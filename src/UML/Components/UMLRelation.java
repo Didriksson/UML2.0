@@ -6,20 +6,14 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 public class UMLRelation implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1888514158819310180L;
 	private final String type;
 	private UMLComponent root;
 	private UMLComponent destination;
-	private String multiplicityRoot;
-	private String multiplicityDestination;
+	private int multiplicityRoot;
+	private int multiplicityDestination;
 
 	public UMLRelation(String type) {
 		this.type = type;
-		multiplicityDestination = "";
-		multiplicityRoot = "";
 	}
 
 	public String getType() {
@@ -51,24 +45,38 @@ public class UMLRelation implements Serializable {
 	}
 
 	public String toString() {
+		String rootName = "";
+		String destName = "";
+		
+		if(root != null)
+			rootName = root.getName();
+		if(destination != null)
+			destName = destination.getName();
+		
+		
 		return "Relation type: " + type + "\n" + "Root element: "
-				+ root.getName() + "\n" + "Destination element: "
-				+ destination.getName() + "\n";
+				+ rootName + "\n" + 
+				"Destination element: " + destName + "\n";
 	}
 
-	public String getMultiplicityRoot() {
+	public int getMultiplicityRoot() {
 		return multiplicityRoot;
 	}
 
-	public String getMultiplicityDestination() {
+	public int getMultiplicityDestination() {
 		return multiplicityDestination;
 	}
 
-	public void setMultiplicityRoot(String multiplicityRoot) {
+	public void setMultiplicityRoot(int multiplicityRoot) throws Exception {
+		if (multiplicityRoot <= 0)
+			throw new Exception("Multiplicity must be greater than 0.");
 		this.multiplicityRoot = multiplicityRoot;
 	}
 
-	public void setMultiplicityDestination(String multiplicityDestination) {
+	public void setMultiplicityDestination(int multiplicityDestination)
+			throws Exception {
+		if (multiplicityDestination <= 0)
+			throw new Exception("Multiplicity must be greater than 0.");
 		this.multiplicityDestination = multiplicityDestination;
 	}
 

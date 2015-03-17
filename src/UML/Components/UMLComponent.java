@@ -112,5 +112,4 @@ public class UMLComponent implements Serializable{
 
 		return json;
 	}
-
 }

@@ -37,6 +37,8 @@ public class MethodMenu extends JPanel implements IVisability {
 	private JRadioButton returnTypeListMethodsRButton;
 	private JRadioButton returnTypeFieldMethodsRButton;
 
+	private TitledBorder titledBorder;
+
 	private JComboBox<String> returnTypelistParameter, returnTypelistMethod;
 	private Vector<String> returnTypeVectorList;
 
@@ -110,6 +112,7 @@ public class MethodMenu extends JPanel implements IVisability {
 		methodPanel.add(methodNameField, "wrap");
 		methodPanel.add(new RadioButtonVisability(this), "wrap");
 		methodPanel.add(updateMethodButton, "span 2 1");		
+
 		
 		parameterPanel.add(parameterNameLabel, "wrap");
 		parameterPanel.add(parameterNameField, "span 2 1, wrap");
@@ -191,7 +194,7 @@ public class MethodMenu extends JPanel implements IVisability {
 	private JPanel panelSetup(String title) {
 		JPanel panel = new JPanel();
 		panel.setLayout(new MigLayout("", "[grow, fill]", "grow"));
-		TitledBorder titledBorder = BorderFactory.createTitledBorder(title);
+		titledBorder = BorderFactory.createTitledBorder(title);
 		panel.setBorder(titledBorder);
 		return panel;
 	}

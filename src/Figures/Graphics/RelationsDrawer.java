@@ -12,7 +12,7 @@ import javax.swing.Action;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
-import Controller.UMLRelationsComponentController;
+import Controller.UMLRelationsController;
 import Figures.Resizable;
 import GUI_View.FigureViewingPanel;
 import GUI_View.MouseInteraction;
@@ -23,11 +23,11 @@ public class RelationsDrawer extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private FigureViewingPanel topPanel;
 	private FigureList figureList;
-	private UMLRelationsComponentController controller;
+	private UMLRelationsController controller;
 	private MouseInteraction mouseInteraction;
 
 	public RelationsDrawer(FigureViewingPanel fwp,
-			UMLRelationsComponentController controller) {
+			UMLRelationsController controller) {
 		this.setLayout(null);
 		this.setBackground(Color.WHITE);
 		this.controller = controller;
@@ -47,8 +47,8 @@ public class RelationsDrawer extends JPanel {
 		return topPanel.returnOverlapsedComponent(p);
 	}
 	
-	public void updateToolbar(AssociationFigure selectedFigure) {
-		topPanel.updateToolbar(selectedFigure);
+	public void hideToolbar() {
+		topPanel.hideToolbar();
 	}
 
 	private void setUpKeyBinding() {
@@ -98,7 +98,10 @@ public class RelationsDrawer extends JPanel {
 	private void addNewAssociationFigure(UMLRelation r) throws Exception {
 		Point start = topPanel.getRelation().get(r).start;
 		Point endPoint = topPanel.getRelation().get(r).end;
-		AssociationFigure figure = FigureFactory.getRelationsFigure(r, start, endPoint);
+		AssociationFigure figure = FigureFactory.getRelationsFigure(
+				r.getType(), start, endPoint);
+		figure.setDestinationMulString(""+r.getMultiplicityDestination());
+		figure.setRootMulString(""+r.getMultiplicityDestination());
 		figureList.add(figure, r);
 	}
 
@@ -118,6 +121,13 @@ public class RelationsDrawer extends JPanel {
 	public void setRootForRelation(UMLRelation rel, UMLComponent umlComponent,
 			Point point) {
 		controller.setRootForRelation(rel, umlComponent, point);
+	}
+
+	public void removeDestinationForRelation(UMLRelation rel) {
+		controller.removeDestinationForRelation(rel);
+	}
+	public void removeRootForRelation(UMLRelation rel) {
+		controller.removeRootForRelation(rel);
 	}
 
 }

@@ -116,7 +116,6 @@ public class UMLDrawAreaController {
 	}
 
 	public void removeRootForRelation(UMLRelation rel) {
-		System.out.println(rel);
 		executeCommand(new NewRootForRelationCommand(diagram, rel, null));
 	}
 	public void updateMultiplicites(UMLRelation r, String root, String dest) {

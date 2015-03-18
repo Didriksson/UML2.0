@@ -1,6 +1,7 @@
 package Command;
 
 import runner.Diagram;
+import ConstantsAndEnums.Constants;
 import UML.Components.UMLComponent;
 
 public class RemoveClassComponentCommand implements ICommand {

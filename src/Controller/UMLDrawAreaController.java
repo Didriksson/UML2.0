@@ -13,6 +13,7 @@ import Command.NewDestinationForRelationCommand;
 import Command.NewMethodCommand;
 import Command.NewRootForRelationCommand;
 import Command.RemoveClassComponentCommand;
+import Command.RemoveComponentMethodCommand;
 import Command.RemoveRelationCommand;
 import Command.UpdateMultiplicitesCommand;
 import ConstantsAndEnums.Enums;
@@ -51,6 +52,10 @@ public class UMLDrawAreaController {
 
 	public void removeRelation(UMLRelation r) {
 		executeCommand(new RemoveRelationCommand(diagram, r));
+	}
+	
+	public void removeComponentMethod(UMLComponent c, int index) {
+		executeCommand(new RemoveComponentMethodCommand(c, index));
 	}
 
 	public void setDestinationForRelation(UMLRelation rel, UMLComponent c,

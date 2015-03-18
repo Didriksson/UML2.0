@@ -20,7 +20,8 @@ public class RemoveComponentVariableCommand implements ICommand {
 	
 	@Override
 	public void execute() {
-		this.v = component.getVariables().remove(index);
+		if(component.getVariables().size() > 0)
+			this.v = component.getVariables().remove(index);
 		d.signalUpdate();
 	}
 

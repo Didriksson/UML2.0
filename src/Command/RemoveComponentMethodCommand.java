@@ -19,7 +19,8 @@ public class RemoveComponentMethodCommand implements ICommand {
 	
 	@Override
 	public void execute() {
-		this.e = component.getMethods().remove(index);
+		if(component.getMethods().size() > 0)
+			this.e = component.getMethods().remove(index);
 		d.signalUpdate();
 	}
 

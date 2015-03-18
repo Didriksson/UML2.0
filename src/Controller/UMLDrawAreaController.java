@@ -57,6 +57,10 @@ public class UMLDrawAreaController {
 	public void removeComponentMethod(UMLComponent c, int index) {
 		executeCommand(new RemoveComponentMethodCommand(diagram, c, index));
 	}
+	
+	public void removeComponentVariable(UMLComponent umlC, int index) {
+		executeCommand(new RemoveComponentVariableCommand(umlC, index));	
+	}
 
 	public void setDestinationForRelation(UMLRelation rel, UMLComponent c,
 			Point point) {
@@ -127,5 +131,7 @@ public class UMLDrawAreaController {
 		executeCommand(new UpdateMultiplicitesCommand(r, root, dest, diagram));
 
 	}
+
+
 
 }

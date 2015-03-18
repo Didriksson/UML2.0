@@ -69,6 +69,10 @@ public class UMLComponentController implements Serializable {
 	public void removeComponentMethod(int index) {
 		drawController.removeComponentMethod(umlC, index);
 	}
+	
+	public void removeComponentVariable(int index) {
+		drawController.removeComponentVariable(umlC, index);
+	}
 
 	public Set<String> getParameterList() {
 		return drawController.getParameterList();
@@ -101,4 +105,6 @@ public class UMLComponentController implements Serializable {
 	public void setMethodMenu(MethodMenu methodMenu) {
 		 this.methodMenu = methodMenu;
 	}
+
+
 }

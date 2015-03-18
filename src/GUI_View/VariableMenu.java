@@ -23,7 +23,7 @@ public class VariableMenu extends JPanel implements IVisability{
 	
 	private JPanel variablePanel, variableReturnTypePanel;
 	
-	private JButton addVariableButton, updateVariableButton;
+	private JButton addVariableButton, deleteVariableButton, updateVariableButton;
 
 	private JTextField variableNameField;
 	private JTextField returnTypeVariableField;
@@ -71,6 +71,7 @@ public class VariableMenu extends JPanel implements IVisability{
 		returnTypeVariableFieldLabel = labelSetup("Return Type");
 
 		addVariableButton = buttonSetup("Add field");
+		deleteVariableButton = buttonSetup("Delete field");
 		updateVariableButton = buttonSetup("Update field");
 		
 		buttonGroupVariables = new ButtonGroup();
@@ -94,11 +95,12 @@ public class VariableMenu extends JPanel implements IVisability{
 		variableReturnTypePanel.add(returnTypeFieldVariablesRButton);
 		variableReturnTypePanel.add(returnTypeVariableField);
 			
-		variablePanel.add(addVariableButton, "wrap");
-		variablePanel.add(variableNameLabel, "wrap");
-		variablePanel.add(variableNameField, "wrap");
-		variablePanel.add(new RadioButtonVisability(this), "wrap");
-		variablePanel.add(updateVariableButton);
+		variablePanel.add(addVariableButton);
+		variablePanel.add(deleteVariableButton, "wrap");
+		variablePanel.add(variableNameLabel, "span 2 1, wrap");
+		variablePanel.add(variableNameField, "span 2 1, wrap");
+		variablePanel.add(new RadioButtonVisability(this), "span 2 1, wrap");
+		variablePanel.add(updateVariableButton, "span 2 1");
 		
 		
 		
@@ -108,6 +110,7 @@ public class VariableMenu extends JPanel implements IVisability{
 			
 		
 		addVariableButton.addActionListener(e -> newVariable());
+		deleteVariableButton.addActionListener(e -> deleteVariable());
 		updateVariableButton.addActionListener(e -> updateVariable());
 		
 		returnTypeListVariablesRButton.doClick();
@@ -179,6 +182,17 @@ public class VariableMenu extends JPanel implements IVisability{
 			selectedComponent.getController().newVariable();
 			((ClassFigure) selectedComponent).updatateList();
 		}
+	}
+	
+	private void deleteVariable() {
+		if (selectedComponent instanceof ClassFigure) {
+			int index = selectedComponent.getController()
+					.getIndexOfVariableList();
+			if (index >= 0 && isSelected)
+				selectedComponent.getController().removeComponentVariable(index);
+			
+			((ClassFigure) selectedComponent).updatateList();
+		}	
 	}
 
 	public void updateTextField(String nameInField) {

@@ -55,7 +55,7 @@ public class UMLDrawAreaController {
 	}
 	
 	public void removeComponentMethod(UMLComponent c, int index) {
-		executeCommand(new RemoveComponentMethodCommand(c, index));
+		executeCommand(new RemoveComponentMethodCommand(diagram, c, index));
 	}
 
 	public void setDestinationForRelation(UMLRelation rel, UMLComponent c,

@@ -82,6 +82,7 @@ public class Diagram extends Observable implements Serializable {
 		if (!o.isPresent())
 			throw new Exception("Could not find component");
 
+		System.out.println(o.get());
 		return o.get();
 	}
 

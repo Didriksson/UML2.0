@@ -30,7 +30,7 @@ public class MethodMenu extends JPanel implements IVisability {
 	
 	private JTextField methodNameField, parameterNameField, returnTypeMethodField ,returnTypeParameterField;
 
-	private JButton addMethodButton, updateMethodButton, addParameterButton;
+	private JButton addMethodButton, deleteMethodButton, updateMethodButton, addParameterButton;
 	private ButtonGroup buttonGroupParameters, buttonGroupMethods;
 	private JRadioButton returnTypeListParaRButton;
 	private JRadioButton returnTypeFieldParaRButton;
@@ -76,6 +76,7 @@ public class MethodMenu extends JPanel implements IVisability {
 		returnTypeParameterField = textFieldSetup();
 
 		addMethodButton = buttonSetup("Add Default Method");
+		deleteMethodButton = buttonSetup("Delete Method");
 		updateMethodButton = buttonSetup("Update Method");
 		addParameterButton = buttonSetup("Add");
 
@@ -105,11 +106,12 @@ public class MethodMenu extends JPanel implements IVisability {
 		methodReturnTypePanel.add(returnTypeMethodField);
 		
 		methodPanel.add(addMethodButton);
+		methodPanel.add(deleteMethodButton);
 		methodPanel.add(methodReturnTypePanel, "span 1 4, wrap");
-		methodPanel.add(methodNameLabel, "wrap");
-		methodPanel.add(methodNameField, "wrap");
-		methodPanel.add(new RadioButtonVisability(this), "wrap");
-		methodPanel.add(updateMethodButton, "span 2 1");		
+		methodPanel.add(methodNameLabel, "span 2 1, wrap");
+		methodPanel.add(methodNameField, "span 2 1, wrap");
+		methodPanel.add(new RadioButtonVisability(this), "span 2 1, wrap");
+		methodPanel.add(updateMethodButton, "span 3 1");		
 		
 		parameterPanel.add(parameterNameLabel, "wrap");
 		parameterPanel.add(parameterNameField, "span 2 1, wrap");
@@ -124,8 +126,9 @@ public class MethodMenu extends JPanel implements IVisability {
 		this.add(methodPanel);
 		this.add(parameterPanel);
 
-
+		
 		addMethodButton.addActionListener(e -> newMethod());
+		deleteMethodButton.addActionListener(e -> deleteMethod());
 		updateMethodButton.addActionListener(e -> updateMethod());
 		addParameterButton.addActionListener(e -> addParametersFromList());
 
@@ -154,6 +157,8 @@ public class MethodMenu extends JPanel implements IVisability {
 			returnTypelistParameter.setEnabled(false);
 		});
 	}
+
+
 
 	public String setVisabilityIdentyfier(String title) {
 		return visabilityIdentyfier = title;
@@ -201,6 +206,17 @@ public class MethodMenu extends JPanel implements IVisability {
 			selectedComponent.getController().newMethod();
 			((ClassFigure) selectedComponent).updatateList();
 		}
+	}
+	
+	private void deleteMethod() {
+		if (selectedComponent instanceof ClassFigure) {
+			int index = selectedComponent.getController()
+					.getIndexOfMethodList();
+			if (index >= 0 && isSelected)
+				selectedComponent.getController().removeComponentMethod(index);
+			
+			((ClassFigure) selectedComponent).updatateList();
+		}	
 	}
 
 	private void updateMethod() {

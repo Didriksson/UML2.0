@@ -65,6 +65,10 @@ public class UMLComponentController implements Serializable {
 	public UMLComponent getComponent() {
 		return umlC;
 	}
+	
+	public void removeComponentMethod(int index) {
+		drawController.removeComponentMethod(umlC, index);
+	}
 
 	public Set<String> getParameterList() {
 		return drawController.getParameterList();

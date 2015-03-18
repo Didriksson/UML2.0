@@ -113,4 +113,12 @@ public class UMLComponent implements Serializable{
 		return json;
 	}
 
+	public boolean removeMethod(UMLMethod m) {
+		return methods.remove(m);
+	}
+
+	public boolean removeVariable(UMLClassVariable v) {
+		return variables.remove(v);
+	}
+
 }

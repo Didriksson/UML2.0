@@ -29,7 +29,6 @@ public class Diagram extends Observable implements Serializable {
 		addingTypesToParameterSet();
 	}
 
-	
 	private void addingTypesToParameterSet() {
 		parameterSet.add("byte");
 		parameterSet.add("short");
@@ -38,14 +37,12 @@ public class Diagram extends Observable implements Serializable {
 		parameterSet.add("float");
 		parameterSet.add("double");
 		parameterSet.add("char");
-		parameterSet.add("String");		
+		parameterSet.add("String");
 		parameterSet.add("boolean");
 	}
-	
+
 	public void addComponent(UMLComponent c) {
 		this.components.add(c);
-		setChanged();
-		notifyObservers(this);
 		signalUpdate();
 	}
 
@@ -55,15 +52,11 @@ public class Diagram extends Observable implements Serializable {
 
 	public boolean removeComponent(UMLComponent c) {
 		boolean operationOK = this.components.remove(c);
-		setChanged();
-		notifyObservers(this);
 		signalUpdate();
 		return operationOK;
 	}
 
 	public boolean removeComponent(String name) {
-		setChanged();
-		notifyObservers(this);
 		signalUpdate();
 		return components.removeIf(c -> c.equals(name));
 	}
@@ -88,11 +81,9 @@ public class Diagram extends Observable implements Serializable {
 	public UMLComponent newClassComponent(String name) {
 		UMLComponent c = new UMLComponent(name, "Class");
 		components.add(c);
-		setChanged();
-		notifyObservers(this);
+		signalUpdate();
 		return c;
 	}
-
 
 	public UMLRelation newRelation(String type) {
 		UMLRelation relation = new UMLRelation(type);
@@ -105,7 +96,6 @@ public class Diagram extends Observable implements Serializable {
 		return relations;
 	}
 
-
 	public boolean removeRelation(UMLRelation relation) {
 		boolean operationOK = relations.remove(relation);
 		signalUpdate();
@@ -115,31 +105,24 @@ public class Diagram extends Observable implements Serializable {
 	public void setDestinationForRelation(UMLRelation rel, UMLComponent comp) {
 		if (rel != null)
 			rel.setDestination(comp);
-		setChanged();
-		notifyObservers(this);
 		signalUpdate();
 	}
 
 	public void setRootForRelation(UMLRelation rel, UMLComponent comp) {
 		if (rel != null)
 			rel.setRoot(comp);
-		setChanged();
-		notifyObservers(this);
 		signalUpdate();
 	}
 
 	public void addMethod(UMLComponent c, UMLMethod m) throws Exception {
 		c.addMethod(m);
-	}
-
-	public void addClassVariable(UMLComponent c, UMLClassVariable v) {
-		c.addVariable(v);
+		signalUpdate();
 	}
 
 	public Set<String> getParametersForMethod() {
 		return parameterSet;
 	}
-	
+
 	public void addRelation(UMLRelation r) {
 		relations.add(r);
 		signalUpdate();

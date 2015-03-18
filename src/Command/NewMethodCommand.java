@@ -16,7 +16,8 @@ public class NewMethodCommand implements ICommand {
 
 	@Override
 	public void execute() {
-		m = new UMLMethod("public", "void", "MethodName");
+		if(m == null)
+			m = new UMLMethod("public", "void", "MethodName");
 		try {
 			d.addMethod(c, m);
 		} catch (Exception e) {
@@ -26,8 +27,8 @@ public class NewMethodCommand implements ICommand {
 
 	@Override
 	public void undo() {
-		// TODO Auto-generated method stub
-
+		c.removeMethod(m);
+		d.signalUpdate();
 	}
 
 }

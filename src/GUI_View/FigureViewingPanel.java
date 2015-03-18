@@ -26,6 +26,7 @@ import Controller.UMLDrawAreaController;
 import Controller.UMLRelationsComponentController;
 import Controller.UMLRelationsController;
 import Figures.ClassFigure;
+import Figures.GUIComponent;
 import Figures.Resizable;
 import Figures.Graphics.AssociationFigure;
 import Figures.Graphics.RelationsDrawer;
@@ -76,7 +77,11 @@ public class FigureViewingPanel extends JPanel implements Observer,
     private void addComponentToDrawArea(UMLComponent c) {
 	if (!getDataPosition().resizables.containsKey(c))
 	    addComponentToResizeableList(c);
-	relationPanel.add(getDataPosition().resizables.get(c));
+	Resizable r = getDataPosition().resizables.get(c);
+	GUIComponent component = r.getGUIComponent();
+	if(component instanceof ClassFigure)
+		((ClassFigure) component).updatateList();
+	relationPanel.add(r);
     }
 
     private void addComponentToResizeableList(UMLComponent c) {

@@ -19,6 +19,7 @@ public class RemoveClassComponentCommand implements ICommand {
 
 	@Override
 	public void undo() {
+		diagram.addComponent(component);
 	}
 
 }
